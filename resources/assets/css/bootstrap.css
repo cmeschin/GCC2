@@ -8372,15 +8372,3 @@ a.text-dark:focus, a.text-dark:hover {
   visibility: hidden !important;
 }
 /*# sourceMappingURL=bootstrap.css.map */
-body {
-	background-color: #343a40;
-	padding-top: 70px;
-}
-.card {
-	border: 4px solid rgba(255, 242, 242, .3);
-	border-radius: .5rem;
-}
-.inline-form input {
-	display: inline-block;
-	width: 100px;
-}
