@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "adldap2/adldap2-laravel": "^3.0",
         "barryvdh/laravel-debugbar": "^3.1",
         "caouecs/laravel-lang": "~3.0",
         "fideloper/proxy": "~3.3",
@@ -57,7 +58,6 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true,
-        "disable-tls": true
+        "optimize-autoloader": true
     }
 }

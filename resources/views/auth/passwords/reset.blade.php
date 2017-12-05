@@ -8,9 +8,9 @@
             {{ csrf_field() }}
             <input type="hidden" name="token" value="{{ $token }}">
             @include('partials.form-group', [
-                'title' => __('Adresse email'),
-                'type' => 'email',
-                'name' => 'email',
+                'title' => __('Identifiant'),
+                'type' => 'text',
+                'name' => 'username',
                 'required' => true,
                 ])
             @include('partials.form-group', [
