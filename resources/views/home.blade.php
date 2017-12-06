@@ -4,12 +4,20 @@
     {{--<nav class="navbar" role="navigation">--}}
     <div class="navbar-header">
         <ul class="nav navbar-nav">
-            {{--<li class="nav-item"> <a class="nav-link" href="#">Accueil</a> </li>--}}
-            <li class="nav-item"> <a class="nav-link" href="#">Nouvelle demande</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#">Demandes en cours</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#">Demandes archivées</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="#">Sondes par Prestations</a> </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDemandes" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Demandes
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownDemandes">
+                    <a class="dropdown-item" href="#">Nouvelle demande</a>
+                    <a class="dropdown-item" href="#">Demandes en cours</a>
+                    <a class="dropdown-item" href="#">Demandes archivées</a>
+                </div>
+            </li>
+            <li class="nav-item"> <a class="nav-link" href="#">Prestations</a> </li>
+            <li class="nav-item disabled"> <a class="nav-link" href="#">Statistiques</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Documentation</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">Administration</a> </li>
         </ul>
     </div>
     <form class="form-inline my-2 my-lg-0">

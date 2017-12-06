@@ -7,19 +7,22 @@
     @endif
     @component('components.card')
         @slot('title')
-            @lang('Renouvellement du mot de passe')
+            @lang('Gestion des mots de passe')
         @endslot
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('login') }}">
             {{ csrf_field() }}
-            @include('partials.form-group', [
-                'title' => __('Adresse email'),
-                'type' => 'email',
-                'name' => 'email',
-                'required' => true,
-                ])
-            @component('components.button')
-                @lang('Envoi de la demande')
-            @endcomponent
+            <div class="panel-body">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <p>Les mots de passe sont gérés par l'AD. Contacter l'EPI-Infra pour vérifier votre compte de domaine TT.</p>
+                    <a class="btn btn-primary float-right" href="{{ route('login') }}">
+                        @lang('Retour')
+                    </a>
+            </div>
         </form>
     @endcomponent
 @endsection
