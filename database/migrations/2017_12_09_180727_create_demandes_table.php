@@ -26,8 +26,8 @@ class CreateDemandesTable extends Migration
             $table->time('temps_hote');
             $table->time('temps_service');
             $table->integer('ticket_itsm');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('etatdemande_id')->references('id')->on('etat_demandes');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//            $table->foreign('etatdemande_id')->references('id')->on('etat_demandes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -39,13 +39,13 @@ class CreateDemandesTable extends Migration
      */
     public function down()
     {
-        Schema::table('demandes',function(Blueprint,$table) {
-            $table->dropForeign('demandes_user_id_foreign');
-        });
-
-        Schema::table('demandes',function(Blueprint,$table) {
-            $table->dropForeign('demandes_etatdemande_id_foreign');
-        });
+//        Schema::table('demandes',function(Blueprint $table) {
+//            $table->dropForeign('demandes_user_id_foreign');
+//        });
+//
+//        Schema::table('demandes',function(Blueprint $table) {
+//            $table->dropForeign('demandes_etatdemande_id_foreign');
+//        });
 
         Schema::dropIfExists('demandes');
     }
