@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "adldap2/adldap2-laravel": "^3.0",
         "barryvdh/laravel-debugbar": "^3.1",
+        "barryvdh/laravel-ide-helper": "^2.4",
         "caouecs/laravel-lang": "~3.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
@@ -53,6 +54,12 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan optimize"
         ]
     },
     "config": {

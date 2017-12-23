@@ -15,6 +15,20 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('centreonhost_id')->nullable();
+            $table->integer('centreonservice_id')->nullable();
+            $table->integer('servicemodele_id');
+            $table->integer('centreonservicetemplate_id');
+            $table->string('nom',255);
+            $table->text('parametres');
+            $table->integer('periode_id');
+            $table->string('frequence',25);
+            $table->boolean('actif');
+            $table->multiLineString('commentaire');
+            $table->string('consigne');
+            $table->integer('typeaction_id');
+            $table->integer('etatdemande_id');
+            $table->boolean('selected');
             $table->timestamps();
         });
     }

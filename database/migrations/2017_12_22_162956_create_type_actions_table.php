@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEtatDemandesTable extends Migration
+class CreateTypeActionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateEtatDemandesTable extends Migration
      */
     public function up()
     {
-        Schema::create('etat_demandes', function (Blueprint $table) {
+        Schema::create('type_actions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('etat',15);
+            $table->string('action',25);
             $table->string('alias',10);
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateEtatDemandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etat_demandes');
+        Schema::dropIfExists('type_actions');
     }
 }

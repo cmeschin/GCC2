@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class EtatDemande extends Model
 {
     /**
-     * Récupère la demande correspondant à l'etatdemande actuel avec etatdemande_id.
+     * Récupère les demandes correspondantes à l'etatdemande actuel avec etatdemande_id.
      */
     public function demande($etatdemande_id)
     {
-        return $this->belongsTo(Demande::class)->with($etatdemande_id);
+        return $this->belongsToMany(Demande::class)->with($etatdemande_id);
     }
 
     /**
-     * Récupère la liste des demande par état.
+     * Récupère la liste des demandes par état.
      */
     public function listdemande()
     {
-        return $this->hasMany(Demande::class);
+        return $this->belongsToMany(Demande::class);
     }
 }

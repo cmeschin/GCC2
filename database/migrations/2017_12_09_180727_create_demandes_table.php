@@ -15,19 +15,17 @@ class CreateDemandesTable extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type',['démarrage', 'mise_à_jour']);
-            $table->string('prestation',100);
+            $table->integer('typedemande_id');
+            $table->integer('etatdemande_id');
             $table->integer('user_id');
+            $table->string('prestation',100);
             $table->integer('listediffusion_id');
             $table->string('reference',50);
-            $table->integer('etatdemande_id');
-            $table->dateTime('date_supervision');
+            $table->dateTime('date_activation');
             $table->text('commentaire');
             $table->time('temps_hote');
             $table->time('temps_service');
-            $table->integer('ticket_itsm');
-//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-//            $table->foreign('etatdemande_id')->references('id')->on('etat_demandes')->onDelete('cascade');
+            $table->string('ticket_itsm',12);
             $table->timestamps();
         });
     }
