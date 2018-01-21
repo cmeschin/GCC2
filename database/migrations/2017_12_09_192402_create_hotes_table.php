@@ -21,10 +21,11 @@ class CreateHotesTable extends Migration
             $table->string('ip',50);
             $table->boolean('actif');
             $table->multiLineString('commentaire');
-            $table->string('consigne');
+            $table->text('consigne');
             $table->integer('typeaction_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');
+            $table->string('motif_annulation',100);
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.5.27 on 2017-12-22.
+ * Generated for Laravel 5.5.32 on 2018-01-21.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1885,7 +1885,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the session store used by the guard.
          *
-         * @return \Illuminate\Contracts\Session\Session. 
+         * @return \Illuminate\Contracts\Session\Session 
          * @static 
          */ 
         public static function getSession()
@@ -2179,6 +2179,17 @@ namespace Illuminate\Support\Facades {
         public static function setEchoFormat($format)
         {
             \Illuminate\View\Compilers\BladeCompiler::setEchoFormat($format);
+        }
+        
+        /**
+         * Set the echo format to double encode entities.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function doubleEncode()
+        {
+            \Illuminate\View\Compilers\BladeCompiler::doubleEncode();
         }
         
         /**
@@ -5819,7 +5830,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|array $view
          * @param array $data
-         * @return \Illuminate\View\View 
+         * @return string 
          * @static 
          */ 
         public static function render($view, $data = array())
@@ -11203,6 +11214,17 @@ namespace Illuminate\Support\Facades {
         public static function defaults($defaults)
         {
             \Illuminate\Routing\UrlGenerator::defaults($defaults);
+        }
+        
+        /**
+         * Get the default named parameters used by the URL generator.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getDefaultParameters()
+        {
+            return \Illuminate\Routing\UrlGenerator::getDefaultParameters();
         }
         
         /**

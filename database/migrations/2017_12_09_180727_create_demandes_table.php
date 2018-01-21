@@ -22,10 +22,11 @@ class CreateDemandesTable extends Migration
             $table->integer('listediffusion_id');
             $table->string('reference',50);
             $table->dateTime('date_activation');
-            $table->text('commentaire');
+            $table->multiLineString('commentaire');
             $table->time('temps_hote');
             $table->time('temps_service');
             $table->string('ticket_itsm',12);
+            $table->string('motif_annulation',100);
             $table->timestamps();
         });
     }
