@@ -15,10 +15,12 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('demande_id');
+            $table->integer('hote_id');
             $table->integer('centreonhost_id')->nullable();
             $table->integer('centreonservice_id')->nullable();
             $table->integer('modeleservice_id');
-            $table->integer('centreonservicetemplate_id');
+            $table->integer('centreonservicetemplate_id')->nullable();
             $table->string('nom',255);
             $table->text('parametres');
             $table->integer('periode_id');
@@ -26,7 +28,7 @@ class CreateServicesTable extends Migration
             $table->boolean('actif');
             $table->multiLineString('commentaire');
             $table->text('consigne');
-            $table->integer('typeaction_id');
+            $table->integer('action_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');
             $table->string('motif_annulation',100);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Demande extends Model
 {
     /**
-     * Get the user that owns the demande.
+     * Récupère l'utilisateur auquel la demande appartient
      */
     public function user()
     {
@@ -15,19 +15,35 @@ class Demande extends Model
     }
 
     /**
-     * Get the hosts that belongs the demande.
+     * Récupère les hôtes appartenant à la demande.
      */
-    public function hote()
+    public function hotes()
     {
         return $this->hasMany(Hote::class);
     }
 
     /**
-     * Get the services that belongs the demande.
+     * Récupère les services appartenant à la demande.
      */
-    public function service()
+    public function services()
     {
         return $this->hasMany(Service::class);
     }
 
+    /**
+     * Récupère les périodes appartenant à la demande.
+     */
+    public function periodes()
+    {
+        return $this->hasMany(Periode::class);
+    }
+    
+    /**
+     * Récupère les états de la demande.
+     */
+    public function etats()
+    {
+        return $this->belongstoMany(EtatDemande::class);
+    }
+    
 }

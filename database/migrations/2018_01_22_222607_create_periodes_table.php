@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHotesTable extends Migration
+class CreatePeriodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateHotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('hotes', function (Blueprint $table) {
+        Schema::create('periodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('demande_id');
-            $table->integer('centreonhost_id')->nullable();
-            $table->string('nom',30);
-            $table->string('description',255);
-            $table->string('ip',50);
-            $table->boolean('actif');
-            $table->multiLineString('commentaire');
-            $table->text('consigne');
+            $table->string('nom',50);
+            $table->string('lundi',255);
+            $table->string('mardi',255);
+            $table->string('mercredi',255);
+            $table->string('jeudi',255);
+            $table->string('vendredi',255);
+            $table->string('samedi',255);
+            $table->string('dimanche',255);
             $table->integer('action_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');
@@ -38,6 +39,6 @@ class CreateHotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hotes');
+        Schema::dropIfExists('periodes');
     }
 }

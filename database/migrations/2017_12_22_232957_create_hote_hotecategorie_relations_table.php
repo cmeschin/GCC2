@@ -16,7 +16,7 @@ class CreateHoteHotecategorieRelationsTable extends Migration
         Schema::create('hote_hotecategorie_relations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('hote_id');
-            $table->integer('hc_id');
+            $table->integer('hotecategorie_id');
             $table->timestamps();
         });
     }

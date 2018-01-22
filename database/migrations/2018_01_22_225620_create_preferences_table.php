@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypeActionsTable extends Migration
+class CreatePreferencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTypeActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_actions', function (Blueprint $table) {
+        Schema::create('preferences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('action',25);
-            $table->string('alias',10);
+            $table->integer('user_id');
+            $table->string('type',50);
+            $table->string('cle',255);
+            $table->string('valeur',255);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTypeActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_actions');
+        Schema::dropIfExists('preferences');
     }
 }

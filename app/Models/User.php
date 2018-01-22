@@ -28,11 +28,19 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the demande that belongs the user.
+     * Récupère les demandes de l'utilisateur
      */
-    public function demande()
+    public function demandes()
     {
         return $this->hasMany(Demande::class);
     }
 
+    /**
+     * Récupère les preferences de l'utilisateur.
+     */
+    public function preferences()
+    {
+        return $this->hasMany(Preference::class);
+    }
+    
 }

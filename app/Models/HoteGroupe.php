@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HoteCategorie extends Model
+class HoteGroupe extends Model
 {
     /**
-     * Récupère les hotes appartenant aux catégories.
+     * Récupère les hotes appartenant aux groupes.
      */
     public function hotes()
     {

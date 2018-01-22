@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeServiceRelationsTable extends Migration
+class CreateHoteGroupesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateDemandeServiceRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('demande_service_relations', function (Blueprint $table) {
+        Schema::create('hote_groupes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('demande_id');
-            $table->integer('service_id');
+            $table->integer('centreon_hg_id');
+            $table->string('groupe',50);
+            $table->string('nom',50);
+            $table->string('abreviation',5)->nullable(); // nullable() rend optionnel la saisie de ce champ
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateDemandeServiceRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demande_service_relations');
+        Schema::dropIfExists('hote_groupes');
     }
 }

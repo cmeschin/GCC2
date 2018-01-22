@@ -15,6 +15,8 @@ class CreateTypeDemandesTable extends Migration
     {
         Schema::create('type_demandes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type',20);
+            $table->string('alias',20);
             $table->timestamps();
         });
     }

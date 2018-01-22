@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListeDiffusionsTable extends Migration
+class CreateActionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateListeDiffusionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('liste_diffusions', function (Blueprint $table) {
+        Schema::create('actions', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('action',15);
+            $table->string('alias',15);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateListeDiffusionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('liste_diffusions');
+        Schema::dropIfExists('actions');
     }
 }
