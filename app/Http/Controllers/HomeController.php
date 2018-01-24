@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,5 +18,18 @@ class HomeController extends Controller
             return redirect('/login');
         }
         return view('home');
+    }
+    
+    /**
+     * Get user logged.
+     */
+    public function getUser()
+    
+    {
+        
+        $user = User::findOfFail();
+        
+        return view('home', compact('user'));
+        
     }
 }

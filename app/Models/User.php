@@ -43,4 +43,12 @@ class User extends Authenticatable
         return $this->hasMany(Preference::class);
     }
     
+    /**
+     * Récupère les commentaires de l'utilisateur.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+    
 }

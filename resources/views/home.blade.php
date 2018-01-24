@@ -26,12 +26,15 @@
     </form>
 
 @endsection
+
+
+
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-4 alert-info">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Bienvenue!</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -39,8 +42,43 @@
                             {{ session('status') }}
                         </div>
                     @endif
+						<div class="panel panel-default bg-info">
+							{{ Auth::user()->name }} You are logged in!
+						</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-5 alert-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">Bienvenue!</div>
 
-                    You are logged in!
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+						<div class="panel panel-default bg-info">
+							{{ Auth::user()->name }} You are logged in!
+						</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-md-offset-2 alert-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">Bienvenue 2!</div>
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+						<div class="panel panel-default bg-info">
+							{{ Auth::user()->name }} You are logged in!
+						</div>
                 </div>
             </div>
         </div>

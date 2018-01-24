@@ -38,4 +38,20 @@ class Hote extends Model
         return $this->belongstoMany(HoteGroupe::class);
     }
     
+    /**
+     * récupère l'action appartenant à l'hote.
+     */
+    public function action()
+    {
+        return $this->belongsTo(Action::class);
+    }
+    
+    /**
+     * Récupère les commentaires de l'hote.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+    
 }

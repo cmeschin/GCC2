@@ -22,4 +22,20 @@ class Periode extends Model
         return $this->hasMany(Service::class);
     }
     
+    /**
+     * récupère l'action appartenant à la periode.
+     */
+    public function action()
+    {
+        return $this->belongsTo(Action::class);
+    }
+    
+    /**
+     * Récupère les commentaires de le periode.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+    
 }

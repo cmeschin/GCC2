@@ -30,4 +30,20 @@ class Service extends Model
         return $this->belongsTo(Periode::class);
     }
     
+    /**
+     * récupère l'action appartenant au service.
+     */
+    public function action()
+    {
+        return $this->belongsTo(Action::class);
+    }
+    
+    /**
+     * Récupère les commentaires du service.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+    
 }

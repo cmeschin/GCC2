@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Album') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset ('images/Tessi_Icone.png') }}"  type="image/png">
     @yield('css')
 </head>
 <body>
@@ -47,4 +48,7 @@
     })
 </script>
 </body>
+<footer>
+@yield('footer')
+</footer>
 </html>

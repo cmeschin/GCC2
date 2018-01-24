@@ -46,4 +46,28 @@ class Demande extends Model
         return $this->belongstoMany(EtatDemande::class);
     }
     
+    /**
+     * Récupère le type de la demande.
+     */
+    public function typedemande()
+    {
+        return $this->belongsTo(TypeDemande::class);
+    }
+    
+    /**
+     * Récupère les commentaires de la demande.
+     */
+    public function histories()
+    {
+        return $this->hasMany(History::class);
+    }
+    
+    /**
+     * Récupère les notifications de la demande.
+     */
+    public function notificationss()
+    {
+        return $this->hasMany(Notification::class);
+    }
+    
 }
