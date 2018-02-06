@@ -61,10 +61,10 @@
             {{--@if (Route::has('login'))--}}
                 {{--<div class="top-right links">--}}
                     {{--@auth--}}
-                        {{--<a href="{{ url('/home') }}">Home</a>--}}
+                        {{--<a href="{{ url('/home') }}">@lang('Accueil')</a>--}}
                     {{--@else--}}
-                        {{--<a href="{{ route('login') }}">Login</a>--}}
-                        {{--<a href="{{ route('register') }}">Register</a>--}}
+                        {{--<a href="{{ route('login') }}">@lang('Connexion')</a>--}}
+                        {{--<a href="{{ route('register') }}">@lang('Inscription')</a>--}}
                     {{--@endauth--}}
                 {{--</div>--}}
             {{--@endif--}}
@@ -78,9 +78,7 @@
 @endsection
 
 @section('footer')
-<footer>
-    <div class="pull-right m-b-md">
-        propulsé par Laravel
-    </div>
-</footer>
+<div>
+	développé par Cédric Meschin
+</div>
 @endsection

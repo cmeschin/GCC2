@@ -15,9 +15,11 @@ let mix = require('laravel-mix');
 //   .sass('resources/assets/sass/app.scss', 'public/css');
 mix.styles([
             'resources/assets/css/bootstrap.min.css',
+            'resources/assets/css/select2.min.css',
             'resources/assets/css/app.css'
         ], 'public/css/app.css')
         .scripts([
             'resources/assets/js/jquery-3.3.1.slim.min.js',
-            'resources/assets/js/bootstrap.bundle.min.js'
+            'resources/assets/js/bootstrap.bundle.min.js',
+            'resources/assets/js/select2.full.min.js'
         ], 'public/js/app.js');

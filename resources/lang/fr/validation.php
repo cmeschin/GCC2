@@ -103,6 +103,19 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'remember_me' => 'Se rappeler de moi',
+        'forgotten_password' => 'Mot de passe oublié ?',
+        'login' => 'Identifiant',
+        'password' => 'Mot de passe',
+        'log_in' => 'Connexion',
+        'new_request' => 'Nouvelle demande',
+        'pending_requests' => 'Demandes en cours',
+        'archived_requests' => 'Demandes archivées',
+        'benefits' => 'Prestations',
+        'statistics' => 'Statistiques',
+        'documentation' => 'Documentation',
+        'administration' => 'Administration',
+        'search' => 'Rechercher',
     ],
 
     /*

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 //use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class NouvelleDemandeController extends Controller
 {
     /**
      * Show the application dashboard.
@@ -17,7 +17,7 @@ class HomeController extends Controller
         if (! auth()->check()) {
             return redirect('/login');
         }
-        return view('home');
+        return view('nouvelledemande');
     }
     
     /**
@@ -29,7 +29,7 @@ class HomeController extends Controller
         
         $user = User::findOfFail();
         
-        return view('home', compact('user'));
+        return view('nouvelledemande', compact('user'));
         
     }
 }

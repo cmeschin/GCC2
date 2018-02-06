@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('Connexion')
+            @lang('validation.custom.log_in')
         @endslot
         <form method="POST" action="{{ route('login') }}">
             {{ csrf_field() }}
@@ -10,26 +10,28 @@
                 'title' => __('Identifiant'),
                 'type' => 'text',
                 'name' => 'username',
+                'readonly' => false,
                 'required' => true,
                 ])
             @include('partials.form-group', [
                 'title' => __('Mot de passe'),
                 'type' => 'password',
                 'name' => 'password',
+                'readonly' => false,
                 'required' => true,
                 ])
             <div class="form-check">
                 <label class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" name="remember" {{ old('remember') ? 'checked' : '' }}>
                     <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description"> @lang('Se rappeler de moi')</span>
+                    <span class="custom-control-description">@lang('validation.custom.remember_me')</span>
                 </label>
             </div>
             @component('components.button')
-                @lang('Connexion')
+                @lang('validation.custom.log_in')
             @endcomponent
             <a class="btn btn-link" href="{{ route('password.request') }}">
-                @lang('Mot de passe oublié ?')
+                @lang('validation.custom.forgotten_password')
             </a>
         </form>
     @endcomponent
