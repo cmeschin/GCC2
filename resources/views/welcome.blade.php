@@ -61,10 +61,10 @@
             {{--@if (Route::has('login'))--}}
                 {{--<div class="top-right links">--}}
                     {{--@auth--}}
-                        {{--<a href="{{ url('/home') }}">@lang('Accueil')</a>--}}
+                        {{--<a href="{{ url('/home') }}">@lang('validation.custom.home')</a>--}}
                     {{--@else--}}
-                        {{--<a href="{{ route('login') }}">@lang('Connexion')</a>--}}
-                        {{--<a href="{{ route('register') }}">@lang('Inscription')</a>--}}
+                        {{--<a href="{{ route('login') }}">@lang('validation.custom.connection')</a>--}}
+                        {{--<a href="{{ route('register') }}">@lang('validation.custom.registration')</a>--}}
                     {{--@endauth--}}
                 {{--</div>--}}
             {{--@endif--}}

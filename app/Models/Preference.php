@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Preference extends Model
 {
     /**
-     * Get the user that owns the demande.
+     * Get the user that owns the preferences.
      */
     public function user()
     {

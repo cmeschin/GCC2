@@ -16,7 +16,7 @@ class CreateEtatDemandesTable extends Migration
         Schema::create('etat_demandes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('etat',15);
-            $table->string('alias',10);
+            $table->string('action',15);
             $table->timestamps();
         });
     }

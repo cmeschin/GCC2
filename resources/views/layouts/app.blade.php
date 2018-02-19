@@ -30,11 +30,11 @@
         <ul class="navbar-nav">
 
             @guest
-                <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
-                <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
+                <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('validation.custom.connection')</a></li>
+                <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('validation.custom.registration')</a></li>
             @else
                 <li class="nav-item">
-                    <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('Déconnexion')</a>
+                    <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('validation.custom.log_out')</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">
                         {{ csrf_field() }}
                     </form>
