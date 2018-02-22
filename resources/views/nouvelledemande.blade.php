@@ -13,6 +13,7 @@
                     'type' => 'text',
                     'name' => 'demandeur',
                     'value' => Auth::user()->username,
+                    'placeholder' => "identifiant du demandeur",
                     'required' => true,
                     'readonly' => true,
                     ])
@@ -23,6 +24,7 @@
                     'type' => 'text',
                     'name' => 'refdemande',
                     'value' => date("YmdHi") . "_" . Auth::user()->username,
+                    'placeholder' => "référence de la demande",
                     'required' => true,
                     'readonly' => true,
                     ])
@@ -30,9 +32,10 @@
                 <div class="col-md-4">
                 @include('partials.form-group-input', [
                     'title' => __('Date de supervision souhaitée'),
-                    'type' => 'date',
+                    'type' => 'text',
                     'name' => 'datedemande',
-                    'value' => date("d / m / Y"),
+                    'value' => "",
+                    'placeholder' => "jj/mm/aaaa",
                     'required' => true,
                     'readonly' => false,
                     ])
@@ -115,5 +118,25 @@
 @section('script')
 	<script>
 		$('.select2').select2();
+		var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
+		$.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
+		$("#datedemande").bootstrapDP({
+			//showOn: "button",
+			//dateFormat: "yy-mm-dd",
+			//buttonImage: "images/calendar.gif",
+			//buttonImageOnly: true,
+			//buttonText: "Choix de la date",
+			//beforeShowDay: function(date){ return [date.getDay() != 6 && date.getDay() != 0,""]},
+			//minDate: 0,
+    		//format: 'dd/mm/yyyy',
+    		daysOfWeekDisabled: "0,6",
+    		autoclose: true,
+    		language: "fr",
+    	    startDate: '0d',
+    	    todayBtn: true,
+			//minDate: 0, //blocage de saisie d'une date antérieur à J
+		    calendarWeeks: true
+			//todayHighlight: true,
+		});
     </script>
 @endsection
