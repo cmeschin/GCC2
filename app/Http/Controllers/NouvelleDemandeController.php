@@ -31,6 +31,20 @@ class NouvelleDemandeController extends Controller
         return view('nouvelledemande',compact('etatdemandes','typedemandes','listdiffusions','listprestations'));
     }
 
+    public function selection()
+    {
+        /**
+         * Fonction chargée de traiter les infos générales et de charger le contenu des hosts et services de la prestation
+         */
+        if (! auth()->check()) {
+            return redirect('/login');
+        }
+        //$typedemandes = $this->get_typedemande();
+        //$etatdemandes = $this->get_etatdemande();
+        //$listdiffusions = $this->get_listdiffusion();
+        //$listprestations = $this->get_prestations();
+        return 'coucou';
+    }
     public function get_etatdemande()
     {
         $etatdemandes = EtatDemande::all()->pluck('etat','id');

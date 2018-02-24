@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.general_informations')
         @endslot
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ action('NouvelleDemandeController@selection') }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-4">

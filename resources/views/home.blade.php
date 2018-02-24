@@ -8,7 +8,7 @@
                     Demandes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownDemandes">
-                    <a class="dropdown-item" href="/nouvelledemande">@lang('validation.custom.new_request')</a>
+                    <a class="dropdown-item" href="/new">@lang('validation.custom.new_request')</a>
                     <a class="dropdown-item" href="#">@lang('validation.custom.pending_requests')</a>
                     <a class="dropdown-item" href="#">@lang('validation.custom.archived_requests')</a>
                 </div>

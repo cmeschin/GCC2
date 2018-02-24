@@ -20,16 +20,14 @@
                 'readonly' => false,
                 'required' => true,
                 ])
-            <div class="form-check">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">@lang('validation.custom.remember_me')</span>
-                </label>
+            <!-- <div class="form-check"> -->
+            <div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+				<label class="custom-control-label" for="remember"> @lang('validation.custom.remember_me')</label>
+            	@component('components.button')
+                	@lang('validation.custom.log_in')
+            	@endcomponent
             </div>
-            @component('components.button')
-                @lang('validation.custom.log_in')
-            @endcomponent
         </form>
     @endcomponent
 @endsection
