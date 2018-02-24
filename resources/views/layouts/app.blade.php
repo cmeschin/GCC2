@@ -31,7 +31,6 @@
 
             @guest
                 <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('validation.custom.connection')</a></li>
-                <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('validation.custom.registration')</a></li>
             @else
                 <li class="nav-item">
                     <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('validation.custom.log_out')</a>

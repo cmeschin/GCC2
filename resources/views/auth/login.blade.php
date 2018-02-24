@@ -30,9 +30,6 @@
             @component('components.button')
                 @lang('validation.custom.log_in')
             @endcomponent
-            <a class="btn btn-link" href="{{ route('password.request') }}">
-                @lang('validation.custom.forgotten_password')
-            </a>
         </form>
     @endcomponent
 @endsection

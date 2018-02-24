@@ -64,7 +64,6 @@
                         {{--<a href="{{ url('/home') }}">@lang('validation.custom.home')</a>--}}
                     {{--@else--}}
                         {{--<a href="{{ route('login') }}">@lang('validation.custom.connection')</a>--}}
-                        {{--<a href="{{ route('register') }}">@lang('validation.custom.registration')</a>--}}
                     {{--@endauth--}}
                 {{--</div>--}}
             {{--@endif--}}
