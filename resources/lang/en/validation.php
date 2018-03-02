@@ -129,6 +129,7 @@ return [
         'administration'        => 'Administration',
         'search'                => 'Search',
         'general_informations'  => 'General informations',
+        'selection'             => 'Selection of elements',
         'state'                 => [
             'draft'             => 'Draft',
             'todo'              => 'To do',

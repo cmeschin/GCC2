@@ -2,9 +2,9 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('validation.custom.general_informations')
+            @lang('validation.custom.selection')
         @endslot
-        <form method="POST" action="{{ action('NouvelleDemandeController@selection') }}">
+        <form method="POST" action="{{ action('NouvelleDemandeController@parametrage') }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-4">
@@ -23,7 +23,7 @@
                     'title' => __('Référence de la demande'),
                     'type' => 'text',
                     'name' => 'refdemande',
-                    'value' => date("YmdHi") . "_" . Auth::user()->username,
+                    'value' => date("ymdHi") . "_" . Auth::user()->username,
                     'placeholder' => "référence de la demande",
                     'required' => true,
                     'readonly' => true,

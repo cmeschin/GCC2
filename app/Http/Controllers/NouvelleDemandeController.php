@@ -3,35 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Models\Centreon;
+use App\Models\Demande;
 use App\Models\EtatDemande;
 use App\Models\Preference;
 use App\Models\TypeDemande;
-use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
+use App\Http\Requests\DemandeNewRequest;
 
 class NouvelleDemandeController extends Controller
 {
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
      */
     
     
-    public function index()
+    public function initialisation()
     {
         if (! auth()->check()) {
             return redirect('/login');
         }
+        $refdemande = date("ymdHi") . "_" . Auth::user()->username;
         $typedemandes = $this->get_typedemande();
-        $etatdemandes = $this->get_etatdemande();
+        
+        $etatdemande = Lang::get('validation.custom.state.draft');
         $listdiffusions = $this->get_listdiffusion();
         $listprestations = $this->get_prestations();
-        return view('nouvelledemande',compact('etatdemandes','typedemandes','listdiffusions','listprestations'));
+        return view('template.infosgenerales',compact('typedemandes','listdiffusions','listprestations','refdemande','etatdemande'));
     }
 
-    public function selection()
+    public function selection(DemandeNewRequest $request)
+    {
+        /**
+         * Fonction chargée de traiter les infos générales et de charger le contenu des hosts et services de la prestation
+         */
+        if (! auth()->check()) {
+            return redirect('/login');
+        }
+
+        /**
+         * initialiser la demande en enregistrant les infos générales
+         * 
+         */
+        /**
+         * Ajout d'une demande
+         */
+        //dd($request);
+        $etatdemande_id = EtatDemande::where('etat', 'draft')->value('id');
+        $dateactivation = date_format(date_create(strtotime($request->dateactivation)),"Y-m-d");
+        //dd($request->dateactivation);
+        //dd($dateactivation);
+        //$etatdemande_id = $this->get_etatdemande()->where('etat', 'draft')->value('id');
+        $user_id = Auth::user()->id;
+        $demande = new Demande;
+        
+        $demande->etatdemande_id    = $etatdemande_id;
+        $demande->user_id           = $user_id;
+        $demande->reference         = strval($request->refdemande);
+        $demande->date_activation   = $dateactivation;
+        $demande->listediffusion_id = $request->listeDiffusion[0];
+        $demande->typedemande_id    = $request->typeDemande[0];
+        $demande->prestation        = strval($request->prestation[0]);
+        $demande->commentaire       = strval($request->description);
+        
+        $demande->save();
+        
+        /**
+         * Afficher la seconde vue
+         */
+        //return view('template.selection',compact('refdemande'));
+        return view('template.selection');
+    }
+
+//     public function selection()
+//     {
+//         return view('template.selection');
+//     }
+    
+    public function parametrage()
     {
         /**
          * Fonction chargée de traiter les infos générales et de charger le contenu des hosts et services de la prestation
@@ -43,8 +94,10 @@ class NouvelleDemandeController extends Controller
         //$etatdemandes = $this->get_etatdemande();
         //$listdiffusions = $this->get_listdiffusion();
         //$listprestations = $this->get_prestations();
-        return 'coucou';
+        //return view('template.parametrage');
+        return 'parametrage';
     }
+    
     public function get_etatdemande()
     {
         $etatdemandes = EtatDemande::all()->pluck('etat','id');
@@ -59,7 +112,7 @@ class NouvelleDemandeController extends Controller
 
     public function get_listdiffusion()
     {
-        $listdiffusions = Preference::All('id','user_id','valeur')->where('user_id', Auth::user()->id);
+        $listdiffusions = Preference::All('id','type','user_id','valeur')->where('user_id', Auth::user()->id)->where('type', 'emails');
         return $listdiffusions;
     }
     
@@ -68,5 +121,4 @@ class NouvelleDemandeController extends Controller
         $listprestations = Centreon::All('sg_name');
         return $listprestations;
     }
-    
 }

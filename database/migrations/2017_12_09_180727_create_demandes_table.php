@@ -21,12 +21,12 @@ class CreateDemandesTable extends Migration
             $table->string('prestation',100);
             $table->integer('listediffusion_id');
             $table->string('reference',50);
-            $table->dateTime('date_activation');
-            $table->multiLineString('commentaire');
-            $table->time('temps_hote');
-            $table->time('temps_service');
-            $table->string('ticket_itsm',12);
-            $table->string('motif_annulation',100);
+            $table->date('date_activation');
+            $table->multiLineString('commentaire')->nullable();
+            $table->time('temps_hote',5)->default(0);
+            $table->time('temps_service')->default(0);
+            $table->string('ticket_itsm',12)->nullable();
+            $table->string('motif_annulation',100)->nullable();
             $table->timestamps();
         });
     }

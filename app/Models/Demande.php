@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Demande extends Model
 {
+
     /**
      * Récupère l'utilisateur auquel la demande appartient
      */

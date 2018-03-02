@@ -17,10 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('/nouvelledemande', 'NouvelleDemandeController@index')->name('nouvelledemande');
+Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
 
-Route::get('/nouvelledemande', 'NouvelleDemandeController@selection')->name('nouvelledemande');
+Route::post('nouvelledemande/{refdemande}', 'NouvelleDemandeController@selection')->name('selection');
 
 

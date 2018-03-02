@@ -129,6 +129,7 @@ return [
         'administration'        => 'Administration',
         'search'                => 'Rechercher',
         'general_informations'  => 'Informations générales',
+        'selection'             => 'Sélection des éléments',
         'state'                 => [
             'draft'             => 'Brouillon',
             'todo'              => 'A Traiter',

@@ -14,5 +14,14 @@ class EtatDemande extends Model
     {
         return $this->belongsToMany(Demande::class);
     }
+    
+    /**
+     * Récupère les demandes correspondantes à l'etatdemande.
+     */
+    public function get_id_etatdemande($etatdemande)
+    {
+        return $this->with('etat',$etatdemande)->get('id');
+    }
+    
 
 }
