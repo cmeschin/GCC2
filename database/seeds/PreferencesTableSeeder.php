@@ -16,6 +16,12 @@ class PreferencesTableSeeder extends Seeder
                 'user_id' => '1',
                 'type' => 'emails',
                 'cle' => 'liste1',
+                'valeur' => 'c.zic@free.fr',
+        ]);
+        Preference::create([
+                'user_id' => '1',
+                'type' => 'emails',
+                'cle' => 'liste1',
                 'valeur' => 'c.zic@free.fr;c.zic@free.fr',
         ]);
         Preference::create([
@@ -23,6 +29,12 @@ class PreferencesTableSeeder extends Seeder
                 'type' => 'emails',
                 'cle' => 'liste2',
                 'valeur' => 'c.zic@free.fr;c.zic@free.fr;c.zic@free.fr',
+        ]);
+        Preference::create([
+                'user_id' => '2',
+                'type' => 'emails',
+                'cle' => 'liste1',
+                'valeur' => 'c.meschin@free.fr',
         ]);
         Preference::create([
                 'user_id' => '2',

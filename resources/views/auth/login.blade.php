@@ -12,6 +12,7 @@
                 'name' => 'username',
                 'readonly' => false,
                 'required' => true,
+                'autofocus' => 'true',
                 ])
             @include('partials.form-group', [
                 'title' => __('Mot de passe'),
@@ -19,6 +20,7 @@
                 'name' => 'password',
                 'readonly' => false,
                 'required' => true,
+                'autofocus' => '',
                 ])
             <!-- <div class="form-check"> -->
             <div class="custom-control custom-checkbox">

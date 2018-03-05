@@ -49,12 +49,27 @@ class DemandeNewRequest extends FormRequest
                 
                 //'etat'    => 'required|exists:etat_demandes,etat',
                 'demandeur'         => 'required|exists:users,username',
-                'refdemande'        => 'required|max:50',
+                'refdemande'        => 'required|unique:demandes,reference|max:50',
                 'dateactivation'    => 'required|date_format:d/m/Y',
-                //'listdiffusion'     => 'required|integer',
-                //'typedemande_id'    => 'required|integer',
+                //'listeDiffusion'     => 'required|integer',
+                //'typeDemande'    => 'required|integer',
                 'prestation'        => 'required|max:100',
                 'description'       => 'nullable|string',
+        ];
+    }
+    
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+                'listeDiffusion.required' => 'A ListeDiffusion is required',
+                'listeDiffusion.integer' => 'A ListeDiffusion is integer',
+                'typeDemande.required'  => 'A typeDemande is required',
+                'typeDemande.integer'  => 'A typeDemande is integer',
         ];
     }
 }

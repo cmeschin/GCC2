@@ -8,6 +8,7 @@ use App\Models\EtatDemande;
 use App\Models\Preference;
 use App\Models\TypeDemande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use App\Http\Requests\DemandeNewRequest;
@@ -52,7 +53,9 @@ class NouvelleDemandeController extends Controller
          */
         //dd($request);
         $etatdemande_id = EtatDemande::where('etat', 'draft')->value('id');
-        $dateactivation = date_format(date_create(strtotime($request->dateactivation)),"Y-m-d");
+        //$dateactivation = date("Y-m-d",,strtotime(str_replace('/', '-',$request->dateactivation)));
+        //$dateactivation = Carbon::createFromFormat('Y-m-d H', $request->dateactivation[0],'Europe/Paris')->toDateTimeString();
+        $dateactivation = Carbon::now();
         //dd($request->dateactivation);
         //dd($dateactivation);
         //$etatdemande_id = $this->get_etatdemande()->where('etat', 'draft')->value('id');
@@ -61,12 +64,12 @@ class NouvelleDemandeController extends Controller
         
         $demande->etatdemande_id    = $etatdemande_id;
         $demande->user_id           = $user_id;
-        $demande->reference         = strval($request->refdemande);
+        $demande->reference         = $request->refdemande;
         $demande->date_activation   = $dateactivation;
         $demande->listediffusion_id = $request->listeDiffusion[0];
         $demande->typedemande_id    = $request->typeDemande[0];
-        $demande->prestation        = strval($request->prestation[0]);
-        $demande->commentaire       = strval($request->description);
+        $demande->prestation        = $request->prestation[0];
+        $demande->commentaire       = $request->description;
         
         $demande->save();
         

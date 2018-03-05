@@ -58,7 +58,6 @@
                     <label for="listeDiffusion">Liste de diffusion</label>
                     <div class="form-control">
                         <select id="listeDiffusion" name="listeDiffusion[]" class="select2 form-control{{ $errors->has('listeDiffusion[]') ? ' is-invalid' : ''}}" required>
- 							<option value="0" selected>{{ Auth::user()->email }}</option>
 							@foreach($listdiffusions as $liste)
 	 							<option value="{{ $liste['id'] }}">{{ $liste['valeur'] }}</option>
 	 						@endforeach
@@ -138,22 +137,12 @@
 		var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
 		$.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
 		$("#dateactivation").bootstrapDP({
-			//showOn: "button",
-			//dateFormat: "yy-mm-dd",
-			//buttonImage: "images/calendar.gif",
-			//buttonImageOnly: true,
-			//buttonText: "Choix de la date",
-			//beforeShowDay: function(date){ return [date.getDay() != 6 && date.getDay() != 0,""]},
-			//minDate: 0,
-    		//format: 'dd/mm/yyyy',
     		daysOfWeekDisabled: "0,6",
     		autoclose: true,
     		language: "fr",
     	    startDate: '0d',
-    	    todayBtn: true,
-			//minDate: 0, //blocage de saisie d'une date antérieur à J
-		    calendarWeeks: true
-			//todayHighlight: true,
+		    calendarWeeks: true,
+			todayHighlight: true,
 		});
     </script>
 @endsection
