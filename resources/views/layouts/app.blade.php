@@ -33,10 +33,11 @@
                 <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('validation.custom.connection')</a></li>
             @else
                 <li class="nav-item">
+					<a id="account" class="nav-link" href="{{ route('moncompte') }}">@lang('validation.custom.account')</a>
+                </li>
+                <li class="nav-item">
                     <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('validation.custom.log_out')</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">
-                        {{ csrf_field() }}
-                    </form>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">{{ csrf_field() }}</form>
                 </li>
             @endguest
         </ul>

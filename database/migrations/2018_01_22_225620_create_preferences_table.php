@@ -16,7 +16,7 @@ class CreatePreferencesTable extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('type',50);
+            $table->enum('type',['emails']);
             $table->string('cle',255);
             $table->string('valeur',255);
             $table->timestamps();

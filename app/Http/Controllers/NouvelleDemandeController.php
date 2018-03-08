@@ -59,11 +59,11 @@ class NouvelleDemandeController extends Controller
         //dd($request->dateactivation);
         //dd($dateactivation);
         //$etatdemande_id = $this->get_etatdemande()->where('etat', 'draft')->value('id');
-        $user_id = Auth::user()->id;
+        $userid = Auth::user()->id;
         $demande = new Demande;
         
         $demande->etatdemande_id    = $etatdemande_id;
-        $demande->user_id           = $user_id;
+        $demande->user_id           = $userid;
         $demande->reference         = $request->refdemande;
         $demande->date_activation   = $dateactivation;
         $demande->listediffusion_id = $request->listeDiffusion[0];
@@ -115,7 +115,7 @@ class NouvelleDemandeController extends Controller
 
     public function get_listdiffusion()
     {
-        $listdiffusions = Preference::All('id','type','user_id','valeur')->where('user_id', Auth::user()->id)->where('type', 'emails');
+        $listdiffusions = Preference::All('id','type','cle','user_id','valeur')->where('user_id', Auth::user()->id)->where('type', 'emails');
         return $listdiffusions;
     }
     

@@ -109,6 +109,7 @@ return [
         'password'              => 'Mot de passe',
         'log_in'                => 'Connexion',
         'log_out'               => 'Déconnexion',
+        'account'               => 'Mon compte',
         'new_request'           => 'Nouvelle demande',
         'pending_requests'      => 'Demandes en cours',
         'archived_requests'     => 'Demandes archivées',
@@ -130,6 +131,8 @@ return [
         'search'                => 'Rechercher',
         'general_informations'  => 'Informations générales',
         'selection'             => 'Sélection des éléments',
+        'save'                  => 'Enregistrer',
+        'cancel'                => 'Annuler',
         'state'                 => [
             'draft'             => 'Brouillon',
             'todo'              => 'A Traiter',

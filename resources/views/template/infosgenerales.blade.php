@@ -58,8 +58,9 @@
                     <label for="listeDiffusion">Liste de diffusion</label>
                     <div class="form-control">
                         <select id="listeDiffusion" name="listeDiffusion[]" class="select2 form-control{{ $errors->has('listeDiffusion[]') ? ' is-invalid' : ''}}" required>
+							<option value="0">{{ Auth::user()->email }}</option>
 							@foreach($listdiffusions as $liste)
-	 							<option value="{{ $liste['id'] }}">{{ $liste['valeur'] }}</option>
+	 							<option value="{{ $liste['id'] }}">{{ $liste['cle'] . ' - ' . $liste['valeur'] }}</option>
 	 						@endforeach
                         </select>
 						

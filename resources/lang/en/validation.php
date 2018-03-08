@@ -109,6 +109,7 @@ return [
         'password'              => 'Password',
         'log_in'                => 'Log in',
         'log_out'               => 'Log out',
+        'account'               => 'My account',
         'new_request'           => 'New request',
         'pending_requests'      => 'Pending requests',
         'archived_requests'     => 'Archived requests',
@@ -130,6 +131,8 @@ return [
         'search'                => 'Search',
         'general_informations'  => 'General informations',
         'selection'             => 'Selection of elements',
+        'save'                  => 'Save',
+        'cancel'                => 'Cancel',
         'state'                 => [
             'draft'             => 'Draft',
             'todo'              => 'To do',

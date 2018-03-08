@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +22,8 @@ Auth::routes();
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
+
+Route::get('moncompte', 'HomeController@account')->name('moncompte');
 
 Route::post('nouvelledemande/{refdemande}', 'NouvelleDemandeController@selection')->name('selection');
 
