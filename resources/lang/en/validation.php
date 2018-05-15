@@ -39,6 +39,7 @@ return [
     'dimensions'           => 'The :attribute has invalid image dimensions.',
     'distinct'             => 'The :attribute field has a duplicate value.',
     'email'                => 'The :attribute must be a valid email address.',
+    'email_array'          => "The :attribute field must be a valid emails list with semicolon separator.",
     'exists'               => 'The selected :attribute is invalid.',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'The :attribute field must have a value.',
@@ -131,9 +132,11 @@ return [
         'search'                => 'Search',
         'general_informations'  => 'General informations',
         'selection'             => 'Selection of elements',
-        'save'                  => 'Save',
+        'ok'                    => 'Ok',
+        'save'                  => 'Save',                
         'cancel'                => 'Cancel',
-        'state'                 => [
+        'add'                   => 'Add',
+            'state'                 => [
             'draft'             => 'Draft',
             'todo'              => 'To do',
             'inprogress'        => 'In progress',

@@ -8,9 +8,6 @@
     <title>{{ config('app.name', 'GCC2') }}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="{{ asset ('images/Tessi_Icone.png') }}" type="image/png">
-    <!-- Fonts -->
-	<!-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> -->
-    <!-- Styles -->
 	<!--[if lt IE 9]>
   		{{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
   		{{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}

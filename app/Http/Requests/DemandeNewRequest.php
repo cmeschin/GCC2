@@ -3,9 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\EtatDemande;
-use App\Models\TypeDemande;
 
 class DemandeNewRequest extends FormRequest
 {
@@ -26,12 +23,6 @@ class DemandeNewRequest extends FormRequest
      */
     public function rules()
     {
-        /**
-         * Récupère les id des valeurs transmises
-         */
-        
-        
-        
         return [
             /**
              * Traitement des informations générales

@@ -17,6 +17,7 @@ mix.styles([
             'resources/assets/css/bootstrap.min.css',
             'resources/assets/css/select2.min.css',
             'resources/assets/css/bootstrap-datepicker.standalone.min.css',
+            'resources/assets/css/fontawesome-all.min.css',
             'resources/assets/css/app.css'
         ], 'public/css/app.css')
         .scripts([

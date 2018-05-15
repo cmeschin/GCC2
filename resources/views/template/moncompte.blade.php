@@ -4,8 +4,6 @@
         @slot('title')
             @lang('validation.custom.account') : {{ Auth::user()->name }} 
         @endslot
-        <form method="POST" action="{{ route('moncompte') }}">
-            {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-5">
                 @include('partials.form-group-input', [
@@ -49,6 +47,7 @@
                                 <th>Type</th>
                                 <th>Nom</th>
                                 <th>Valeur</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -57,61 +56,67 @@
                                   <td> {{$preference->type}} </td>
                                   <td> {{$preference->cle}} </td>
                                   <td> {{$preference->valeur}} </td>
+                                  <td><a href="{{ route('delpreference', ['id' => $preference->id]) }}"><span style="font-size:1em; color:#6a003e" class="fas fa-trash fa-fw"></span></a></td>
                               </tr>
                              @endforeach
                        </tbody>
                     </table>
 				</div>
 			</div>
-			<div class="card bg-dark">
-			<div class='row'>
-                <div class="col-md-3">
-                    <label for="typepreference">Type</label>
-                    <div class="form-control">
-                        <select id="typepreference" name="typepreference[]" class="select2 form-control{{ $errors->has('typepreference[]') ? ' is-invalid' : ''}}" required>
-							@foreach($typepreferences as $option)
-	 							<option value="{{ $option['type'] }}">{{ $option['type'] }}</option>
-	 						@endforeach
-                        </select>
-						
-                        @if ($errors->has('typepreference[]'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('typepreference[]') }}
+			<div class='card bg-dark'>
+				<h4 class="card-header">
+        			Nouvel élément
+    			</h4>
+	    		<div class="card-body">
+			        <form method="POST" action="{{ route('addpreference') }}">
+           				{{ csrf_field() }}
+	                    <div class="row">
+	                    <div class="col-md-3">
+                            <label for="typepreference">Type</label>
+                            <div class="form-control">
+                                <select id="typepreference" name="typepreference[]" class="select2 form-control{{ $errors->has('typepreference[]') ? ' is-invalid' : ''}}" required>
+        							@foreach($typepreferences as $option)
+        	 							<option value="{{ $option['type'] }}">{{ $option['type'] }}</option>
+        	 						@endforeach
+                                </select>
+        						
+                                @if ($errors->has('typepreference[]'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('typepreference[]') }}
+                                    </div>
+                                @endif
                             </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    @include('partials.form-group-input', [
-                        'title' => __('Nom'),
-                        'type' => 'text',
-                        'name' => 'nom',
-                        'value' => "",
-                        'placeholder' => "Nom de l'élément",
-                        'required' => true,
-                        'readonly' => false,
-                        ])
-                </div>
-                <div class="col-md-12">
-                    @include('partials.form-group-input', [
-                        'title' => __('Valeur'),
-                        'type' => 'text',
-                        'name' => 'valeur',
-                        'value' => "",
-                        'placeholder' => "valeurs de l'élément",
-                        'required' => true,
-                        'readonly' => false,
-                        ])
-                </div>
+                        </div>
+                        <div class="col-md-5">
+                            @include('partials.form-group-input', [
+                                'title' => __('Nom'),
+                                'type' => 'text',
+                                'name' => 'cle',
+                                'value' => "",
+                                'placeholder' => "Nom de l'élément",
+                                'required' => true,
+                                'readonly' => false,
+                                ])
+                        </div>
+                        <div class="col-md-12">
+                            @include('partials.form-group-input', [
+                                'title' => __('Valeur'),
+                                'type' => 'text',
+                                'name' => 'valeur',
+                                'value' => "",
+                                'placeholder' => "valeurs de l'élément",
+                                'required' => true,
+                                'readonly' => false,
+                                ])
+                        </div>
+                        </div>
+                        @component('components.button')
+                			@lang('validation.custom.add') <span style="font-size:1em; color:#6a003e" class="fas fa-plus"></span>
+            			@endcomponent
+                	</form>
                 </div>
 			</div>
-            @component('components.button')
-                @lang('validation.custom.save')
-            @endcomponent
-            @component('components.button')
-                @lang('validation.custom.cancel')
-            @endcomponent
-        </form>
+                <a href="/home" class="btn btn-primary float-right">@lang('validation.custom.ok') <span style="font-size:1em; color:#6a003e" class="fas fa-check"></span></a>
 
     @endcomponent
 @endsection

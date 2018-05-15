@@ -39,6 +39,7 @@ return [
     'dimensions'           => "La taille de l'image :attribute n'est pas conforme.",
     'distinct'             => 'Le champ :attribute a une valeur en double.',
     'email'                => 'Le champ :attribute doit être une adresse courriel valide.',
+    'email_array'          => "Le champ :attribute doit être une liste d'adresses courriels valides séparées par un point-virgule.",
     'exists'               => 'Le champ :attribute sélectionné est invalide.',
     'file'                 => 'Le champ :attribute doit être un fichier.',
     'filled'               => 'Le champ :attribute doit avoir une valeur.',
@@ -131,8 +132,10 @@ return [
         'search'                => 'Rechercher',
         'general_informations'  => 'Informations générales',
         'selection'             => 'Sélection des éléments',
+        'ok'                  => 'Ok',
         'save'                  => 'Enregistrer',
         'cancel'                => 'Annuler',
+        'add'                   => 'Ajouter',
         'state'                 => [
             'draft'             => 'Brouillon',
             'todo'              => 'A Traiter',
