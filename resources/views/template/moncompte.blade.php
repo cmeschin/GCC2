@@ -53,10 +53,17 @@
                         <tbody class="text-center">
                              @foreach($allpreferences as $preference)
                               <tr>
-                                  <td> {{$preference->type}} </td>
-                                  <td> {{$preference->cle}} </td>
-                                  <td> {{$preference->valeur}} </td>
-                                  <td><a href="{{ route('delpreference', ['id' => $preference->id]) }}"><span style="font-size:1em; color:#6a003e" class="fas fa-trash fa-fw"></span></a></td>
+                                  <form method="POST" action="{{ route('delpreference', ['id' => $preference->id]) }}">
+           							{{ csrf_field() }}
+	                                  <td> {{$preference->type}} </td>
+    	                              <td> {{$preference->cle}} </td>
+        	                          <td> {{$preference->valeur}} </td>
+<!--             	                      <td><a href="{{ route('delpreference', ['id' => $preference->id]) }}"><span style="font-size:1em; color:#6a003e" class="fas fa-trash fa-fw"></span></a></td> -->
+            	                      <td>@component('components.button')
+                						<span style="font-size:1em; color:#6a003e" class="fas fa-trash"></span>
+            						  @endcomponent</td>
+                				  </form>
+            	                  
                               </tr>
                              @endforeach
                        </tbody>

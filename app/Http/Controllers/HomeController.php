@@ -78,9 +78,12 @@ class HomeController extends Controller
         if (! auth()->check()) {
             return redirect('/login');
         }
-        $userid = Auth::user()->id;
-        Preference::select('id','type','cle','user_id','valeur')->where('id', $id)->where('user_id', $userid)->delete();
-        return $this->account();
+//         $userid = Auth::user()->id;
+//         Preference::select('id','type','cle','user_id','valeur')->where('id', $id)->where('user_id', $userid)->delete();
+        $preference = Preference::find($id);
+        $preference->delete();
+        return redirect('/moncompte');
+        
         
     }
     

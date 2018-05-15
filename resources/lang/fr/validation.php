@@ -132,10 +132,11 @@ return [
         'search'                => 'Rechercher',
         'general_informations'  => 'Informations générales',
         'selection'             => 'Sélection des éléments',
-        'ok'                  => 'Ok',
+        'ok'                    => 'Ok',
         'save'                  => 'Enregistrer',
         'cancel'                => 'Annuler',
         'add'                   => 'Ajouter',
+        'delete'                => 'Supprimer',
         'state'                 => [
             'draft'             => 'Brouillon',
             'todo'              => 'A Traiter',

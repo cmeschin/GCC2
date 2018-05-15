@@ -136,7 +136,8 @@ return [
         'save'                  => 'Save',                
         'cancel'                => 'Cancel',
         'add'                   => 'Add',
-            'state'                 => [
+        'delete'                => 'Delete',
+        'state'                 => [
             'draft'             => 'Draft',
             'todo'              => 'To do',
             'inprogress'        => 'In progress',
