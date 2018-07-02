@@ -118,7 +118,7 @@
                         'type' => 'text',
                         'name' => 'description',
                         'rows' => "3",
-                        'placeholder' => "indiquez ici une description rapide de la demande (facultatif)...",
+                        'placeholder' => "indiquez ici une brève description de la demande (facultatif)...",
                         'required' => false,
                         'readonly' => false,
                         ])
