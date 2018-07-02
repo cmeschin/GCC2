@@ -76,9 +76,17 @@ class NouvelleDemandeController extends Controller
          * Afficher la seconde vue
          */
         //return view('template.selection',compact('refdemande'));
-        return view('template.selection');
+        $api = new ApiController;
+        $myToken = $api->getToken();
+        
+        $serviceByServiceGroup = $api->getServicesByServiceGroup($myToken, $request->prestation[0]);
+        
+        //return $api;
+        //return view('template.selection');
     }
 
+
+    
 //     public function selection()
 //     {
 //         return view('template.selection');

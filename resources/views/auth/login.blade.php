@@ -24,8 +24,6 @@
                 ])
             <!-- <div class="form-check"> -->
             <div class="custom-control custom-checkbox">
-				<input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-				<label class="custom-control-label" for="remember"> @lang('validation.custom.remember_me')</label>
             	@component('components.button')
                 	@lang('validation.custom.log_in')
             	@endcomponent

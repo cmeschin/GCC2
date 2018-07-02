@@ -23,11 +23,11 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
 
-Route::get('moncompte', 'HomeController@account')->name('moncompte');
-
 Route::post('nouvelledemande/{refdemande}', 'NouvelleDemandeController@selection')->name('selection');
 
-Route::post('moncompte', 'HomeController@addpreference')->name('addpreference');
+Route::get('moncompte', 'HomeController@account')->name('moncompte');
+
+Route::post('addpreference', 'HomeController@addpreference')->name('addpreference');
 
 Route::post('delpreference/{id}', 'HomeController@delpreference')->name('delpreference');
 

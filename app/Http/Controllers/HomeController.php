@@ -24,13 +24,13 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function gohome()
-    {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
-        return view('home');
-    }
+//     public function gohome()
+//     {
+//         if (! auth()->check()) {
+//             return redirect('/login');
+//         }
+//         return view('home');
+//     }
     
     public function account()
     {
@@ -69,7 +69,7 @@ class HomeController extends Controller
         $preference->valeur     = $request->valeur;
 
         $preference->save();
-        return $this->account();
+        return redirect('/moncompte');
         
     }
 

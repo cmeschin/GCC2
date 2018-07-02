@@ -13,7 +13,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 90vh;
             }
 
             .flex-center {
@@ -37,7 +37,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 60px;
             }
 
             .links > a {
@@ -70,7 +70,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Gestionnaire des changements
+                    Gestionnaire des changements centreon
                 </div>
             </div>
         </div>
@@ -78,6 +78,6 @@
 
 @section('footer')
 <div>
-	développé par Cédric Meschin
+	développé par Cédric Meschin - Tessi Technologies 2018
 </div>
 @endsection
