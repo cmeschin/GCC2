@@ -98,7 +98,7 @@
                         <select id="prestation" name="prestation[]" class="select2 form-control{{ $errors->has('prestation[]') ? ' is-invalid' : ''}}" required>
  							<option value="" selected></option>
 							@foreach($listprestations as $prestation)
-	 							<option value="{{ $prestation['sg_name'] }}">{{ $prestation['sg_name'] }}</option>
+	 							<option value="{{ $prestation['name'] }}">{{ $prestation['name'] }}</option>
 	 						@endforeach
                         </select>
 						

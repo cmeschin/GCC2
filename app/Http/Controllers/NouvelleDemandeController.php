@@ -77,9 +77,9 @@ class NouvelleDemandeController extends Controller
          */
         //return view('template.selection',compact('refdemande'));
         $api = new ApiController;
-        $myToken = $api->getToken();
+        $mytoken = $api->getToken();
         
-        $serviceByServiceGroup = $api->getServicesByServiceGroup($myToken, $request->prestation[0]);
+        $servicesbyservicegroup = $api->getServicesByServiceGroup($mytoken, $request->prestation[0]);
         
         //return $api;
         //return view('template.selection');
@@ -128,7 +128,16 @@ class NouvelleDemandeController extends Controller
     
     public function get_prestations()
     {
-        $listprestations = Centreon::All('sg_name');
-        return $listprestations;
+        //$listprestations = Centreon::All('sg_name');
+        $api = new ApiController;
+        $mytoken = $api->getToken();
+        $result = $api->getServiceGroups($mytoken);
+        foreach ($result['result'] as $prestation){
+            //var_dump($prestation);
+            $prestations[]=$prestation;
+                //$newlist= array($id => $prestation->id,$name => $prestation->name, $alias => $prestation->alias);
+        };
+        //dd($newlist);
+        return $prestations;
     }
 }

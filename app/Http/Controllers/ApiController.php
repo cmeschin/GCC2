@@ -7,67 +7,87 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class ApiController extends Controller
 {
-    /**
-     * Fonction de récupération d'un token pour accéder aux éléments de centreon
-     * 
-     */
-    /**
-     * @TODO variabiliser l'URL et les user/password
-     */
     
     public function getToken()
     {
-        $apiClient = new GuzzleClient();
-        $res = $apiClient->request('POST', 'http://192.168.0.7/centreon/api/index.php?action=authenticate', [
+        /**
+         * Fonction de récupération d'un token pour accéder aux éléments de centreon
+         *
+         */
+        /**
+         * @TODO variabiliser l'URL et les user/password
+         */
+        $URL = "http://192.168.0.7/centreon/api/index.php";
+        $PARAMETERS="?action=authenticate";
+        $APICLIENT = new GuzzleClient();
+        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
                 'form_params' => [
                         'username' => 'centreon',
                         'password' => 'centreon',
                 ]
         ]);
-        echo $res->getStatusCode();
-        // "200"
-//        echo $res->getHeader('content-type');
-        // 'application/json; charset=utf8'
-//        echo $res->getBody();
         $token = json_decode($res->getBody(), true);
-        //dd($token);
         $token =  $token['authToken'];
         return $token;
-        // {"type":"User"...'
     }
-    
-    public function getServicesByServiceGroup($token,$servicegroup)
+
+    public function getServiceGroups($token)
     {
-        $myToken = $token;
-        $myServiceGroup = $servicegroup;
-        $headers = [
-            'Content-Type' => 'application/json',
-            'centreon-auth-token' => $myToken,
+        /**
+         * Fonction de récupération des groupes de service (prestation)
+         *
+         */
+        /**
+         * @TODO variabiliser l'URL et les user/password
+         */
+        //$mytoken = $token;
+        $URL = "http://192.168.0.7/centreon/api/index.php";
+        $PARAMETERS="?action=action&object=centreon_clapi";
+        $HEADERS = [
+                'Content-Type' => 'application/json',
+                //'centreon-auth-token' => $mytoken,
+                'centreon-auth-token' => $token,
         ];
         
-        var_dump($headers);
-        $apiClient = new GuzzleClient([
-            'headers' => $headers
+        $APICLIENT = new GuzzleClient([
+                'headers' => $HEADERS
         ]);
-        var_dump($apiClient);
         
-        $res = $apiClient->request('POST', 'http://192.168.0.7/centreon/api/index.php?action=action&object=centreon_clapi', [
-                'form_params' => [
-                        'action' => 'getservice',
+        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
+                'json' => [
+                        'action' => 'show',
                         'object' => 'sg',
-                        'values' => "'" . $myServiceGroup . "'"
                 ]
         ]);
-        var_dump($res);
-        echo $res->getStatusCode();
-        // "200"
-        //        echo $res->getHeader('content-type');
-        // 'application/json; charset=utf8'
-        //        echo $res->getBody();
-        $serviceByServiceGroup = json_decode($res->getBody(), true);
-        //dd($token);
-        //$token =  $token['authToken'];
-        return $serviceByServiceGroup;
-        // {"type":"User"...'
+        $servicegroups = json_decode($res->getBody(), true);
+        return $servicegroups;
+    }
+
+    public function getServicesByServiceGroup($token,$servicegroup)
+    {
+        //$mytoken = $token;
+        //$myservicegroup = $servicegroup;
+        $URL = "http://192.168.0.7/centreon/api/index.php";
+        $PARAMETERS="?action=action&object=centreon_clapi";
+        $HEADERS = [
+                'Content-Type' => 'application/json',
+                //'centreon-auth-token' => $mytoken,
+                'centreon-auth-token' => $token,
+        ];
+        
+        $APICLIENT = new GuzzleClient([
+            'headers' => $HEADERS
+        ]);
+        
+        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
+                'json' => [
+                        'action' => 'getservice',
+                        'object' => 'sg',
+                        'values' => $servicegroup
+                ]
+        ]);
+        $servicesbyservicegroup = json_decode($res->getBody(), true);
+        dd($servicesbyservicegroup);
+        return $servicesbyservicegroup;
     }
 }
