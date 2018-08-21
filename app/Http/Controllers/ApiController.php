@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Centreon;
 use GuzzleHttp\Client as GuzzleClient;
+
+define("URL",  "http://192.168.0.7/centreon/api/index.php");
 
 class ApiController extends Controller
 {
-    
+
+    /**
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getToken()
     {
         /**
@@ -17,10 +23,10 @@ class ApiController extends Controller
         /**
          * @TODO variabiliser l'URL et les user/password
          */
-        $URL = "http://192.168.0.7/centreon/api/index.php";
-        $PARAMETERS="?action=authenticate";
-        $APICLIENT = new GuzzleClient();
-        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
+        //$URL = "http://192.168.0.7/centreon/api/index.php";
+        $parameters="?action=authenticate";
+        $apiClient = new GuzzleClient();
+        $res = $apiClient->request('POST', URL.$parameters, [
                 'form_params' => [
                         'username' => 'centreon',
                         'password' => 'centreon',
@@ -34,60 +40,88 @@ class ApiController extends Controller
     public function getServiceGroups($token)
     {
         /**
-         * Fonction de récupération des groupes de service (prestation)
+         * Fonction de récupération de tous les groupes de service (prestation)
          *
          */
         /**
          * @TODO variabiliser l'URL et les user/password
          */
         //$mytoken = $token;
-        $URL = "http://192.168.0.7/centreon/api/index.php";
-        $PARAMETERS="?action=action&object=centreon_clapi";
-        $HEADERS = [
+        //$URL = "http://192.168.0.7/centreon/api/index.php";
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
                 'Content-Type' => 'application/json',
-                //'centreon-auth-token' => $mytoken,
                 'centreon-auth-token' => $token,
         ];
         
-        $APICLIENT = new GuzzleClient([
-                'headers' => $HEADERS
+        $apiClient = new GuzzleClient([
+                'headers' => $headers
         ]);
         
-        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
+        $res = $apiClient->request('POST', URL.$parameters, [
                 'json' => [
                         'action' => 'show',
                         'object' => 'sg',
                 ]
         ]);
-        $servicegroups = json_decode($res->getBody(), true);
-        return $servicegroups;
+        $serviceGroups = json_decode($res->getBody(), true);
+        //var_dump($serviceGroups);
+        return $serviceGroups;
     }
 
-    public function getServicesByServiceGroup($token,$servicegroup)
+    /**
+     * Fonction de récupération de tous service pour le groupe de service (prestation) donné
+     *
+     * @param $token
+     * @param $serviceGroup
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getServicesByServiceGroup($token, $serviceGroup)
     {
+        /**
+         * @TODO variabiliser l'URL et les user/password
+         */
         //$mytoken = $token;
         //$myservicegroup = $servicegroup;
-        $URL = "http://192.168.0.7/centreon/api/index.php";
-        $PARAMETERS="?action=action&object=centreon_clapi";
-        $HEADERS = [
+        //$URL = "http://192.168.0.7/centreon/api/index.php";
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
                 'Content-Type' => 'application/json',
-                //'centreon-auth-token' => $mytoken,
                 'centreon-auth-token' => $token,
         ];
         
-        $APICLIENT = new GuzzleClient([
-            'headers' => $HEADERS
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
         ]);
         
-        $res = $APICLIENT->request('POST', $URL.$PARAMETERS, [
+        $res = $apiClient->request('POST', URL.$parameters, [
                 'json' => [
                         'action' => 'getservice',
                         'object' => 'sg',
-                        'values' => $servicegroup
+                        'values' => $serviceGroup
                 ]
         ]);
-        $servicesbyservicegroup = json_decode($res->getBody(), true);
-        dd($servicesbyservicegroup);
-        return $servicesbyservicegroup;
+        $servicesByServiceGroup = json_decode($res->getBody(), true);
+        //var_dump($servicesByServiceGroup);
+        return $servicesByServiceGroup;
     }
+
+    /**
+     * Fonction de récupération des services par la categorie et la liste des hôtes en paramètre
+     *
+     * @param $token
+     * @param $serviceCategorie
+     * @param $hosts
+     * @return string
+     */
+    public function getServicesByServiceCategorieByHosts($token, $serviceCategorie, $hosts)
+    {
+        $centreon = new Centreon;
+        $servicesByServiceCategorieByHosts = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie,$hosts);
+
+        return $servicesByServiceCategorieByHosts;
+        
+    }
+    
 }

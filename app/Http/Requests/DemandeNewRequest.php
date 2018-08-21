@@ -40,8 +40,8 @@ class DemandeNewRequest extends FormRequest
                 
                 //'etat'    => 'required|exists:etat_demandes,etat',
                 'demandeur'         => 'required|exists:users,username',
-                'refdemande'        => 'required|unique:demandes,reference|max:50',
-                'dateactivation'    => 'required|date_format:d/m/Y',
+                'refDemande'        => 'required|unique:demandes,reference|max:50',
+                'dateActivation'    => 'required|date_format:d/m/Y',
                 //'listeDiffusion'     => 'required|integer',
                 //'typeDemande'    => 'required|integer',
                 'prestation'        => 'required|max:100',

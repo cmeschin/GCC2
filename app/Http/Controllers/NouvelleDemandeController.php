@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Centreon;
+//use function Adldap\Connections\Provider\auth;
+use App\Http\Requests\DemandeNewRequest;
 use App\Models\Demande;
 use App\Models\EtatDemande;
 use App\Models\Preference;
@@ -10,7 +11,6 @@ use App\Models\TypeDemande;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use App\Http\Requests\DemandeNewRequest;
 
 class NouvelleDemandeController extends Controller
 {
@@ -25,13 +25,14 @@ class NouvelleDemandeController extends Controller
         if (! auth()->check()) {
             return redirect('/login');
         }
-        $refdemande = date("ymdHi") . "_" . Auth::user()->username;
-        $typedemandes = $this->get_typedemande();
+        $refDemande = date("ymdHis") . "_" . Auth::user()->username;
+        $typeDemandes = $this->getTypeDemande();
         
-        $etatdemande = Lang::get('validation.custom.state.draft');
-        $listdiffusions = $this->get_listdiffusion();
-        $listprestations = $this->get_prestations();
-        return view('template.infosgenerales',compact('typedemandes','listdiffusions','listprestations','refdemande','etatdemande'));
+        $etatDemande = Lang::get('validation.custom.state.draft');
+        $listDiffusions = $this->getListDiffusion();
+        $listPrestations = $this->getPrestations();
+        //dd($listPrestations);
+        return view('template.infosgenerales',compact('typeDemandes','listDiffusions','listPrestations','refDemande','etatDemande'));
     }
 
     public function selection(DemandeNewRequest $request)
@@ -51,20 +52,15 @@ class NouvelleDemandeController extends Controller
          * Ajout d'une demande
          */
         //dd($request);
-        $etatdemande_id = EtatDemande::where('etat', 'draft')->value('id');
-        //$dateactivation = date("Y-m-d",,strtotime(str_replace('/', '-',$request->dateactivation)));
-        //$dateactivation = Carbon::createFromFormat('Y-m-d H', $request->dateactivation[0],'Europe/Paris')->toDateTimeString();
-        $dateactivation = Carbon::now();
-        //dd($request->dateactivation);
-        //dd($dateactivation);
-        //$etatdemande_id = $this->get_etatdemande()->where('etat', 'draft')->value('id');
-        $userid = Auth::user()->id;
+        $etatDemandeId = EtatDemande::where('etat', 'draft')->value('id');
+        $dateActivation = Carbon::now();
+        $userId = Auth::user()->id;
         $demande = new Demande;
         
-        $demande->etatdemande_id    = $etatdemande_id;
-        $demande->user_id           = $userid;
-        $demande->reference         = $request->refdemande;
-        $demande->date_activation   = $dateactivation;
+        $demande->etatdemande_id    = $etatDemandeId;
+        $demande->user_id           = $userId;
+        $demande->reference         = $request->refDemande;
+        $demande->date_activation   = $dateActivation;
         $demande->listediffusion_id = $request->listeDiffusion[0];
         $demande->typedemande_id    = $request->typeDemande[0];
         $demande->prestation        = $request->prestation[0];
@@ -77,12 +73,34 @@ class NouvelleDemandeController extends Controller
          */
         //return view('template.selection',compact('refdemande'));
         $api = new ApiController;
-        $mytoken = $api->getToken();
+        $token = $api->getToken();
         
-        $servicesbyservicegroup = $api->getServicesByServiceGroup($mytoken, $request->prestation[0]);
+        $servicesByServiceGroup = $api->getServicesByServiceGroup($token,$request->prestation[0]);
+        /**
+         * @TODO
+         *  - extraire la liste des hotes de la variable ci-dessus => fait
+         *  - récupérer les services complémentaire appartenant à la categorie 'Systeme' des hôtes extraits ci-dessus => fait
+         *  - compléter le tableau précédent. => fait
+         *  - récupérer host_address, host_activate, service_activate, service_timeperiod
+         *  - renvoyer la vue "selection" avec les infos
+         */
+        //var_dump($servicesByServiceGroup);
+        foreach ($servicesByServiceGroup['result'] as $value){
+            // extraction des hôtes du tableau
+            $res[]=$value['host name'];
+        };
+        // suppression des doublons d'hôte
+        $hosts = array_unique($res);
+        $serviceCategorie="Systeme";
+        //dd($hosts);
         
-        //return $api;
-        //return view('template.selection');
+        $servicesByServiceCategorieByHosts[] = $api->getServicesByServiceCategorieByHosts($token,$serviceCategorie, $hosts);
+        //var_dump($servicesByServiceCategorieByHosts);
+        foreach($servicesByServiceCategorieByHosts as $value){
+            $servicesByServiceGroup['result'] = $value;
+        };
+        //dd($servicesByServiceGroup['result']);
+        return view('template.selection');
     }
 
 
@@ -108,36 +126,43 @@ class NouvelleDemandeController extends Controller
         return 'parametrage';
     }
     
-    public function get_etatdemande()
+    public function getEtatDemande()
     {
         $etatdemandes = EtatDemande::all()->pluck('etat','id');
         return $etatdemandes;
     }
 
-    public function get_typedemande()
+    public function getTypeDemande()
     {
         $typedemandes = TypeDemande::all()->pluck('type','id');
         return $typedemandes;
     }
 
-    public function get_listdiffusion()
+    public function getListDiffusion()
     {
         $listdiffusions = Preference::All('id','type','cle','user_id','valeur')->where('user_id', Auth::user()->id)->where('type', 'emails');
         return $listdiffusions;
     }
     
-    public function get_prestations()
+    public function getPrestations()
     {
+        /**
+         * Fonction de récupération de la lise des prestations
+         * 
+         * @TODO : trier la liste par ordre croissant et plus par id (par défaut) 
+         */
         //$listprestations = Centreon::All('sg_name');
         $api = new ApiController;
-        $mytoken = $api->getToken();
-        $result = $api->getServiceGroups($mytoken);
+        $token = $api->getToken();
+        $result = $api->getServiceGroups($token);
+        
         foreach ($result['result'] as $prestation){
-            //var_dump($prestation);
-            $prestations[]=$prestation;
-                //$newlist= array($id => $prestation->id,$name => $prestation->name, $alias => $prestation->alias);
+            if ($prestation['name'] != null){
+                $prestations[]=$prestation['name'];
+            };
         };
-        //dd($newlist);
+        sort($prestations);
+        //dd($prestations);
         return $prestations;
     }
 }
