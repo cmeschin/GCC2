@@ -10,7 +10,7 @@ class Demande extends Model
     /**
      * Récupère l'utilisateur auquel la demande appartient
      */
-    public function user()
+    public function getUser()
     {
         return $this->belongsTo(User::class);
     }
@@ -18,7 +18,7 @@ class Demande extends Model
     /**
      * Récupère les hôtes appartenant à la demande.
      */
-    public function hotes()
+    public function getHotes()
     {
         return $this->hasMany(Hote::class);
     }
@@ -26,7 +26,7 @@ class Demande extends Model
     /**
      * Récupère les services appartenant à la demande.
      */
-    public function services()
+    public function getServices()
     {
         return $this->hasMany(Service::class);
     }
@@ -34,7 +34,7 @@ class Demande extends Model
     /**
      * Récupère les périodes appartenant à la demande.
      */
-    public function periodes()
+    public function getPeriodes()
     {
         return $this->hasMany(Periode::class);
     }
@@ -42,7 +42,7 @@ class Demande extends Model
     /**
      * Récupère les états de la demande.
      */
-    public function etats()
+    public function getEtats()
     {
         return $this->belongstoMany(EtatDemande::class);
     }
@@ -50,7 +50,7 @@ class Demande extends Model
     /**
      * Récupère le type de la demande.
      */
-    public function typedemande()
+    public function getTypeDemande()
     {
         return $this->belongsTo(TypeDemande::class);
     }
@@ -58,7 +58,7 @@ class Demande extends Model
     /**
      * Récupère les commentaires de la demande.
      */
-    public function histories()
+    public function getHistories()
     {
         return $this->hasMany(History::class);
     }
@@ -66,7 +66,7 @@ class Demande extends Model
     /**
      * Récupère les notifications de la demande.
      */
-    public function notificationss()
+    public function getNotifications()
     {
         return $this->hasMany(Notification::class);
     }

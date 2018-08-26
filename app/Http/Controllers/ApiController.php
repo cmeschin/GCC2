@@ -2,52 +2,92 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Centreon;
+
 use GuzzleHttp\Client as GuzzleClient;
 
 define("URL",  "http://192.168.0.7/centreon/api/index.php");
 
 class ApiController extends Controller
 {
+    /**
+     * @TODO variabiliser l'URL et les user/password
+     */
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
 
     /**
+     * Fonction de récupération de tous les hotes répondant au filtre
+     *
+     * @param $token
+     * @param $host
+     * @return array('id','name','alias','address','activate')
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiHost($token,$host)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'host',
+                'values' => $host
+            ]
+        ]);
+        $host = json_decode($res->getBody(), true);
+        return $host;
+    }
+
+    /**
+     * Fonction de récupération de tous les hotes
+     *
+     * @param $token
+     * @return array('id','name','alias','address','activate')
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiHosts($token)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'host'
+            ]
+        ]);
+        $hosts = json_decode($res->getBody(), true);
+        //var_dump($serviceGroups);
+        return $hosts;
+    }
+
+    /**
+     * Fonction de récupération de tous les groupes de service (prestation)
+     *
+     * @param $token
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getToken()
+    public function getApiServiceGroups($token)
     {
-        /**
-         * Fonction de récupération d'un token pour accéder aux éléments de centreon
-         *
-         */
-        /**
-         * @TODO variabiliser l'URL et les user/password
-         */
-        //$URL = "http://192.168.0.7/centreon/api/index.php";
-        $parameters="?action=authenticate";
-        $apiClient = new GuzzleClient();
-        $res = $apiClient->request('POST', URL.$parameters, [
-                'form_params' => [
-                        'username' => 'centreon',
-                        'password' => 'centreon',
-                ]
-        ]);
-        $token = json_decode($res->getBody(), true);
-        $token =  $token['authToken'];
-        return $token;
-    }
-
-    public function getServiceGroups($token)
-    {
-        /**
-         * Fonction de récupération de tous les groupes de service (prestation)
-         *
-         */
-        /**
-         * @TODO variabiliser l'URL et les user/password
-         */
-        //$mytoken = $token;
-        //$URL = "http://192.168.0.7/centreon/api/index.php";
         $parameters="?action=action&object=centreon_clapi";
         $headers = [
                 'Content-Type' => 'application/json',
@@ -77,14 +117,8 @@ class ApiController extends Controller
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getServicesByServiceGroup($token, $serviceGroup)
+    public function getApiServicesByServiceGroup($token, $serviceGroup)
     {
-        /**
-         * @TODO variabiliser l'URL et les user/password
-         */
-        //$mytoken = $token;
-        //$myservicegroup = $servicegroup;
-        //$URL = "http://192.168.0.7/centreon/api/index.php";
         $parameters="?action=action&object=centreon_clapi";
         $headers = [
                 'Content-Type' => 'application/json',
@@ -108,20 +142,24 @@ class ApiController extends Controller
     }
 
     /**
-     * Fonction de récupération des services par la categorie et la liste des hôtes en paramètre
+     * Fonction de récupération d'un token pour accéder aux éléments de centreon
      *
-     * @param $token
-     * @param $serviceCategorie
-     * @param $hosts
-     * @return string
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getServicesByServiceCategorieByHosts($token, $serviceCategorie, $hosts)
+    public function getApiToken()
     {
-        $centreon = new Centreon;
-        $servicesByServiceCategorieByHosts = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie,$hosts);
-
-        return $servicesByServiceCategorieByHosts;
-        
+        $parameters="?action=authenticate";
+        $apiClient = new GuzzleClient();
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'form_params' => [
+                'username' => 'centreon',
+                'password' => 'centreon',
+            ]
+        ]);
+        $token = json_decode($res->getBody(), true);
+        $token =  $token['authToken'];
+        return $token;
     }
-    
+
 }

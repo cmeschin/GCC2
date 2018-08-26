@@ -10,7 +10,7 @@ class EtatDemande extends Model
     /**
      * Récupère les demandes correspondantes à l'etatdemande.
      */
-    public function demandes()
+    public function getDemandes()
     {
         return $this->belongsToMany(Demande::class);
     }
@@ -18,7 +18,7 @@ class EtatDemande extends Model
     /**
      * Récupère les demandes correspondantes à l'etatdemande.
      */
-    public function get_id_etatdemande($etatdemande)
+    public function getIdEtatDemande($etatdemande)
     {
         return $this->with('etat',$etatdemande)->get('id');
     }

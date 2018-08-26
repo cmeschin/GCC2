@@ -9,7 +9,7 @@ class Action extends Model
     /**
      * Get the services that owns the action.
      */
-    public function services()
+    public function getServices()
     {
         return $this->hasMany(Service::class);
     }
@@ -17,7 +17,7 @@ class Action extends Model
     /**
      * Get the hosts that owns the action.
      */
-    public function hotes()
+    public function getHotes()
     {
         return $this->hasMany(Hote::class);
     }
@@ -25,7 +25,7 @@ class Action extends Model
     /**
      * Get the periodes that owns the action.
      */
-    public function periodes()
+    public function getPeriodes()
     {
         return $this->hasMany(Periode::class);
     }

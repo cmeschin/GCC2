@@ -24,38 +24,30 @@ class HomeController extends Controller
         return view('home');
     }
 
-//     public function gohome()
-//     {
-//         if (! auth()->check()) {
-//             return redirect('/login');
-//         }
-//         return view('home');
-//     }
-    
     public function account()
     {
         if (! auth()->check()) {
             return redirect('/login');
         }
-        $typepreferences = $this->get_typepreferences();
-        $allpreferences = $this->get_allpreferencesbyuser(Auth::user()->id);
+        $typepreferences = $this->getTypePreferences();
+        $allpreferences = $this->getAllPreferencesByUser(Auth::user()->id);
         
         return view('template.moncompte',compact('typepreferences','allpreferences'));
     }
     
-    public function get_typepreferences()
+    public function getTypePreferences()
     {
         $typepreferences = Preference::select('type')->distinct()->get();
         return $typepreferences;
     }
 
-    public function get_allpreferencesbyuser($userid)
+    public function getAllPreferencesByUser($userid)
     {
         $allpreferences = Preference::all('id','type','cle','user_id','valeur')->where('user_id', $userid);
         return $allpreferences;
     }
     
-    public function addpreference(AccountNewRequest $request)
+    public function addPreference(AccountNewRequest $request)
     {
         if (! auth()->check()) {
             return redirect('/login');
@@ -73,7 +65,7 @@ class HomeController extends Controller
         
     }
 
-    public function delpreference($id)
+    public function delPreference($id)
     {
         if (! auth()->check()) {
             return redirect('/login');
