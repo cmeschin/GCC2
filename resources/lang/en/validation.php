@@ -150,7 +150,9 @@ return [
             'deleted'           => 'Deleted',
             'delete'            => 'Delete',
         ],
-            
+        'list_of_services'      => 'List of services',
+        'list_of_hosts'      => 'List of hosts',
+        'list_of_timeperiods'      => 'List of timeperiods',
     ],
 
     /*

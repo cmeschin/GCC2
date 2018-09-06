@@ -150,6 +150,10 @@ return [
             'deleted'           => 'Supprimé',
             'delete'            => 'Supprimer',
         ],
+        'list_of_services'      => 'Liste des services',
+        'list_of_hosts'      => 'Liste des hôtes',
+        'list_of_timeperiods'      => 'Liste des périodes temporelles',
+
     ],
 
     /*

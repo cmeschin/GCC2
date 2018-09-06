@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.selection')
         @endslot
-        <form method="POST" action="">
+        <form id="submitSelection" method="POST" action="">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-12">
@@ -12,42 +12,101 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                           <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                              Collapsible Group Item #1
+                            <a class="tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listServices"
+                               aria-expanded="true" aria-controls="collapseOne">
+                              @lang('validation.custom.list_of_services')
                             </a>
                           </h4>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                          <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <div id="listServices" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="panel-body responsive-table-line" style="margin:0px auto">
+                              <table id="T_Liste_Service" class="table table-bordered table-condensed table-body-center">
+                                  <tr class="text-center tessi-rose-clair">
+                                      <th></th>
+                                      <th>Hôte</th>
+                                      <th>Service</th>
+                                      <th>Fréquence</th>
+                                      <th>Plage Horaire</th>
+                                      <th>Controle</th>
+                                      <th hidden="hidden">service_id</th>
+                                      <th hidden="hidden">host_id</th>
+                                  </tr>
+                                  @php
+                                      $i = 1;
+                                      $nom_hote = "";
+                                  @endphp
+
+                                  @foreach ($services as $service)
+                                      @php
+                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1);
+
+                                        if ($nom_hote != $nom_hote_actuel){
+
+                                          $j = 1;
+                                          $nom_hote = $nom_hote_actuel; // enlève la localisation et la fonction et les deux -
+                                          $hote_localisation = stristr($service['host name'],'-',1); // conserve la chaine avant le premier tiret
+                                        }
+                                      @endphp
+                                      @if ($service['host activate'] == 0 || $service['service activate'] == 0)
+                                          {{--// mise en couleur pour les controles inactifs--}}
+                                          <tr class="tessi-disabled">
+                                      @else
+                                          <tr>
+                                      @endif
+                                      <td class="text-center"><input type="checkbox" name="selection_service" id="s{{ $i }}"/></td>
+                                      @if ($j  == 1 || $j % 10 == 0)
+                                          <td class="badge-info tooltip-link" data-toggle="tooltip"
+                                              data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
+                                      @else
+                                          <td></td>
+                                      @endif
+                                      @if ($service['service activate'] == 1 && $service['host activate'] == 1)
+                                          <td><a target="_blank" href="http://192.168.0.7/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host name'] }}&service_description={{ $service['service description'] }}">{{ $service['service description'] }}</a></td>
+                                      @else
+                                          <td>{{ $service['service description'] }}</td>
+                                      @endif
+                                      <td>Fréquence</td>
+                                      <td>{{ $service['tp name'] }}</td>
+                                      <td>{{ $service['service activate'] }}</td>
+                                      <td hidden>s{{ $service['service id'] }}</td>
+                                      <td hidden>h{{ $service['host id'] }}</td>
+                                      </tr>
+                                      @php
+                                          $i++;
+                                          $j++;
+                                      @endphp
+                                  @endforeach
+                              </table>
                           </div>
                         </div>
                       </div>
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingTwo">
                           <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Collapsible Group Item #2
+                            <a class="collapsed tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listHosts"
+                               aria-expanded="false" aria-controls="collapseTwo">
+                                @lang('validation.custom.list_of_hosts')
                             </a>
                           </h4>
                         </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div id="listHosts" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                           <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            Mon deuxième beau tableau
                           </div>
                         </div>
                       </div>
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingThree">
                           <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                              Collapsible Group Item #3
+                            <a class="collapsed tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listTimeperiods"
+                               aria-expanded="false" aria-controls="collapseThree">
+                                @lang('validation.custom.list_of_timeperiods')
                             </a>
                           </h4>
                         </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div id="listTimeperiods" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                           <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            Mon troisième beau tableau
                           </div>
                         </div>
                       </div>
@@ -62,4 +121,10 @@
 @endsection
 
 @section('script')
+    <script>
+        $(function()
+        {
+            $(".tooltip-link").tooltip();
+        });
+    </script>
 @endsection

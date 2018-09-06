@@ -15,5 +15,6 @@ return [
 
     'previous' => '&laquo; Précédent',
     'next'     => 'Suivant &raquo;',
+    'waiting' => 'Merci de patienter pendant le chargement des données...',
 
 ];

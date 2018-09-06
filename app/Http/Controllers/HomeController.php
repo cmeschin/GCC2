@@ -12,23 +12,33 @@ use App\Http\Requests\AccountNewRequest;
 class HomeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //$this->middleware('guest');
+        if (! auth()->check()) {
+            return redirect('/login');
+        }
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
         return view('home');
     }
 
     public function account()
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
+//        if (! auth()->check()) {
+//            return redirect('/login');
+//        }
         $typepreferences = $this->getTypePreferences();
         $allpreferences = $this->getAllPreferencesByUser(Auth::user()->id);
         
@@ -49,9 +59,9 @@ class HomeController extends Controller
     
     public function addPreference(AccountNewRequest $request)
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
+//        if (! auth()->check()) {
+//            return redirect('/login');
+//        }
         $userid = Auth::user()->id;
         $preference = New Preference;
 
@@ -67,9 +77,9 @@ class HomeController extends Controller
 
     public function delPreference($id)
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
+//        if (! auth()->check()) {
+//            return redirect('/login');
+//        }
 //         $userid = Auth::user()->id;
 //         Preference::select('id','type','cle','user_id','valeur')->where('id', $id)->where('user_id', $userid)->delete();
         $preference = Preference::find($id);

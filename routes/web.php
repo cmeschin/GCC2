@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,9 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
 
-Route::post('nouvelledemande/{refdemande}', 'NouvelleDemandeController@selection')->name('selection');
+Route::post('nouvelledemande/{refdemande}/selection', 'NouvelleDemandeController@selection')->name('selection');
+
+Route::post('nouvelledemande/{refdemande}/parametrage', 'NouvelleDemandeController@parametrage')->name('parametrage');
 
 Route::get('moncompte', 'HomeController@account')->name('moncompte');
 

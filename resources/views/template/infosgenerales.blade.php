@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.general_informations')
         @endslot
-        <form method="POST" action="{{ route('selection', $refDemande) }}">
+        <form id="submitInfosGenerales" method="POST" action="{{ route('selection', $refDemande) }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-3">
@@ -124,9 +124,20 @@
                         ])
                 </div>
             </div>
-            @component('components.button')
-                @lang('pagination.next')
-            @endcomponent
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    @component('components.waiting')
+                        @lang('pagination.waiting')
+                    @endcomponent
+                </div>
+                <div class="col-md-2">
+                    @component('components.button')
+                        @lang('pagination.next')
+                    @endcomponent
+
+                </div>
+
+            </div>
         </form>
 
     @endcomponent
@@ -145,5 +156,9 @@
 		    calendarWeeks: true,
 			todayHighlight: true
 		});
+        $("[id^='submit']").submit(function(){ //fonction permettant d'afficher le message d'attente
+            waiting();
+        });
+
     </script>
 @endsection

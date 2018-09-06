@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Lang;
 
 class NouvelleDemandeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //$this->middleware('guest');
+        //$this->middleware('ajax', ['only' => 'register']);
+        //$this->middleware('ajax');
+        if (! auth()->check()) {
+            return redirect('/login');
+        }
+    }
 
     /**
      * Get all EtatDemande
@@ -80,9 +94,9 @@ class NouvelleDemandeController extends Controller
      */
     public function initialisation()
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
+//        if (! auth()->check()) {
+//            return redirect('/login');
+//        }
         $refDemande = date("ymdHis") . "_" . Auth::user()->username;
         $typeDemandes = $this->getTypeDemande();
 
@@ -94,21 +108,18 @@ class NouvelleDemandeController extends Controller
     }
 
     /**
-     * Fonction chargée de traiter les infos générales et de charger le contenu des hosts et services de la prestation
+     * Fonction chargée de traiter la selection et de charger les formulaires de paramétrage
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
      */
-    public function parametrage()
+    public function parametrage(DemandeNewRequest $request)
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
         //$typedemandes = $this->get_typedemande();
         //$etatdemandes = $this->get_etatdemande();
         //$listdiffusions = $this->get_listdiffusion();
         //$listprestations = $this->get_prestations();
-        //return view('template.parametrage');
-        return 'parametrage';
+        return view('template.parametrage');
+        //return 'parametrage';
     }
 
     /**
@@ -120,9 +131,9 @@ class NouvelleDemandeController extends Controller
      */
     public function selection(DemandeNewRequest $request)
     {
-        if (! auth()->check()) {
-            return redirect('/login');
-        }
+//        if (! auth()->check()) {
+//            return redirect('/login');
+//        }
 
         $etatDemandeId = EtatDemande::where('etat', 'draft')->value('id');
         $dateActivation = Carbon::now();
@@ -157,34 +168,151 @@ class NouvelleDemandeController extends Controller
          *      service_timeperiod => fait
          *  - renvoyer la vue "selection" avec les infos
          */
-        foreach ($servicesByServiceGroup['result'] as $value){
-            // extraction des hôtes du tableau
-            $res[]=$value['host name'];
-        };
-        // suppression des doublons d'hôte
-        $hosts = array_unique($res);
+//        foreach ($servicesByServiceGroup['result'] as $value){
+//            // extraction des hôtes du tableau
+//            $res[]=$value['host name'];
+//        };
+//        suppression des doublons d'hôte
+//        $hosts = array_unique($res);
+        // extrait la liste des hôtes unitairement
+        $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host name'));
+        //dd($hosts);
+
         $serviceCategorie="Systeme";
 
         $servicesByServiceCategorieByHosts[] = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts);
-        foreach($servicesByServiceCategorieByHosts as $value){
-            $servicesByServiceGroup['result'] = $value;
-        };
 
-        //récupérer la liste des timeperiod
-        foreach ($servicesByServiceGroup['result'] as $value){
-            // extraction des hôtes du tableau
-            $serviceIds[] = $value['service id'];
-        };
+        //dd($servicesByServiceGroup,$servicesByServiceCategorieByHosts);
+        // fusionne les deux tableaux
+        $services = array_merge($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
+        //$services = array_merge_recursive($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
+        //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts[0];
+        //dd($services);
+
+        //récupérer la liste des service_id
+        $serviceIds = array_column($services, 'service id');
         //dd($serviceIds);
-        $timeperiods[]=$centreon->getCentreonTimeperiodByServiceIds($serviceIds);
+
+        $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
         //dd($timeperiods);
 
+        $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
+        //dd($serviceDetails);
+
+        $services = $this->addServiceTimeperiod($services,$timeperiods);
+
+        $services = $this->addServiceDetails($services,$serviceDetails);
+        //dd($services);
+
         // Afficher la seconde vue
-        return view('template.selection');
+        return view('template.selection',compact('refDemande','services'));
     }
 
-    public function addServiceValues($servicesByServiceGroup,$values)
+    /**
+     * Add details on each services
+     *
+     * @param $services
+     * @param $serviceDetails
+     * @return array("host id", "host name", "service id", "service description", "tp name", "host address",
+     *  "host activate", "service activate", "service categorie")
+     */
+    public function addServiceDetails($services, $serviceDetails)
     {
+        //dd($services,$serviceDetails);
+        $i = 0;
+        foreach($services as $value)
+        {
+            \Log::info('Service: ', [$value]);
+            for($j=0;$j<count($serviceDetails);$j++){
+                $indexHost = array_search($value['host id'],$serviceDetails[$j]);
+                if ($indexHost)
+                {
+                    \Log::info('Detail: ', [$serviceDetails[$j]]);
+                    // get values in serviceDetails array
+                    $hostAddress = $serviceDetails[$j]['host_address'];
+                    $hostActivate = $serviceDetails[$j]['host_activate'];
+                    $serviceActivate = $serviceDetails[$j]['service_activate'];
+                    $serviceCategorie = $serviceDetails[$j]['sc_name'];
+
+                    // set new values in services array
+                    $services[$i]['host address'] = $hostAddress;
+                    $services[$i]['host activate'] = $hostActivate;
+                    $services[$i]['service activate'] = $serviceActivate;
+                    $services[$i]['sc name'] = $serviceCategorie;
+
+                    // if found exit loop and get new service in services array
+                    break;
+                }
+            }
+//            for($k=0;$k<count($serviceDetails);$k++){
+//                $indexService = array_search($value['service id'],$serviceDetails[$k]);
+//                if ($indexService)
+//                {
+//                    \Log::info('Detail Service: ', [$serviceDetails[$k]]);
+//                    // get values in serviceDetails array
+////                    $hostAddress = $serviceDetails[$k]['host_address'];
+////                    $hostActivate = $serviceDetails[$k]['host_activate'];
+//                    $serviceActivate = $serviceDetails[$k]['service_activate'];
+//                    $serviceCategorie = $serviceDetails[$k]['sc_name'];
+//
+//                    // set new values in services array
+////                    $services[$i]['host address'] = $hostAddress;
+////                    $services[$i]['host activate'] = $hostActivate;
+//                    $services[$i]['service activate'] = $serviceActivate;
+//                    $services[$i]['sc name'] = $serviceCategorie;
+//
+//                    // if found exit loop and get new service in services array
+//                    break;
+//                }
+//            }
+            $i++;
+        }
+        //dd($services);
+        return $services;
+
+    }
+
+    /**
+     * Add timeperiod on each services
+     *
+     * @param $services
+     * @param $timeperiods
+     * @return array("host id", "host name", "service id", "service description", "tp name")
+     */
+    public function addServiceTimeperiod($services, $timeperiods)
+    {
+        //dd($services,$timeperiods);
+        $i = 0;
+        foreach($services as $value)
+        {
+            for($j=0;$j<count($timeperiods);$j++){
+                $index = array_search($value['service id'],$timeperiods[$j]);
+                if ($index)
+                {
+                    $tpName = $timeperiods[$j]['tp_name'];
+                    $tpMonday = $timeperiods[$j]['tp_monday'];
+                    $tpThursday = $timeperiods[$j]['tp_thursday'];
+                    $tpWednesday = $timeperiods[$j]['tp_wednesday'];
+                    $tpTuesday = $timeperiods[$j]['tp_tuesday'];
+                    $tpFriday = $timeperiods[$j]['tp_friday'];
+                    $tpSaturday = $timeperiods[$j]['tp_saturday'];
+                    $tpSunday = $timeperiods[$j]['tp_sunday'];
+
+                    $services[$i]['tp name'] = $tpName;
+                    $services[$i]['tp monday'] = $tpMonday;
+                    $services[$i]['tp thursday'] = $tpThursday;
+                    $services[$i]['tp wednesday'] = $tpWednesday;
+                    $services[$i]['tp tuesday'] = $tpTuesday;
+                    $services[$i]['tp friday'] = $tpFriday;
+                    $services[$i]['tp saturday'] = $tpSaturday;
+                    $services[$i]['tp sunday'] = $tpSunday;
+                    break;
+                }
+            }
+            $i++;
+        }
+        //dd($services);
+        return $services;
 
     }
 }
