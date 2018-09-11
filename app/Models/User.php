@@ -36,19 +36,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Récupère les preferences de l'utilisateur.
-     */
-    public function preferences()
-    {
-        return $this->hasMany(Preference::class);
-    }
-    
-    /**
      * Récupère les commentaires de l'utilisateur.
      */
     public function histories()
     {
         return $this->hasMany(History::class);
     }
-    
+
+    /**
+     * Récupère les preferences de l'utilisateur.
+     */
+    public function preferences()
+    {
+        return $this->hasMany(Preference::class);
+    }
+
+    public function role($id)
+    {
+        return $this->where($id)->get('role');
+    }
 }

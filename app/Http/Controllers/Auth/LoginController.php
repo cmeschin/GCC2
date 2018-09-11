@@ -17,10 +17,20 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
 
-    /**
+//    $user = $this->username();
+
+//    public function verifyUser($username){
+//        if ( $username == User::user()->id ) {
+//            return redirect('/login');
+//        }else{
+//            RegisterController::create();
+//        };
+//    }
+
+
+/**
      * Where to redirect users after login.
      *
      * @var string

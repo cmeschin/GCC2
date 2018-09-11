@@ -202,6 +202,7 @@ class NouvelleDemandeController extends Controller
         $services = $this->addServiceTimeperiod($services,$timeperiods);
 
         $services = $this->addServiceDetails($services,$serviceDetails);
+        sort($services);
         //dd($services);
 
         // Afficher la seconde vue

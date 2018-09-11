@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Preference;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccountNewRequest;
 
@@ -31,7 +32,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $role = $this->isAdmin(Auth::user()->id)->get(0);
+        return view('home', compact('role'));
     }
 
     public function account()
@@ -88,5 +90,16 @@ class HomeController extends Controller
         
         
     }
-    
+
+    /**
+     * Get role of user
+     * @param $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function isAdmin($id)
+    {
+        //$role = User::select('role')->where('id',$id)->pluck('role');
+        $role = User::where('id',$id)->pluck('role');
+        return $role;
+    }
 }

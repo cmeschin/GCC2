@@ -26,12 +26,6 @@
                 position: relative;
             }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
             .content {
                 text-align: center;
             }
@@ -58,16 +52,6 @@
 
 @section('content')
         <div class="flex-center position-ref full-height">
-            {{--@if (Route::has('login'))--}}
-                {{--<div class="top-right links">--}}
-                    {{--@auth--}}
-                        {{--<a href="{{ url('/home') }}">@lang('validation.custom.home')</a>--}}
-                    {{--@else--}}
-                        {{--<a href="{{ route('login') }}">@lang('validation.custom.connection')</a>--}}
-                    {{--@endauth--}}
-                {{--</div>--}}
-            {{--@endif--}}
-
             <div class="content">
                 <div class="title m-b-md">
                     Gestionnaire des changements centreon
