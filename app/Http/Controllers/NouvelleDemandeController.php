@@ -111,6 +111,8 @@ class NouvelleDemandeController extends Controller
      * Fonction chargée de traiter la selection et de charger les formulaires de paramétrage
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
+     *
+     * @TODO
      */
     public function parametrage(DemandeNewRequest $request)
     {
@@ -155,8 +157,9 @@ class NouvelleDemandeController extends Controller
         $api = new ApiController;
         $centreon = new Centreon;
         $token = $api->getApiToken();
+        $prestation = $request->prestation[0];
 
-        $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$request->prestation[0]);
+        $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$prestation);
         /**
          * @TODO
          *  - extraire la liste des hotes de la variable ci-dessus => fait
@@ -178,15 +181,15 @@ class NouvelleDemandeController extends Controller
         $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host name'));
         //dd($hosts);
 
-        $serviceCategorie="Systeme";
+        $serviceCategorie = "Systeme";
 
-        $servicesByServiceCategorieByHosts[] = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts);
+        $servicesByServiceCategorieByHosts = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts, $prestation);
 
         //dd($servicesByServiceGroup,$servicesByServiceCategorieByHosts);
         // fusionne les deux tableaux
-        $services = array_merge($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
+        $services = array_merge($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts);
         //$services = array_merge_recursive($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
-        //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts[0];
+        //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts;
         //dd($services);
 
         //récupérer la liste des service_id
@@ -202,7 +205,11 @@ class NouvelleDemandeController extends Controller
         $services = $this->addServiceTimeperiod($services,$timeperiods);
 
         $services = $this->addServiceDetails($services,$serviceDetails);
-        sort($services);
+        //array_unique(array_column($services,'service id'));
+        //sort($services);
+        array_multisort(array_column($services, 'host name'),  SORT_ASC,
+            array_column($services, 'service description'), SORT_ASC,
+            $services);
         //dd($services);
 
         // Afficher la seconde vue
@@ -223,12 +230,12 @@ class NouvelleDemandeController extends Controller
         $i = 0;
         foreach($services as $value)
         {
-            \Log::info('Service: ', [$value]);
+            //\Log::info('Service: ', [$value]);
             for($j=0;$j<count($serviceDetails);$j++){
                 $indexHost = array_search($value['host id'],$serviceDetails[$j]);
                 if ($indexHost)
                 {
-                    \Log::info('Detail: ', [$serviceDetails[$j]]);
+                    //\Log::info('Detail: ', [$serviceDetails[$j]]);
                     // get values in serviceDetails array
                     $hostAddress = $serviceDetails[$j]['host_address'];
                     $hostActivate = $serviceDetails[$j]['host_activate'];

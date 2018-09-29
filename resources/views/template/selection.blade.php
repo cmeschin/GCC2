@@ -67,7 +67,13 @@
                                       @endif
                                       <td>Fréquence</td>
                                       <td>{{ $service['tp name'] }}</td>
-                                      <td>{{ $service['service activate'] }}</td>
+                                      @if ($service['host activate'] == 0)
+                                          <td>hôte désactivé</td>
+                                      @elseif ($service['service activate'] == 0)
+                                          <td>désactivé</td>
+                                      @else
+                                          <td>actif</td>
+                                      @endif
                                       <td hidden>s{{ $service['service id'] }}</td>
                                       <td hidden>h{{ $service['host id'] }}</td>
                                       </tr>

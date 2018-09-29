@@ -56,24 +56,56 @@ class Centreon extends Model
      *
      * @param $serviceCategorie
      * @param $hosts
+     * @param $prestation
      * @return array ('host id','host name','service id','service description')
      */
-    public function getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts)
+    public function getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts, $prestation)
     {
         $res = DB::connection('centreon')->table('service as s')
-        ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"), 'h.host_name as host name', DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"), 's.service_description as service description')
+        ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"), 'h.host_name as host name', DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"), 's.service_description as service description', DB::RAW('GROUP_CONCAT(sg.sg_name) as sg_name'))
         ->leftjoin('host_service_relation as hsr','s.service_id','=','hsr.service_service_id')
         ->leftjoin('host as h','hsr.host_host_id','=','h.host_id')
         ->leftjoin('service as st','s.service_template_model_stm_id','=','st.service_id')
         ->leftjoin('service_categories_relation as scr','st.service_id','=', 'scr.service_service_id')
         ->leftjoin('service_categories as sc','scr.sc_id','=','sc.sc_id')
-        ->where('sc.sc_name',$serviceCategorie)
-        ->whereIn('h.host_name',$hosts)
+        ->leftjoin('servicegroup_relation as sgr', 's.service_id', '=', 'sgr.service_service_id')
+        ->leftjoin('servicegroup as sg', 'sgr.servicegroup_sg_id', '=', 'sg.sg_id')
+        ->where('sc.sc_name', $serviceCategorie)
+        ->whereIn('h.host_name', $hosts)
+            ->groupBy('host name', 'service description', 'host id', 'service id')
         ->orderBy('h.host_name','asc')
         ->orderBy('s.service_description','asc')
         ;
         
         $services = json_decode($res->get(), true);
+        //dd($services);
+        $services = $this->dropDuplicateServicesByPrestation($services,$prestation);
+        //dd($services);
+        return $services;
+    }
+
+    /**
+     * Drop duplicate services already get by prestation
+     *
+     * @param $services
+     * @param $prestation
+     * @return array cleaned of duplicates
+     */
+    public function dropDuplicateServicesByPrestation($services, $prestation)
+    {
+        if ( !is_array( $services ) ) {
+            return false;
+        }
+        foreach ( $services as $element ) {
+            //dd($element);
+            if ( strstr( $element['sg_name'], $prestation ) ) {
+                $key = array_search($element,$services);
+                unset($services[$key]);
+                //dd($key);
+                $delElements[] = $element;
+            }
+        }
+        //dd($delElements,$services);
         return $services;
     }
 
