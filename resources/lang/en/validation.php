@@ -151,8 +151,20 @@ return [
             'delete'            => 'Delete',
         ],
         'list_of_services'      => 'List of services',
-        'list_of_hosts'      => 'List of hosts',
-        'list_of_timeperiods'      => 'List of timeperiods',
+        'list_of_hosts'         => 'List of hosts',
+        'list_of_timeperiods'   => 'List of timeperiods',
+        'timeperiod'           => 'Timeperiod',
+        'timeperiods'           => 'Timeperiods',
+        'weekdays'              => [
+            'monday'            => 'Monday',
+            'tuesday'           => 'Tuesday',
+            'wednesday'         => 'Wednesday',
+            'thursday'          => 'Thursday',
+            'friday'            => 'Friday',
+            'saturday'          => 'Saturday',
+            'sunday'            => 'Sunday',
+        ],
+
     ],
 
     /*

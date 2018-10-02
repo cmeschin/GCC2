@@ -4,12 +4,90 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast;
 
 
 class Centreon extends Model
 {
     protected $connection = 'centreon';
+
+    /**
+     * get hosts details by list of hosts
+     * @param $hosts
+     * @return mixed
+     */
+    public function getCentreonHostDetailsByHosts($hosts)
+    {
+
+        $res = DB::connection('centreon')->table('host as h')
+            ->select('h.host_id'
+                , 'h.host_name'
+                , 'h.host_address'
+                , 'h.host_alias'
+                , 'h.host_activate'
+                , DB::RAW("GROUP_CONCAT(DISTINCT ht.host_name) as Modeles")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgtype.hg_name,6)) as GroupeType")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsolution.hg_name,10)) as GroupeSolution")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsite.hg_name,6)) as GroupeSite")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcarchitecture.hc_name,hctarchitecture.hc_name),14)) as CategorieArchitecture")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcfonction.hc_name,hctfonction.hc_name),10) SEPARATOR ', ') as CategorieFonction")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hclangue.hc_name,hctlangue.hc_name),8)) as CategorieLangue")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcos.hc_name,hctos.hc_name),4)) as CategorieOS")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hctype.hc_name,hcttype.hc_name),6)) as CategorieType"))
+
+            ->leftjoin('host_template_relation as htr','h.host_id','=','htr.host_host_id')
+            ->leftjoin('host as ht','htr.host_tpl_id','=','ht.host_id')
+            ->leftjoin('hostgroup_relation as hgr','h.host_id','=','hgr.host_host_id')
+            ->leftjoin('hostgroup as hgtype', function($join){
+                $join->on('hgr.hostgroup_hg_id','=','hgtype.hg_id');
+                $join->on( DB::RAW("substr(hgtype.hg_name,1,5)"),'=' ,DB::RAW('"Type_"'));})
+            ->leftjoin('hostgroup as hgsolution', function($join){
+                $join->on('hgr.hostgroup_hg_id','=','hgsolution.hg_id');
+                $join->on( DB::RAW("substr(hgsolution.hg_name,1,9)"),'=' ,DB::RAW('"Solution_"'));})
+            ->leftjoin('hostgroup as hgsite', function($join){
+                $join->on('hgr.hostgroup_hg_id','=','hgsite.hg_id');
+                $join->on( DB::RAW("substr(hgsite.hg_name,1,5)"),'=' ,DB::RAW('"Site_"'));})
+            ->leftjoin('hostcategories_relation as hcr','hcr.host_host_id','=','h.host_id')
+            ->leftjoin('hostcategories_relation as hcrt','hcrt.host_host_id','=','ht.host_id')
+            ->leftjoin('hostcategories as hcarchitecture', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hcarchitecture.hc_id');
+                $join->on( DB::RAW("substr(hcarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
+            ->leftjoin('hostcategories as hcfonction', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hcfonction.hc_id');
+                $join->on( DB::RAW("substr(hcfonction.hc_name,1,9)"),'=' ,DB::RAW('"Fonction_"'));})
+            ->leftjoin('hostcategories as hclangue', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hclangue.hc_id');
+                $join->on( DB::RAW("substr(hclangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
+            ->leftjoin('hostcategories as hcos', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hcos.hc_id');
+                $join->on( DB::RAW("substr(hcos.hc_name,1,3)"),'=' ,DB::RAW('"OS_"'));})
+            ->leftjoin('hostcategories as hctype', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hctype.hc_id');
+                $join->on( DB::RAW("substr(hctype.hc_name,1,5)"),'=' ,DB::RAW('"Type_"'));})
+            ->leftjoin('hostcategories as hctarchitecture', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hctarchitecture.hc_id');
+                $join->on( DB::RAW("substr(hctarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
+            ->leftjoin('hostcategories as hctfonction', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hctfonction.hc_id');
+                $join->on( DB::RAW("substr(hctfonction.hc_name,1,9)"),'=' ,DB::RAW('"Fonction_"'));})
+            ->leftjoin('hostcategories as hctlangue', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hctlangue.hc_id');
+                $join->on( DB::RAW("substr(hctlangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
+            ->leftjoin('hostcategories as hctos', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hctos.hc_id');
+                $join->on( DB::RAW("substr(hctos.hc_name,1,3)"),'=' ,DB::RAW('"OS_"'));})
+            ->leftjoin('hostcategories as hcttype', function($join){
+                $join->on('hcr.hostcategories_hc_id','=','hcttype.hc_id');
+                $join->on( DB::RAW("substr(hcttype.hc_name,1,5)"),'=' ,DB::RAW('"Type_"'));})
+            ->where('h.host_register','=','1')
+            ->wherein('h.host_name', $hosts)
+            ->groupby('h.host_name','h.host_id', 'h.host_address', 'h.host_alias', 'h.host_activate')
+            ->orderBy('h.host_name','asc')
+        ;
+
+        $hostDetails = json_decode($res->get(), true);
+        return $hostDetails;
+
+    }
 
     public function getCentreonServiceDetailsByServiceIds($serviceIds)
     {
@@ -155,4 +233,51 @@ class Centreon extends Model
         return $timeperiods;
 
     }
+    /**
+     * Get Timeperiods by service Id's (list)
+     *
+     * @param $serviceIds
+     * @return array(service_id, tp_id, tp_name, tp_monday, tp_tuesday, tp_wednesday, tp_thursday, tp_friday, tp_saturday, tp_sunday)
+     */
+    public function getCentreonUniqueTimeperiodsByServiceIds($serviceIds)
+    {
+        $res = DB::connection('centreon')->table('service as s')
+            ->select(DB::RAW('DISTINCT t.tp_id'),
+                't.tp_name',
+                't.tp_monday',
+                't.tp_tuesday',
+                't.tp_wednesday',
+                't.tp_thursday',
+                't.tp_friday',
+                't.tp_saturday',
+                't.tp_sunday'
+            )
+            ->leftjoin('service as st1','s.service_template_model_stm_id', '=','st1.service_id')
+            ->leftjoin('service as st2','st1.service_template_model_stm_id', '=','st2.service_id')
+            ->leftjoin('service as st3','st2.service_template_model_stm_id', '=','st3.service_id')
+            ->leftjoin('service as st4','st3.service_template_model_stm_id', '=','st4.service_id')
+            ->leftjoin('service as st5','st4.service_template_model_stm_id', '=','st5.service_id')
+            ->leftjoin('service as st6','st5.service_template_model_stm_id', '=','st6.service_id')
+            ->leftjoin('service as st7','st6.service_template_model_stm_id', '=','st7.service_id')
+            ->leftjoin('service as st8','st7.service_template_model_stm_id', '=','st8.service_id')
+            ->leftjoin('timeperiod as t','t.tp_id', '=',
+                DB::raw("coalesce(s.timeperiod_tp_id,
+                    st1.timeperiod_tp_id,
+                    st2.timeperiod_tp_id,
+                    st3.timeperiod_tp_id,
+                    st4.timeperiod_tp_id,
+                    st5.timeperiod_tp_id,
+                    st6.timeperiod_tp_id,
+                    st7.timeperiod_tp_id,
+                    st8.timeperiod_tp_id)")
+            )
+            ->whereIn('s.service_id',$serviceIds)
+            ->orderby('t.tp_name','asc')
+        ;
+
+        $uniqueTimeperiods = json_decode($res->get(), true);
+        return $uniqueTimeperiods;
+
+    }
+
 }

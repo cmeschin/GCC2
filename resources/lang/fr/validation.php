@@ -151,8 +151,19 @@ return [
             'delete'            => 'Supprimer',
         ],
         'list_of_services'      => 'Liste des services',
-        'list_of_hosts'      => 'Liste des hôtes',
-        'list_of_timeperiods'      => 'Liste des périodes temporelles',
+        'list_of_hosts'         => 'Liste des hôtes',
+        'list_of_timeperiods'   => 'Liste des périodes temporelles',
+        'timeperiod'            => 'Période temporelle',
+        'timeperiods'           => 'Périodes temporelles',
+        'weekdays'              => [
+            'monday'            => 'Lundi',
+            'tuesday'           => 'Mardi',
+            'wednesday'         => 'Mercredi',
+            'thursday'          => 'Jeudi',
+            'friday'            => 'Vendredi',
+            'saturday'          => 'Samedi',
+            'sunday'            => 'Dimanche',
+        ],
 
     ],
 

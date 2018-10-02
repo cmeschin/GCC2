@@ -20,7 +20,7 @@
                         </div>
                         <div id="listServices" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                           <div class="panel-body responsive-table-line" style="margin:0px auto">
-                              <table id="T_Liste_Service" class="table table-bordered table-condensed table-body-center">
+                              <table id="T_List_Service" class="table table-bordered table-condensed table-body-center">
                                   <tr class="text-center tessi-rose-clair">
                                       <th></th>
                                       <th>Hôte</th>
@@ -97,7 +97,61 @@
                         </div>
                         <div id="listHosts" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                           <div class="panel-body">
-                            Mon deuxième beau tableau
+                              <table id="T_List_Host" class="table table-bordered table-condensed table-body-center">
+                                  <tr class="text-center tessi-rose-clair">
+                                      <th></th>
+                                      <th>Hostname</th>
+                                      <th>IP</th>
+                                      <th>Description</th>
+                                      <th>Contrôle</th>
+                                      <th>Site</th>
+                                      <th>Solution</th>
+                                      <th>Type</th>
+                                      <th>Architecture</th>
+                                      <th>Fonction</th>
+                                      <th>Langue</th>
+                                      <th>OS</th>
+                                      <th>Type</th>
+                                      <th hidden="hidden">host_id</th>
+                                  </tr>
+                                  @php
+                                      $i = 1;
+                                  @endphp
+
+                                  @foreach ($hostsDetails as $host)
+                                      @if ($host['host_activate'] == 0)
+                                          {{--// mise en couleur pour les controles inactifs--}}
+                                          <tr class="tessi-disabled">
+                                      @else
+                                          <tr>
+                                      @endif
+                                          <td class="text-center"><input type="checkbox" name="selection_timeperiod" id="t{{ $i }}"/></td>
+                                          @if ($host['host_activate'] == 1)
+                                              <td><a target="_blank" href="http://192.168.0.7/centreon/main.php?p=20201&o=svcd&host_name={{ $host['host_name'] }}">{{ $host['host_name'] }}</a></td>
+                                          @else
+                                              <td>{{ $host['host_name'] }}</td>
+                                          @endif
+                                          <td>{{ $host['host_address'] }}</td>
+                                          <td>{{ $host['host_alias'] }}</td>
+                                          @if ($host['host_activate'] == 0)
+                                              <td>désactivé</td>
+                                          @else
+                                              <td>actif</td>
+                                          @endif
+                                          <td>{{ $host['GroupeSite'] }}</td>
+                                          <td>{{ $host['GroupeSolution'] }}</td>
+                                          <td>{{ $host['GroupeType'] }}</td>
+                                          <td>{{ $host['CategorieArchitecture'] }}</td>
+                                          <td>{{ $host['CategorieFonction'] }}</td>
+                                          <td>{{ $host['CategorieLangue'] }}</td>
+                                          <td>{{ $host['CategorieOS'] }}</td>
+                                          <td>{{ $host['CategorieType'] }}</td>
+                                      </tr>
+                                      @php
+                                          $i++;
+                                      @endphp
+                                  @endforeach
+                              </table>
                           </div>
                         </div>
                       </div>
@@ -112,7 +166,41 @@
                         </div>
                         <div id="listTimeperiods" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                           <div class="panel-body">
-                            Mon troisième beau tableau
+                              <table id="T_List_Timeperiod" class="table table-bordered table-condensed table-body-center">
+                                  <tr class="text-center tessi-rose-clair">
+                                      <th></th>
+                                      <th>@lang('validation.custom.timeperiod')</th>
+                                      <th>@lang('validation.custom.weekdays.monday')</th>
+                                      <th>@lang('validation.custom.weekdays.tuesday')</th>
+                                      <th>@lang('validation.custom.weekdays.wednesday')</th>
+                                      <th>@lang('validation.custom.weekdays.thursday')</th>
+                                      <th>@lang('validation.custom.weekdays.friday')</th>
+                                      <th>@lang('validation.custom.weekdays.saturday')</th>
+                                      <th>@lang('validation.custom.weekdays.sunday')</th>
+                                      <th hidden="hidden">tp_id</th>
+                                  </tr>
+                              @php
+                                  $i = 1;
+                              @endphp
+
+                              @foreach ($uniqueTimeperiods as $timeperiod)
+                                  <tr>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod" id="t{{ $i }}"/></td>
+                                      <td>{{ $timeperiod['tp_name'] }}</td>
+                                      <td>{{ $timeperiod['tp_monday'] }}</td>
+                                      <td>{{ $timeperiod['tp_tuesday'] }}</td>
+                                      <td>{{ $timeperiod['tp_wednesday'] }}</td>
+                                      <td>{{ $timeperiod['tp_thursday'] }}</td>
+                                      <td>{{ $timeperiod['tp_friday'] }}</td>
+                                      <td>{{ $timeperiod['tp_saturday'] }}</td>
+                                      <td>{{ $timeperiod['tp_sunday'] }}</td>
+                                      <td>t{{ $timeperiod['tp_id'] }}</td>
+                                  </tr>
+                                  @php
+                                      $i++;
+                                  @endphp
+                              @endforeach
+                              </table>
                           </div>
                         </div>
                       </div>

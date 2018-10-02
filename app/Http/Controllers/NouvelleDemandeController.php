@@ -197,7 +197,12 @@ class NouvelleDemandeController extends Controller
         //dd($serviceIds);
 
         $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
-        //dd($timeperiods);
+//        dd($timeperiods);
+        $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
+//        dd($uniqueTimeperiods);
+
+        $hostsDetails = $centreon->getCentreonHostDetailsByHosts($hosts);
+        //dd($hostsDetails);
 
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
         //dd($serviceDetails);
@@ -213,7 +218,7 @@ class NouvelleDemandeController extends Controller
         //dd($services);
 
         // Afficher la seconde vue
-        return view('template.selection',compact('refDemande','services'));
+        return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hostsDetails'));
     }
 
     /**
