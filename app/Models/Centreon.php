@@ -93,7 +93,23 @@ class Centreon extends Model
     {
 
         $res = DB::connection('centreon')->table('service as s')
-            ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"), 'h.host_address', 'h.host_activate', DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"), 's.service_activate', 'sc.sc_name')
+            ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"),
+                'h.host_address',
+                'h.host_activate',
+                DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"),
+                's.service_activate',
+                'sc.sc_name',
+                DB::RAW("CONCAT(coalesce(
+                    s.service_normal_check_interval,
+                    st1.service_normal_check_interval,
+                    st2.service_normal_check_interval,
+                    st3.service_normal_check_interval,
+                    st4.service_normal_check_interval,
+                    st5.service_normal_check_interval,
+                    st6.service_normal_check_interval,
+                    st7.service_normal_check_interval,
+                    st8.service_normal_check_interval),' Min') as 'service_normal_check_interval'")
+            )
             ->leftjoin('host_service_relation as hsr','s.service_id','=','hsr.service_service_id')
             ->leftjoin('host as h','hsr.host_host_id','=','h.host_id')
             ->leftjoin('service as st1','s.service_template_model_stm_id', '=','st1.service_id')

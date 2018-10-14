@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.selection')
         @endslot
-        <form id="submitSelection" method="POST" action="">
+        <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-12">
@@ -19,7 +19,7 @@
                           </h4>
                         </div>
                         <div id="listServices" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                          <div class="panel-body responsive-table-line" style="margin:0px auto">
+                          <div class="panel-body responsive-table-line" style="margin:0 auto">
                               <table id="T_List_Service" class="table table-bordered table-condensed table-body-center">
                                   <tr class="text-center tessi-rose-clair">
                                       <th></th>
@@ -53,7 +53,7 @@
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input type="checkbox" name="selection_service" id="s{{ $i }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service" id="s{{ $i }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
                                               data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
@@ -65,7 +65,7 @@
                                       @else
                                           <td>{{ $service['service description'] }}</td>
                                       @endif
-                                      <td>Fréquence</td>
+                                      <td>{{ $service['service interval'] }}</td>
                                       <td>{{ $service['tp name'] }}</td>
                                       @if ($service['host activate'] == 0)
                                           <td>hôte désactivé</td>

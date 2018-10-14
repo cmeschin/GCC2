@@ -19,13 +19,15 @@ class LoginController extends Controller
     */
     use AuthenticatesUsers;
 
-//    $user = $this->username();
 
-//    public function verifyUser($username){
-//        if ( $username == User::user()->id ) {
-//            return redirect('/login');
+//    public function login()
+//    {
+//        $username = $this->username();
+//        if ( $username == Auth::user()->get($username) ) {
+//            AuthenticatesUsers::login();
+////            return redirect('/login');
 //        }else{
-//            RegisterController::create();
+//            RegistersUsers::register();
 //        };
 //    }
 
@@ -45,6 +47,19 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Surcharge en cas d'echec d'authentification
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function sendFailedLoginResponse($request)
+    {
+        $username= $request->username;
+        return view('auth.register',compact('username'));
+//        throw ValidationException::withMessages([
+//            $this->username() => [trans('auth.failed')],
+//        ]);
     }
 
     public function username()

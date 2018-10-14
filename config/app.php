@@ -123,7 +123,7 @@ return [
 
     'log' => env('APP_LOG', 'daily'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_level' => env('APP_LOG_LEVEL', 'info'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,7 @@ return [
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
         rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Adldap' => Adldap\Laravel\Facades\Adldap::class,
+        'Account' => App\Http\Controllers\Account::class,
     ],
 
 ];
