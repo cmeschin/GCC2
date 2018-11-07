@@ -142,6 +142,5 @@ class NouvelleDemandeController extends Controller
         //$listdiffusions = $this->get_listdiffusion();
         //$listprestations = $this->get_prestations();
         return view('template.parametrage', compact('refDemande'));
-        //return 'parametrage';
     }
 }

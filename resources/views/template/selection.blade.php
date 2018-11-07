@@ -38,6 +38,8 @@
 
                                   @foreach ($services as $service)
                                       @php
+                                        //var_dump( $service);
+                                        \Log::info('Service ' . $i . ' : ' . var_dump($service));
                                         $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1);
 
                                         if ($nom_hote != $nom_hote_actuel){
