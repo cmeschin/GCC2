@@ -27,14 +27,16 @@ if (!function_exists('addServiceTimeperiod')) {
         //dd($services,$serviceDetails);
         \Log::info('Service: ajout des détails');
         $i = 0;
+
         foreach($services as $value)
         {
-            \Log::debug('Service: ', [$value]);
+            //\Log::debug('Service: ', [$value]);
             for($j=0;$j<count($serviceDetails);$j++){
                 $indexService = array_search($value['service id'],$serviceDetails[$j]);
+                $trouve = False;
                 if ($indexService)
                 {
-                    \Log::debug('Detail: ', [$serviceDetails[$j]]);
+                    //\Log::debug('Detail: ', [$serviceDetails[$j]]);
                     // get values in serviceDetails array
                     $hostAddress = $serviceDetails[$j]['host_address'];
                     $hostActivate = $serviceDetails[$j]['host_activate'];
@@ -50,13 +52,20 @@ if (!function_exists('addServiceTimeperiod')) {
                     $services[$i]['service interval'] = $serviceInterval;
 
                     // if found, exit loop and get new service in services array
+                    $trouve = True;
                     break;
                 }
             }
+            if (!$trouve)
+            {
+                \Log::debug('ERREUR Service configuration incomplete: ', [$value]);
+            }
+
             $i++;
         }
         \Log::info('Service: détails ajoutés');
         //dd($services);
+        //var_dump($services);
         return $services;
     }
 }
@@ -71,11 +80,13 @@ if (!function_exists('addServiceTimeperiod')) {
 if (!function_exists('addServiceTimeperiod')) {
     function addServiceTimeperiod($services, $timeperiods)
     {
+        \Log::info('Service: ajout des TimePeriod');
         //dd($services,$timeperiods);
         $i = 0;
         foreach ($services as $value) {
             for ($j = 0; $j < count($timeperiods); $j++) {
                 $index = array_search($value['service id'], $timeperiods[$j]);
+                $trouve = False;
                 if ($index) {
                     $tpName = $timeperiods[$j]['tp_name'];
                     $tpMonday = $timeperiods[$j]['tp_monday'];
@@ -94,11 +105,18 @@ if (!function_exists('addServiceTimeperiod')) {
                     $services[$i]['tp friday'] = $tpFriday;
                     $services[$i]['tp saturday'] = $tpSaturday;
                     $services[$i]['tp sunday'] = $tpSunday;
+
+                    $trouve = True;
                     break;
                 }
             }
+            if (!$trouve)
+            {
+                \Log::debug('ERREUR TimePeriod configuration incomplete: ', [$value]);
+            }
             $i++;
         }
+        \Log::info('Service: TimePeriod ajoutés');
         //dd($services);
         return $services;
    }
