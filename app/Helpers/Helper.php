@@ -21,7 +21,7 @@ use App\Models\TypeDemande;
  * @return array("host id", "host name", "service id", "service description", "tp name", "host address",
  *  "host activate", "service activate", "service categorie")
  */
-if (!function_exists('addServiceTimeperiod')) {
+if (!function_exists('addServiceDetails')) {
     function addServiceDetails($services, $serviceDetails)
     {
         //dd($services,$serviceDetails);

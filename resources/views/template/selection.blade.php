@@ -38,8 +38,6 @@
 
                                   @foreach ($services as $service)
                                       @php
-                                        //var_dump( $service);
-                                        //\Log::info('Service ' . $i . ' : ' . var_dump($service));
                                         $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1);
 
                                         if ($nom_hote != $nom_hote_actuel){
@@ -109,9 +107,9 @@
                                       <th>Site</th>
                                       <th>Solution</th>
                                       <th>Type</th>
-                                      <th>Architecture</th>
+                                      {{--<th>Architecture</th>--}}
                                       <th>Fonction</th>
-                                      <th>Langue</th>
+                                      {{--<th>Langue</th>--}}
                                       <th>OS</th>
                                       <th>Type</th>
                                       <th hidden="hidden">host_id</th>
@@ -143,9 +141,9 @@
                                           <td>{{ $host['GroupeSite'] }}</td>
                                           <td>{{ $host['GroupeSolution'] }}</td>
                                           <td>{{ $host['GroupeType'] }}</td>
-                                          <td>{{ $host['CategorieArchitecture'] }}</td>
+                                          {{--<td>{{ $host['CategorieArchitecture'] }}</td>--}}
                                           <td>{{ $host['CategorieFonction'] }}</td>
-                                          <td>{{ $host['CategorieLangue'] }}</td>
+                                          {{--<td>{{ $host['CategorieLangue'] }}</td>--}}
                                           <td>{{ $host['CategorieOS'] }}</td>
                                           <td>{{ $host['CategorieType'] }}</td>
                                       </tr>

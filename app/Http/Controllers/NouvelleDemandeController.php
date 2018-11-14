@@ -106,7 +106,7 @@ class NouvelleDemandeController extends Controller
         //dd($hostsDetails);
 
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
-//        dd($serviceDetails);
+        //dd($serviceDetails);
 
         $services = addServiceTimeperiod($services,$timeperiods);
 
