@@ -2,10 +2,13 @@
 	--tessi-rose-fonce: #6A003E;
 	--tessi-rose-clair: #A71D5D;
 }
-
+html {
+	font-size: 62.5%;
+}
 body {
 	background-color: #dee1e4;
 	padding-top: 70px;
+	font-size: 1.6rem;
 }
 .card {
 	border: 4px solid var(--tessi-rose-fonce);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Demande;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -28,7 +29,10 @@ class HomeController extends Controller
     {
         $account = new Account;
         $role = $account->isAdmin(Auth::user()->id)->get(0);
-        return view('home', compact('role'));
+        $limit = 5;
+        $lastrequest = $this->lastRequest($limit);
+        $lastprocessed = $this->lastProcessed($limit);
+        return view('home', compact('role','lastrequest', 'lastprocessed', 'limit'));
     }
 
     /**
@@ -42,5 +46,21 @@ class HomeController extends Controller
         $allpreferences = $account->getAllPreferencesByUser(Auth::user()->id);
         
         return view('template.moncompte',compact('typepreferences','allpreferences'));
+    }
+
+    public function lastRequest($limit)
+    {
+        $demandes = new Demande();
+        $lastrequest = $demandes->getDemandes($limit);
+
+        return $lastrequest;
+    }
+
+    public function lastProcessed($limit)
+    {
+        $demandes = new Demande();
+        $lastprocessed = $demandes->getLastProcessed($limit);
+
+        return $lastprocessed;
     }
 }

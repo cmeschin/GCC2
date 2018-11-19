@@ -100,16 +100,16 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+    'custom'    => [
+        'attribute-name'        => [
+            'rule-name'         => 'custom-message',
         ],
         'remember_me'           => 'Remember me',
         'forgotten_password'    => 'Forgotten password ?',
         'login'                 => 'Login',
         'password'              => 'Password',
         'log_in'                => 'Log in',
-        'first_log_in'           => 'First log in',
+        'first_log_in'          => 'First log in',
         'log_out'               => 'Log out',
         'account'               => 'My account',
         'new_request'           => 'New request',
@@ -124,7 +124,8 @@ return [
         'connection'            => 'Connection',
         'registration'          => 'Registration',
         'general_informations'  => 'General informations',
-        'selection'             => 'Selection of elements',
+        'selection'             => 'Selection of objects',
+        'parametrage'           => 'Setting of objects',
         'ok'                    => 'Ok',
         'save'                  => 'Save',                
         'cancel'                => 'Cancel',
@@ -146,7 +147,7 @@ return [
         'list_of_services'      => 'List of services',
         'list_of_hosts'         => 'List of hosts',
         'list_of_timeperiods'   => 'List of timeperiods',
-        'timeperiod'           => 'Timeperiod',
+        'timeperiod'            => 'Timeperiod',
         'timeperiods'           => 'Timeperiods',
         'weekdays'              => [
             'monday'            => 'Monday',

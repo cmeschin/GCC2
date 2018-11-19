@@ -70,5 +70,19 @@ class Demande extends Model
     {
         return $this->hasMany(Notification::class);
     }
-    
+
+    /**
+     * Function to get last x requests
+     * @param $limit
+     * @return mixed
+     */
+    public function getDemandes($limit)
+    {
+        return $this->orderBy('id', 'desc')->take($limit)->get(['reference','prestation','date_activation']);
+    }
+
+    public function getLastProcessed($limit)
+    {
+        return $this->where('etatdemande_id','=',5)->orderBy('updated_at', 'Desc')->take($limit)->get(['reference','prestation','date_activation']);
+    }
 }

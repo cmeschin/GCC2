@@ -31,7 +31,7 @@
             }
 
             .title {
-                font-size: 60px;
+                font-size: 6.0rem;
             }
 
             .links > a {

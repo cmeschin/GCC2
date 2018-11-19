@@ -10,6 +10,7 @@ use App\Models\EtatDemande;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 
 class NouvelleDemandeController extends Controller
@@ -102,8 +103,8 @@ class NouvelleDemandeController extends Controller
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
 //        dd($uniqueTimeperiods);
 
-        $hostsDetails = $centreon->getCentreonHostDetailsByHosts($hosts);
-        //dd($hostsDetails);
+        $hosts = $centreon->getCentreonHostDetailsByHosts($hosts);
+        //dd($hosts);
 
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
         //dd($serviceDetails);
@@ -119,7 +120,7 @@ class NouvelleDemandeController extends Controller
         //dd($services);
 
         // Afficher la seconde vue
-        return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hostsDetails'));
+        return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
     }
 
     /**
@@ -134,13 +135,16 @@ class NouvelleDemandeController extends Controller
      *      - hosts
      *      - timeperiods
      */
-    public function parametrage($refDemande)
+    public function parametrage(Request $request, $refDemande)
     {
-
+        $productname = $request->input('selection_service[]');
+        //$data = Input::get('selection_service[]');
+        dd($productname);
+        //return $data;
         //$typedemandes = $this->get_typedemande();
         //$etatdemandes = $this->get_etatdemande();
         //$listdiffusions = $this->get_listdiffusion();
         //$listprestations = $this->get_prestations();
-        return view('template.parametrage', compact('refDemande'));
+        return view('template.parametrage', compact('refDemande', 'data'));
     }
 }

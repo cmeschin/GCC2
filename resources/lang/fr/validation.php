@@ -100,16 +100,16 @@ return [
     |
     */
 
-    'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+    'custom'                    => [
+        'attribute-name'        => [
+            'rule-name'         => 'custom-message',
         ],
         'remember_me'           => 'Se rappeler de moi',
         'forgotten_password'    => 'Mot de passe oublié ?',
         'login'                 => 'Identifiant',
         'password'              => 'Mot de passe',
         'log_in'                => 'Connexion',
-        'first_log_in'           => 'Première connexion',
+        'first_log_in'          => 'Première connexion',
         'log_out'               => 'Déconnexion',
         'account'               => 'Mon compte',
         'new_request'           => 'Nouvelle demande',
@@ -124,7 +124,8 @@ return [
         'connection'            => 'Connexion',
         'registration'          => 'Inscription',
         'general_informations'  => 'Informations générales',
-        'selection'             => 'Sélection des éléments',
+        'selection'             => 'Sélection des objets',
+        'parametrage'           => 'Paramétrage des objets',
         'ok'                    => 'Ok',
         'save'                  => 'Enregistrer',
         'cancel'                => 'Annuler',

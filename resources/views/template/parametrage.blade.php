@@ -7,6 +7,7 @@
         <form method="POST" action="">
             {{ csrf_field() }}
             <div class="row">
+                {{$data}};
 			</div>
             @component('components.button')
                 @lang('pagination.next')

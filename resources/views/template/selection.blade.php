@@ -53,7 +53,7 @@
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service" id="s{{ $i }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $i }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
                                               data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
@@ -118,14 +118,14 @@
                                       $i = 1;
                                   @endphp
 
-                                  @foreach ($hostsDetails as $host)
+                                  @foreach ($hosts as $host)
                                       @if ($host['host_activate'] == 0)
                                           {{--// mise en couleur pour les controles inactifs--}}
                                           <tr class="tessi-disabled">
                                       @else
                                           <tr>
                                       @endif
-                                          <td class="text-center"><input type="checkbox" name="selection_timeperiod" id="t{{ $i }}"/></td>
+                                          <td class="text-center"><input type="checkbox" name="selection_host[]" id="t{{ $i }}"/></td>
                                           @if ($host['host_activate'] == 1)
                                               <td><a target="_blank" href="http://192.168.0.7/centreon/main.php?p=20201&o=svcd&host_name={{ $host['host_name'] }}">{{ $host['host_name'] }}</a></td>
                                           @else
@@ -185,7 +185,7 @@
 
                               @foreach ($uniqueTimeperiods as $timeperiod)
                                   <tr>
-                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod" id="t{{ $i }}"/></td>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $i }}"/></td>
                                       <td>{{ $timeperiod['tp_name'] }}</td>
                                       <td>{{ $timeperiod['tp_monday'] }}</td>
                                       <td>{{ $timeperiod['tp_tuesday'] }}</td>

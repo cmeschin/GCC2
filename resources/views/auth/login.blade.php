@@ -12,7 +12,7 @@
                 'name' => 'username',
                 'readonly' => false,
                 'required' => true,
-                'autofocus' => 'true',
+                'autofocus' => 'autofocus',
                 ])
             @include('partials.form-group', [
                 'title' => __('Mot de passe'),
