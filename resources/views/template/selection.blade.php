@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.selection')
         @endslot
-        <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
+        <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande, $services, $hosts, $uniqueTimeperiods) }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-12">

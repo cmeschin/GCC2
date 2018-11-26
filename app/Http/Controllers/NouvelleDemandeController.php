@@ -135,11 +135,11 @@ class NouvelleDemandeController extends Controller
      *      - hosts
      *      - timeperiods
      */
-    public function parametrage(Request $request, $refDemande)
+    public function parametrage($request, $refDemande, $services, $hosts, $uniqueTimeperiods)
     {
         $productname = $request->input('selection_service[]');
         //$data = Input::get('selection_service[]');
-        dd($productname);
+        dd($services);
         //return $data;
         //$typedemandes = $this->get_typedemande();
         //$etatdemandes = $this->get_etatdemande();

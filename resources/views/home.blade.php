@@ -33,54 +33,58 @@
             {{--@include('template.widget')--}}
         {{--</div>--}}
 
-        <div class="card col-md-5 offset-md-1">
-            <h4 class="card-header">
-                {{ $limit }} dernières demandes rédigées
-            </h4>
-            <div class="col-md-12 table-responsive">
-                <table class="table ">
-                    <thead class="text-center">
-                    <tr>
-                        <th>Référence</th>
-                        <th>Prestation</th>
-                        <th>Date activation</th>
-                    </tr>
-                    </thead>
-                    <tbody class="text-center">
-                    @foreach($lastrequest as $demande)
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    {{ $limit }} dernières demandes rédigées
+                </div>
+                <div class="card-body">
+                    <table class="table ">
+                        <thead class="text-center">
                         <tr>
-                            <td> {{$demande->reference}} </td>
-                            <td> {{$demande->prestation}} </td>
-                            <td> {{$demande->date_activation}} </td>
+                            <th>Référence</th>
+                            <th>Prestation</th>
+                            <th>Date activation</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-center">
+                        @foreach($lastrequest as $demande)
+                            <tr>
+                                <td> {{$demande->reference}} </td>
+                                <td> {{$demande->prestation}} </td>
+                                <td> {{$demande->date_activation}} </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="card col-md-5">
-            <h4 class="card-header">
-                {{ $limit }} dernières demandes traitées
-            </h4>
-            <div class="col-md-12 table-responsive">
-                <table class="table ">
-                    <thead class="text-center">
-                    <tr>
-                        <th>Référence</th>
-                        <th>Prestation</th>
-                        <th>Date activation</th>
-                    </tr>
-                    </thead>
-                    <tbody class="text-center">
-                    @foreach($lastprocessed as $demande)
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    {{ $limit }} dernières demandes traitées
+                </div>
+                <div class="card-body">
+                    <table class="table ">
+                        <thead class="text-center">
                         <tr>
-                            <td> {{$demande->reference}} </td>
-                            <td> {{$demande->prestation}} </td>
-                            <td> {{$demande->date_activation}} </td>
+                            <th>Référence</th>
+                            <th>Prestation</th>
+                            <th>Date activation</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-center">
+                        @foreach($lastprocessed as $demande)
+                            <tr>
+                                <td> {{$demande->reference}} </td>
+                                <td> {{$demande->prestation}} </td>
+                                <td> {{$demande->date_activation}} </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -88,15 +92,16 @@
         <p></p>
     </div>
     <div class="row">
-        <div class="card col-md-10 offset-md-1">
-            <h4 class="card-header">
-                Information - Astuce du jour
-            </h4>
-            <div class="col-md-12 table-responsive">
-                <p>blablabla</p>
+        <div class="col-md-12">
+            <div class="card">
+                <h4 class="card-header">
+                    Information - Astuce
+                </h4>
+                <div class="card-body">
+                    <p>blablabla</p>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
 
