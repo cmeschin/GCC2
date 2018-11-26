@@ -18,24 +18,28 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
+    // All my routes that needs a logged in user
+    Route::get('home', 'HomeController@index')->name('home');
 
-Route::post('nouvelledemande/{refdemande}/selection', 'NouvelleDemandeController@selection')->name('selection');
+    Route::get('nouvelledemande', 'NouvelleDemandeController@initialisation')->name('infosgenerales');
 
-Route::post('nouvelledemande/{refdemande}/parametrage', 'NouvelleDemandeController@parametrage')->name('parametrage');
+    Route::post('nouvelledemande/{refdemande}/selection', 'NouvelleDemandeController@selection')->name('selection');
 
-Route::get('moncompte', 'HomeController@account')->name('moncompte');
+    Route::post('nouvelledemande/{refdemande}/parametrage', 'NouvelleDemandeController@parametrage')->name('parametrage');
 
-Route::get('accounts', 'HomeController@accountsManagment')->name('accountsManagment');
+    Route::get('moncompte', 'HomeController@account')->name('moncompte');
 
-Route::post('setaccount/{id}', 'AccountController@setAccount')->name('setaccount');
+    Route::get('accounts', 'HomeController@accountsManagment')->name('accountsManagment');
 
-Route::post('addpreference', 'AccountController@addpreference')->name('addpreference');
+    Route::post('setaccount/{id}', 'AccountController@setAccount')->name('setaccount');
 
-Route::post('delpreference/{id}', 'AccountController@delpreference')->name('delpreference');
+    Route::post('addpreference', 'AccountController@addpreference')->name('addpreference');
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::post('delpreference/{id}', 'AccountController@delpreference')->name('delpreference');
+
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+});
 
 
