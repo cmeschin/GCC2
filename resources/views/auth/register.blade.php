@@ -17,18 +17,21 @@
                     'name' => 'username',
                     'value' => $username,
                     'required' => true,
+                    'autofocus' => 'autofocus',
                     ])
                 @include('partials.form-group', [
                     'title' => __('Nom'),
                     'type' => 'text',
                     'name' => 'name',
                     'required' => true,
+                    'autofocus' => '',
                     ])
                 @include('partials.form-group', [
                     'title' => __('Adresse email'),
                     'type' => 'email',
                     'name' => 'email',
                     'required' => true,
+                    'autofocus' => '',
                     ])
                 {{--@include('partials.form-group', [--}}
                     {{--'title' => __('Mot de passe'),--}}

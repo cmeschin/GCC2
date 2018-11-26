@@ -28,9 +28,13 @@ Route::post('nouvelledemande/{refdemande}/parametrage', 'NouvelleDemandeControll
 
 Route::get('moncompte', 'HomeController@account')->name('moncompte');
 
-Route::post('addpreference', 'HomeController@addpreference')->name('addpreference');
+Route::get('accounts', 'HomeController@accountsManagment')->name('accountsManagment');
 
-Route::post('delpreference/{id}', 'HomeController@delpreference')->name('delpreference');
+Route::post('setaccount/{id}', 'AccountController@setAccount')->name('setaccount');
+
+Route::post('addpreference', 'AccountController@addpreference')->name('addpreference');
+
+Route::post('delpreference/{id}', 'AccountController@delpreference')->name('delpreference');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

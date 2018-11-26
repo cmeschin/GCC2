@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $account = new Account;
+        $account = new AccountController();
         $role = $account->isAdmin(Auth::user()->id)->get(0);
         $limit = 5;
         $lastrequest = $this->lastRequest($limit);
@@ -41,11 +41,20 @@ class HomeController extends Controller
      */
     public function account()
     {
-        $account = new Account;
+        $account = new AccountController();
         $typepreferences = $account->getTypePreferences();
         $allpreferences = $account->getAllPreferencesByUser(Auth::user()->id);
-        
+
         return view('template.moncompte',compact('typepreferences','allpreferences'));
+    }
+
+    public function accountsManagment()
+    {
+        $accounts = new AccountController();
+        $allAccounts = $accounts->getAllAccounts();
+
+        return view('template.accountsmanagment',compact('allAccounts'));
+
     }
 
     public function lastRequest($limit)

@@ -7,8 +7,17 @@ use App\Models\Preference;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class Account extends Controller
+class AccountController extends Controller
 {
+    /**
+     * Get All accounts
+     * @return mixed
+     */
+    public function getAllAccounts()
+    {
+        $allAccounts = User::all('id','username','name','email','role','created_at');
+        return $allAccounts;
+    }
     /**
      * Get all preference types
      * @return typepreferences
@@ -60,8 +69,28 @@ class Account extends Controller
         $preference = Preference::find($id);
         $preference->delete();
         return redirect('/moncompte');
+    }
 
+    /**
+     * Set account role
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function setAccount($id)
+    {
+        $user = User::find($id);
+        if ($user->role == "admin")
+        {
+            $role    = "user";
+        } else
+        {
+            $role    = "admin";
+            //dd($user->role,$role);
+        }
 
+        $user->role = $role;
+        $user->save();
+        return redirect('/accounts');
     }
 
     /**

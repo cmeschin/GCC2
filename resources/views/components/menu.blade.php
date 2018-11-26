@@ -20,6 +20,7 @@
                 @lang('validation.custom.administration')
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownAdministration">
+                <a class="dropdown-item" href="/accounts">@lang('validation.custom.accounts_managment')</a>
                 <a class="dropdown-item" href="/logs" target="_blank">Logs</a>
             </div>
         </li>

@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('validation.custom.account') : {{ Auth::user()->name }} 
+            @lang('validation.custom.myaccount') : {{ Auth::user()->name }}
         @endslot
             <div class="row">
             	<div class="col-md-5">
@@ -58,7 +58,6 @@
 	                                  <td> {{$preference->type}} </td>
     	                              <td> {{$preference->cle}} </td>
         	                          <td> {{$preference->valeur}} </td>
-<!--             	                      <td><a href="{{ route('delpreference', ['id' => $preference->id]) }}"><span style="font-size:1em; color:#6a003e" class="fas fa-trash fa-fw"></span></a></td> -->
             	                      <td>@component('components.button')
                 						<span style="font-size:1em; color:#6a003e" class="fas fa-trash"></span>
             						  @endcomponent</td>
