@@ -41,7 +41,6 @@ class NouvelleDemandeController extends Controller
         $etatDemande = Lang::get('validation.custom.state.draft');
         $listDiffusions = getListDiffusion();
         $listPrestations = getPrestations();
-        //dd($listPrestations);
         return view('template.infosgenerales',compact('typeDemandes','listDiffusions','listPrestations','refDemande','etatDemande'));
     }
 
@@ -81,33 +80,25 @@ class NouvelleDemandeController extends Controller
         $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$prestation);
         // extrait la liste des hôtes unitairement
         $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host name'));
-        //dd($hosts);
 
         $serviceCategorie = "Systeme";
 
         $servicesByServiceCategorieByHosts = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts, $prestation);
 
-        //dd($servicesByServiceGroup,$servicesByServiceCategorieByHosts);
         // fusionne les deux tableaux
         $services = array_merge($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts);
         //$services = array_merge_recursive($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
         //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts;
-//        dd($services);
 
         //récupérer la liste des service_id
         $serviceIds = array_column($services, 'service id');
-        //dd($serviceIds);
 
         $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
-//        dd($timeperiods);
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
-//        dd($uniqueTimeperiods);
 
         $hosts = $centreon->getCentreonHostDetailsByHosts($hosts);
-        //dd($hosts);
 
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
-        //dd($serviceDetails);
 
         $services = addServiceTimeperiod($services,$timeperiods);
 
@@ -117,7 +108,6 @@ class NouvelleDemandeController extends Controller
         array_multisort(array_column($services, 'host name'),  SORT_ASC,
             array_column($services, 'service description'), SORT_ASC,
             $services);
-        //dd($services);
 
         // Afficher la seconde vue
         return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
