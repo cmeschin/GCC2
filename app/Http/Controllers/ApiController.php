@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client as GuzzleClient;
 
-define("URL",  "http://192.168.0.7/centreon/api/index.php");
+define("URL",  "http://192.168.0.22/centreon/api/index.php");
 
 class ApiController extends Controller
 {
