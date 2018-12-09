@@ -58,7 +58,7 @@ if (!function_exists('addServiceDetails')) {
             }
             if (!$trouve)
             {
-                \Log::debug('ERREUR Service configuration incomplete: ', [$value]);
+                \Log::debug('ERREUR Service configuration incomplète: ', [$value]);
             }
 
             $i++;
@@ -89,22 +89,22 @@ if (!function_exists('addServiceTimeperiod')) {
                 $trouve = False;
                 if ($index) {
                     $tpName = $timeperiods[$j]['tp_name'];
-                    $tpMonday = $timeperiods[$j]['tp_monday'];
-                    $tpThursday = $timeperiods[$j]['tp_thursday'];
-                    $tpWednesday = $timeperiods[$j]['tp_wednesday'];
-                    $tpTuesday = $timeperiods[$j]['tp_tuesday'];
-                    $tpFriday = $timeperiods[$j]['tp_friday'];
-                    $tpSaturday = $timeperiods[$j]['tp_saturday'];
-                    $tpSunday = $timeperiods[$j]['tp_sunday'];
+//                    $tpMonday = $timeperiods[$j]['tp_monday'];
+//                    $tpThursday = $timeperiods[$j]['tp_thursday'];
+//                    $tpWednesday = $timeperiods[$j]['tp_wednesday'];
+//                    $tpTuesday = $timeperiods[$j]['tp_tuesday'];
+//                    $tpFriday = $timeperiods[$j]['tp_friday'];
+//                    $tpSaturday = $timeperiods[$j]['tp_saturday'];
+//                    $tpSunday = $timeperiods[$j]['tp_sunday'];
 
                     $services[$i]['tp name'] = $tpName;
-                    $services[$i]['tp monday'] = $tpMonday;
-                    $services[$i]['tp thursday'] = $tpThursday;
-                    $services[$i]['tp wednesday'] = $tpWednesday;
-                    $services[$i]['tp tuesday'] = $tpTuesday;
-                    $services[$i]['tp friday'] = $tpFriday;
-                    $services[$i]['tp saturday'] = $tpSaturday;
-                    $services[$i]['tp sunday'] = $tpSunday;
+//                    $services[$i]['tp monday'] = $tpMonday;
+//                    $services[$i]['tp thursday'] = $tpThursday;
+//                    $services[$i]['tp wednesday'] = $tpWednesday;
+//                    $services[$i]['tp tuesday'] = $tpTuesday;
+//                    $services[$i]['tp friday'] = $tpFriday;
+//                    $services[$i]['tp saturday'] = $tpSaturday;
+//                    $services[$i]['tp sunday'] = $tpSunday;
 
                     $trouve = True;
                     break;
@@ -112,7 +112,7 @@ if (!function_exists('addServiceTimeperiod')) {
             }
             if (!$trouve)
             {
-                \Log::debug('ERREUR TimePeriod configuration incomplete: ', [$value]);
+                \Log::debug('ERREUR TimePeriod configuration incomplète: ', [$value]);
             }
             $i++;
         }

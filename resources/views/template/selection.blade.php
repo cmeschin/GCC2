@@ -4,7 +4,7 @@
         @slot('title')
             @lang('validation.custom.selection')
         @endslot
-        <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande, $services, $hosts, $uniqueTimeperiods) }}">
+        <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
             {{ csrf_field() }}
             <div class="row">
             	<div class="col-md-12">
@@ -38,12 +38,12 @@
 
                                   @foreach ($services as $service)
                                       @php
-                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1);
+                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
 
                                         if ($nom_hote != $nom_hote_actuel){
 
                                           $j = 1;
-                                          $nom_hote = $nom_hote_actuel; // enlève la localisation et la fonction et les deux -
+                                          $nom_hote = $nom_hote_actuel;
                                           $hote_localisation = stristr($service['host name'],'-',1); // conserve la chaine avant le premier tiret
                                         }
                                       @endphp
@@ -53,7 +53,7 @@
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $i }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service id'] }}" value="s{{ $service['service id'] }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
                                               data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
@@ -61,7 +61,7 @@
                                           <td></td>
                                       @endif
                                       @if ($service['service activate'] == 1 && $service['host activate'] == 1)
-                                          <td><a target="_blank" href="http://192.168.0.7/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host name'] }}&service_description={{ $service['service description'] }}">{{ $service['service description'] }}</a></td>
+                                          <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host name'] }}&service_description={{ $service['service description'] }}">{{ $service['service description'] }}</a></td>
                                       @else
                                           <td>{{ $service['service description'] }}</td>
                                       @endif
@@ -125,9 +125,9 @@
                                       @else
                                           <tr>
                                       @endif
-                                          <td class="text-center"><input type="checkbox" name="selection_host[]" id="t{{ $i }}"/></td>
+                                          <td class="text-center"><input type="checkbox" name="selection_host[]" id="t{{ $host['host_id'] }}" value="h{{ $host['host_id'] }}"/></td>
                                           @if ($host['host_activate'] == 1)
-                                              <td><a target="_blank" href="http://192.168.0.7/centreon/main.php?p=20201&o=svcd&host_name={{ $host['host_name'] }}">{{ $host['host_name'] }}</a></td>
+                                              <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $host['host_name'] }}">{{ $host['host_name'] }}</a></td>
                                           @else
                                               <td>{{ $host['host_name'] }}</td>
                                           @endif
@@ -146,6 +146,7 @@
                                           {{--<td>{{ $host['CategorieLangue'] }}</td>--}}
                                           <td>{{ $host['CategorieOS'] }}</td>
                                           <td>{{ $host['CategorieType'] }}</td>
+                                          <td>{{ $host['host_id'] }}</td>
                                       </tr>
                                       @php
                                           $i++;
@@ -185,7 +186,7 @@
 
                               @foreach ($uniqueTimeperiods as $timeperiod)
                                   <tr>
-                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $i }}"/></td>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $timeperiod['tp_id'] }}" value="t{{ $timeperiod['tp_id'] }}"/></td>
                                       <td>{{ $timeperiod['tp_name'] }}</td>
                                       <td>{{ $timeperiod['tp_monday'] }}</td>
                                       <td>{{ $timeperiod['tp_tuesday'] }}</td>
@@ -194,7 +195,7 @@
                                       <td>{{ $timeperiod['tp_friday'] }}</td>
                                       <td>{{ $timeperiod['tp_saturday'] }}</td>
                                       <td>{{ $timeperiod['tp_sunday'] }}</td>
-                                      <td>t{{ $timeperiod['tp_id'] }}</td>
+                                      <td hidden="hidden">t{{ $timeperiod['tp_id'] }}</td>
                                   </tr>
                                   @php
                                       $i++;

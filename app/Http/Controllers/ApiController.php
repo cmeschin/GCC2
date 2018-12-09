@@ -110,7 +110,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Fonction de récupération de tous service pour le groupe de service (prestation) donné
+     * Fonction de récupération de tous les services pour le groupe de service (prestation) donné
      *
      * @param $token
      * @param $serviceGroup

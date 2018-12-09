@@ -57,10 +57,8 @@ class DemandeNewRequest extends FormRequest
     public function messages()
     {
         return [
-                'listeDiffusion.required' => 'A ListeDiffusion is required',
-                'listeDiffusion.integer' => 'A ListeDiffusion is integer',
-                'typeDemande.required'  => 'A typeDemande is required',
-                'typeDemande.integer'  => 'A typeDemande is integer',
+                'prestation.required' => 'A prestation is required',
+                'dateActivation.required' => 'A activation date is required',
         ];
     }
 }

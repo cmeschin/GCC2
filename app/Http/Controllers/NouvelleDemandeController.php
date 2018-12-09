@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 //use function Adldap\Connections\Provider\auth;
 use App\Http\Requests\DemandeNewRequest;
+use App\Http\Requests\SelectionNewRequest;
 use App\Models\Centreon;
 use App\Models\Demande;
 use App\Models\EtatDemande;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 
 class NouvelleDemandeController extends Controller
@@ -41,6 +41,7 @@ class NouvelleDemandeController extends Controller
         $etatDemande = Lang::get('validation.custom.state.draft');
         $listDiffusions = getListDiffusion();
         $listPrestations = getPrestations();
+        session(['refDemande' => $refDemande]);
         return view('template.infosgenerales',compact('typeDemandes','listDiffusions','listPrestations','refDemande','etatDemande'));
     }
 
@@ -108,7 +109,14 @@ class NouvelleDemandeController extends Controller
         array_multisort(array_column($services, 'host name'),  SORT_ASC,
             array_column($services, 'service description'), SORT_ASC,
             $services);
-
+//dd($services);
+        /**
+         * Enregistrement des variables en session
+         */
+        session(['services' => $services]);
+        session(['hosts' => $hosts]);
+        session(['timeperiods' => $uniqueTimeperiods]);
+//        dd($this->_services);
         // Afficher la seconde vue
         return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
     }
@@ -125,16 +133,20 @@ class NouvelleDemandeController extends Controller
      *      - hosts
      *      - timeperiods
      */
-    public function parametrage($request, $refDemande, $services, $hosts, $uniqueTimeperiods)
+    public function parametrage(SelectionNewRequest $request, $refDemande)
     {
-        $productname = $request->input('selection_service[]');
-        //$data = Input::get('selection_service[]');
-        dd($services);
-        //return $data;
-        //$typedemandes = $this->get_typedemande();
-        //$etatdemandes = $this->get_etatdemande();
-        //$listdiffusions = $this->get_listdiffusion();
-        //$listprestations = $this->get_prestations();
+        $serviceSelected = $request->input('selection_service');
+        $hostSelected = $request->input('selection_host');
+        $timeperiodSelected = $request->input('selection_timeperiod');
+        /**
+         * récupération des variables en session
+         */
+        $services = session('services');
+        $hosts = session('hosts');
+        $timeperiods = session('timeperiods');
+
+//        dd($refDemande,$serviceSelected,$hostSelected,$timeperiodSelected);
+
         return view('template.parametrage', compact('refDemande', 'data'));
     }
 }
