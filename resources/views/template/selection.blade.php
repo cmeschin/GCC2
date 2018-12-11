@@ -53,7 +53,7 @@
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service id'] }}" value="s{{ $service['service id'] }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service id'] }}" value="{{ $service['service id'] }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
                                               data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
@@ -125,7 +125,7 @@
                                       @else
                                           <tr>
                                       @endif
-                                          <td class="text-center"><input type="checkbox" name="selection_host[]" id="t{{ $host['host_id'] }}" value="h{{ $host['host_id'] }}"/></td>
+                                          <td class="text-center"><input type="checkbox" name="selection_host[]" id="h{{ $host['host_id'] }}" value="{{ $host['host_id'] }}"/></td>
                                           @if ($host['host_activate'] == 1)
                                               <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $host['host_name'] }}">{{ $host['host_name'] }}</a></td>
                                           @else
@@ -186,7 +186,7 @@
 
                               @foreach ($uniqueTimeperiods as $timeperiod)
                                   <tr>
-                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $timeperiod['tp_id'] }}" value="t{{ $timeperiod['tp_id'] }}"/></td>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $timeperiod['tp_id'] }}" value="{{ $timeperiod['tp_id'] }}"/></td>
                                       <td>{{ $timeperiod['tp_name'] }}</td>
                                       <td>{{ $timeperiod['tp_monday'] }}</td>
                                       <td>{{ $timeperiod['tp_tuesday'] }}</td>

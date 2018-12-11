@@ -71,6 +71,40 @@ if (!function_exists('addServiceDetails')) {
 }
 
 /**
+ * Add macros of each services
+ * @param $services
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+if (!function_exists('addServiceMacros')) {
+    function addServiceMacros($serviceSelected)
+    {
+        \Log::debug('Service: ajout des macros...');
+        $api = new ApiController;
+        $services = session('services');
+        foreach ($serviceSelected as $currentService)
+        {
+            //dd($services[$i],$serviceSelected, $currentService);
+            $key = array_search($currentService, array_column($services, 'service id'));
+            $myServices[] = $services[$key];
+        }
+        //dd($myServices);
+
+        /**
+         * get macros for myServices (new tab with only selected services
+         */
+        $i = 0;
+        foreach ($myServices as $myService)
+        {
+            $macros = $api->getApiServiceMacros($myService);
+
+            $myServices[$i]['macros'] = $macros;
+            $i++;
+        }
+        session(['myServices' => $myServices]);
+        return $myServices;
+    }
+}
+/**
  * Add timeperiod on each services
  *
  * @param $services
@@ -89,22 +123,8 @@ if (!function_exists('addServiceTimeperiod')) {
                 $trouve = False;
                 if ($index) {
                     $tpName = $timeperiods[$j]['tp_name'];
-//                    $tpMonday = $timeperiods[$j]['tp_monday'];
-//                    $tpThursday = $timeperiods[$j]['tp_thursday'];
-//                    $tpWednesday = $timeperiods[$j]['tp_wednesday'];
-//                    $tpTuesday = $timeperiods[$j]['tp_tuesday'];
-//                    $tpFriday = $timeperiods[$j]['tp_friday'];
-//                    $tpSaturday = $timeperiods[$j]['tp_saturday'];
-//                    $tpSunday = $timeperiods[$j]['tp_sunday'];
 
                     $services[$i]['tp name'] = $tpName;
-//                    $services[$i]['tp monday'] = $tpMonday;
-//                    $services[$i]['tp thursday'] = $tpThursday;
-//                    $services[$i]['tp wednesday'] = $tpWednesday;
-//                    $services[$i]['tp tuesday'] = $tpTuesday;
-//                    $services[$i]['tp friday'] = $tpFriday;
-//                    $services[$i]['tp saturday'] = $tpSaturday;
-//                    $services[$i]['tp sunday'] = $tpSunday;
 
                     $trouve = True;
                     break;
@@ -120,6 +140,28 @@ if (!function_exists('addServiceTimeperiod')) {
         //dd($services);
         return $services;
    }
+}
+
+/**
+ * Decode argument for User display
+ */
+if (!function_exists('decodeArg')) {
+    function decodeArg($arg)
+    {
+        //TODO: decoding argument
+        return $arg;
+    }
+}
+
+/**
+ * Encode argument for Admin and param display
+ */
+if (!function_exists('encodeArg')) {
+    function encodeArg($arg)
+    {
+        //TODO: encoding argument
+        return $arg;
+    }
 }
 
 /**
@@ -157,7 +199,8 @@ if (!function_exists('getPrestations')) {
     function getPrestations()
     {
         $api = new ApiController;
-        $token = $api->getApiToken();
+        $token = session('token');
+        //dd($token);
         $result = $api->getApiServiceGroups($token);
 
         foreach ($result['result'] as $prestation){

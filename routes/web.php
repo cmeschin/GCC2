@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('nouvelledemande/{refdemande}/parametrage', 'NouvelleDemandeController@parametrage')->name('parametrage');
 
+    Route::post('nouvelledemande/{refdemande}/validation', 'NouvelleDemandeController@validation')->name('validation');
+
     Route::get('moncompte', 'HomeController@account')->name('moncompte');
 
     Route::get('accounts', 'HomeController@accountsManagment')->name('accountsManagment');

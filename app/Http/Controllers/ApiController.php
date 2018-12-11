@@ -80,6 +80,33 @@ class ApiController extends Controller
     }
 
     /**
+     * @param $myService (array ['host','service'])
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiServiceMacros($myService)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => session('token'),
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'getmacro',
+                'object' => 'service',
+                'values' => $myService['host name'] . ';' . $myService['service description']
+            ]
+        ]);
+        $macros = json_decode($res->getBody(), true);
+        return $macros;
+    }
+    /**
      * Fonction de récupération de tous les groupes de service (prestation)
      *
      * @param $token

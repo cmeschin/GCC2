@@ -35,13 +35,16 @@ class NouvelleDemandeController extends Controller
      */
     public function initialisation()
     {
+        $api = new ApiController;
+        $token = $api->getApiToken();
         $refDemande = date("ymdHis") . "_" . Auth::user()->username;
         $typeDemandes = getTypeDemande();
+        session(['refDemande' => $refDemande]);
+        session(['token' => $token]);
 
         $etatDemande = Lang::get('validation.custom.state.draft');
         $listDiffusions = getListDiffusion();
         $listPrestations = getPrestations();
-        session(['refDemande' => $refDemande]);
         return view('template.infosgenerales',compact('typeDemandes','listDiffusions','listPrestations','refDemande','etatDemande'));
     }
 
@@ -75,7 +78,8 @@ class NouvelleDemandeController extends Controller
 
         $api = new ApiController;
         $centreon = new Centreon;
-        $token = $api->getApiToken();
+        $token = session('token'); // récupère le token dans la variable de session
+        //dd($token);
         $prestation = $request->prestation[0];
 
         $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$prestation);
@@ -145,8 +149,30 @@ class NouvelleDemandeController extends Controller
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
 
-//        dd($refDemande,$serviceSelected,$hostSelected,$timeperiodSelected);
+        /**
+         * TODO: construire un nouveau tableau avec les informations complètes (macros, etc...) des services sélectionnés
+         *
+         */
+        $myServices = addServiceMacros($serviceSelected);
+        if (count($hostSelected) > 0){
+            foreach ($hostSelected as $currentHost)
+            {
+                $key = array_search($currentHost, array_column($hosts, 'host id'));
+                $myHosts[] = $hosts[$key];
+            }
+        }
+        if (count($timeperiodSelected) > 0) {
+            foreach ($timeperiodSelected as $currentTimeperiod) {
+                $key = array_search($currentTimeperiod, array_column($timeperiods, 'host id'));
+                $myTimeperiods[] = $timeperiods[$key];
+            }
+        }
 
-        return view('template.parametrage', compact('refDemande', 'data'));
+        return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'));
+    }
+
+    public function validation(ParametrageNewRequest $request)
+    {
+        return view('bingo');
     }
 }
