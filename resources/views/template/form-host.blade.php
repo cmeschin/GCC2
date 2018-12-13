@@ -1,19 +1,17 @@
-@extends('layouts.form_account')
+@extends('layouts.layout-param')
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('validation.custom.myaccount') : {{ Auth::user()->name }}
+            @lang('validation.custom.host') : {{ Auth::user()->name }}
         @endslot
             <div class="row">
             	<div class="col-md-5">
-                @include('partials.form-group-input', [
-                    'title' => __('Identifiant'),
+                @include('partials.form-group-select', [
+                    'title' => __('Site'),
                     'type' => 'text',
-                    'name' => 'username',
-                    'value' => Auth::user()->username,
-                    'placeholder' => "Identifiant",
+                    'name' => 'sitename',
+                    'valeur' => 'value',
                     'required' => true,
-                    'readonly' => true,
                     ])
                 </div>
             	<div class="col-md-5">
@@ -53,7 +51,7 @@
                         <tbody class="text-center">
                              @foreach($allpreferences as $preference)
                               <tr>
-                                  <form method="POST" action="{{ route('delpreference', ['userid' => Auth::user()->id, 'preferenceid' => $preference->id]) }}">
+                                  <form method="POST" action="{{ route('delpreference', ['id' => $preference->id]) }}">
            							{{ csrf_field() }}
 	                                  <td> {{$preference->type}} </td>
     	                              <td> {{$preference->cle}} </td>
@@ -74,7 +72,7 @@
         			Nouvel élément
     			</h4>
 	    		<div class="card-body">
-			        <form method="POST" action="{{ route('addpreference',['userid' => Auth::user()->id]) }}">
+			        <form method="POST" action="{{ route('addpreference') }}">
            				{{ csrf_field() }}
 	                    <div class="row">
 	                    <div class="col-md-3">

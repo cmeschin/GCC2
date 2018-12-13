@@ -61,12 +61,12 @@ class AccountController extends Controller
 
     /**
      * Delete preference by id
-     * @param $id
+     * @param $userid, $preferenceid
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delPreference($id)
+    public function delPreference($userid,$preferenceid)
     {
-        $preference = Preference::find($id);
+        $preference = Preference::find($preferenceid);
         $preference->delete();
         return redirect('/moncompte');
     }
@@ -76,9 +76,9 @@ class AccountController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function setAccount($id)
+    public function setAccount($userid)
     {
-        $user = User::find($id);
+        $user = User::find($userid);
         if ($user->role == "admin")
         {
             $role    = "user";
@@ -94,13 +94,24 @@ class AccountController extends Controller
     }
 
     /**
+     * Del account
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function delAccount($userid)
+    {
+        $user = User::find($userid);
+        $user->delete();
+        return redirect('/accounts');
+    }
+    /**
      * Get role of user
      * @param $id
      * @return \Illuminate\Support\Collection
      */
-    public function isAdmin($id)
+    public function isAdmin($userid)
     {
-        $role = User::where('id',$id)->pluck('role');
+        $role = User::where('id',$userid)->pluck('role');
         return $role;
     }
 

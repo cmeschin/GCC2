@@ -35,11 +35,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('accounts', 'HomeController@accountsManagment')->name('accountsManagment');
 
-    Route::post('setaccount/{id}', 'AccountController@setAccount')->name('setaccount');
+    Route::post('account/{userid}/setaccount', 'AccountController@setAccount')->name('setaccount');
 
-    Route::post('addpreference', 'AccountController@addpreference')->name('addpreference');
+    Route::post('account/{userid}/delaccount', 'AccountController@delAccount')->name('delaccount');
 
-    Route::post('delpreference/{id}', 'AccountController@delpreference')->name('delpreference');
+    Route::post('account/{userid}/addpreference', 'AccountController@addPreference')->name('addpreference');
+
+    Route::post('account/{userid}/delpreference/{preferenceid}', 'AccountController@delPreference')->name('delpreference');
 
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
