@@ -80,6 +80,68 @@ class ApiController extends Controller
     }
 
     /**
+     * Fonction de récupération de tous les hostcategories répondant au filtre
+     *
+     * @param $token
+     * @param $hostcategory
+     * @return array('id','name','alias')
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiHostcategories($token,$hostcategory)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'HC',
+                'values' => $hostcategory
+            ]
+        ]);
+        $hostcategories = json_decode($res->getBody(), true);
+        return $hostcategories;
+    }
+
+    /**
+     * Fonction de récupération de tous les hostgroups répondant au filtre
+     *
+     * @param $token
+     * @param $hostgroup
+     * @return array('id','name','alias')
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiHostgroups($token,$hostgroup)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'HG',
+                'values' => $hostgroup
+            ]
+        ]);
+        $hostgroups = json_decode($res->getBody(), true);
+        return $hostgroups;
+    }
+
+    /**
      * @param $myService (array ['host','service'])
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException

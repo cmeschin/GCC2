@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use function Adldap\Connections\Provider\auth;
 use App\Http\Requests\DemandeNewRequest;
+use App\Http\Requests\ParametrageNewRequest;
 use App\Http\Requests\SelectionNewRequest;
 use App\Models\Centreon;
 use App\Models\Demande;
@@ -139,21 +140,37 @@ class NouvelleDemandeController extends Controller
      */
     public function parametrage(SelectionNewRequest $request, $refDemande)
     {
+        $api = new ApiController;
+
         $serviceSelected = $request->input('selection_service');
         $hostSelected = $request->input('selection_host');
         $timeperiodSelected = $request->input('selection_timeperiod');
         /**
          * récupération des variables en session
          */
-        $services = session('services');
+        //$services = session('services');
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
+        $token = session('token');
 
-        /**
-         * TODO: construire un nouveau tableau avec les informations complètes (macros, etc...) des services sélectionnés
-         *
-         */
-        $myServices = addServiceMacros($serviceSelected);
+        $sites = $api->getApiHostgroups($token,'Site')['result'];
+        array_multisort(array_column($sites, 'alias'),  SORT_ASC, $sites);
+
+        $solutions = $api->getApiHostgroups($token,'Solution')['result'];
+        array_multisort(array_column($solutions, 'alias'),  SORT_ASC, $solutions);
+
+        $hostTypes = $api->getApiHostcategories($token,'Type_')['result'];
+        array_multisort(array_column($hostTypes, 'alias'),  SORT_ASC, $hostTypes);
+
+        $hostOss = $api->getApiHostcategories($token,'OS_')['result'];
+        array_multisort(array_column($hostOss, 'alias'),  SORT_ASC, $hostOss);
+
+        $hostFonctions = $api->getApiHostcategories($token,'Fonction_')['result'];
+        array_multisort(array_column($hostFonctions, 'alias'),  SORT_ASC, $hostFonctions);
+
+        if (count($serviceSelected) > 0){
+            $myServices = addServiceMacros($serviceSelected);
+        }
         if (count($hostSelected) > 0){
             foreach ($hostSelected as $currentHost)
             {
@@ -168,11 +185,11 @@ class NouvelleDemandeController extends Controller
             }
         }
 
-        return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'));
+        return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 
     public function validation(ParametrageNewRequest $request)
     {
-        return view('bingo');
+        return 'bingo';
     }
 }

@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('validation.custom.selection')
+            <span class="fas fa-check gcc-ok"> @lang('validation.custom.selection')</span>
         @endslot
         <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
             {{ csrf_field() }}
@@ -12,7 +12,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                           <h4 class="panel-title">
-                            <a class="tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listServices"
+                            <a class="color-tessi-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listServices"
                                aria-expanded="true" aria-controls="collapseOne">
                               @lang('validation.custom.list_of_services')
                             </a>
@@ -21,7 +21,7 @@
                         <div id="listServices" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                           <div class="panel-body responsive-table-line" style="margin:0 auto">
                               <table id="T_List_Service" class="table table-bordered table-condensed table-body-center">
-                                  <tr class="text-center tessi-rose-clair">
+                                  <tr class="text-center color-tessi-clair">
                                       <th></th>
                                       <th>Hôte</th>
                                       <th>Service</th>
@@ -49,7 +49,7 @@
                                       @endphp
                                       @if ($service['host activate'] == 0 || $service['service activate'] == 0)
                                           {{--// mise en couleur pour les controles inactifs--}}
-                                          <tr class="tessi-disabled">
+                                          <tr class="gcc-disabled">
                                       @else
                                           <tr>
                                       @endif
@@ -89,7 +89,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingTwo">
                           <h4 class="panel-title">
-                            <a class="collapsed tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listHosts"
+                            <a class="collapsed color-tessi-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listHosts"
                                aria-expanded="false" aria-controls="collapseTwo">
                                 @lang('validation.custom.list_of_hosts')
                             </a>
@@ -98,7 +98,7 @@
                         <div id="listHosts" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                           <div class="panel-body">
                               <table id="T_List_Host" class="table table-bordered table-condensed table-body-center">
-                                  <tr class="text-center tessi-rose-clair">
+                                  <tr class="text-center color-tessi-clair">
                                       <th></th>
                                       <th>Hostname</th>
                                       <th>IP</th>
@@ -121,7 +121,7 @@
                                   @foreach ($hosts as $host)
                                       @if ($host['host_activate'] == 0)
                                           {{--// mise en couleur pour les controles inactifs--}}
-                                          <tr class="tessi-disabled">
+                                          <tr class="gcc-disabled">
                                       @else
                                           <tr>
                                       @endif
@@ -159,7 +159,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingThree">
                           <h4 class="panel-title">
-                            <a class="collapsed tessi-rose-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listTimeperiods"
+                            <a class="collapsed color-tessi-clair" role="button" data-toggle="collapse" data-parent="#accordion" href="#listTimeperiods"
                                aria-expanded="false" aria-controls="collapseThree">
                                 @lang('validation.custom.list_of_timeperiods')
                             </a>
@@ -168,7 +168,7 @@
                         <div id="listTimeperiods" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                           <div class="panel-body">
                               <table id="T_List_Timeperiod" class="table table-bordered table-condensed table-body-center">
-                                  <tr class="text-center tessi-rose-clair">
+                                  <tr class="text-center color-tessi-clair">
                                       <th></th>
                                       <th>@lang('validation.custom.timeperiod')</th>
                                       <th>@lang('validation.custom.weekdays.monday')</th>
@@ -208,6 +208,11 @@
                     </div>
 				</div>
 			</div>
+            <div class="col-md-8 offset-md-2">
+                @component('components.waiting')
+                    @lang('pagination.waiting')
+                @endcomponent
+            </div>
             @component('components.button')
                 @lang('pagination.next')
             @endcomponent
@@ -221,5 +226,9 @@
         {
             $(".tooltip-link").tooltip();
         });
+        $("[id^='submit']").submit(function(){ //fonction permettant d'afficher le message d'attente
+            waiting();
+        });
+
     </script>
 @endsection

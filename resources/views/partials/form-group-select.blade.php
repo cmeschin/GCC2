@@ -1,9 +1,16 @@
-<div><label for="{{ $name }}">{{ $title }}</label></div>
-<div class="form-control">
-    	{{ Form::select($name,$valeur,null,array('class' => "form-control{{ $errors->has($name) ? ' is-invalid' : ''}}",'id' =>  $name, 'required' => $required )) }}
-    @if ($errors->has($name))
+<div class="form-group">
+    <label for="{{ $name }}">{{ $title }}</label>
+    <div class="form-control">
+        <select id="{{ $name }}" name="{{ $name }}[]" class="select2 form-control{{ $errors->has( $name .'[]') ? ' is-invalid' : ''}}" required style="width: 100%">
+            <option value="" selected>...</option>
+            @foreach($values as $value)
+                <option value="{{ $value['id'] }}">{{ $value['alias'] }}</option>
+            @endforeach
+        </select>
+        @if ($errors->has($name))
         <div class="invalid-feedback">
             {{ $errors->first($name) }}
         </div>
-    @endif
+        @endif
+    </div>
 </div>

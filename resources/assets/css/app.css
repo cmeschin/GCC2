@@ -1,6 +1,6 @@
 :root {
-	--tessi-rose-fonce: #6A003E;
-	--tessi-rose-clair: #A71D5D;
+	--rose-fonce: #6A003E;
+	--rose-clair: #A71D5D;
 }
 html {
 	font-size: 62.5%;
@@ -11,7 +11,7 @@ body {
 	font-size: 1.4rem;
 }
 .card {
-	border: 4px solid var(--tessi-rose-fonce);
+	border: 4px solid var(--rose-fonce);
 	border-radius: .5rem;
 }
 .inline-form input {
@@ -21,19 +21,29 @@ body {
 
 .form-control {
 	font-size: 1.4rem;
+    width: 100%;
 }
+
 
 .btn {
 	font-size: 1.4rem;
 }
 
-.tessi-rose-fonce{
-	color: var(--tessi-rose-fonce);
+.color-tessi-fonce{
+	color: var(--rose-fonce);
 }
-.tessi-rose-clair{
-	color: var(--tessi-rose-clair);
+.color-tessi-clair{
+	color: var(--rose-clair);
 }
 
-.tessi-disabled{
-	background-color: #e4ad3e;
+.gcc-disabled{
+	background-color: dimgrey;
+}
+
+.gcc-ok{
+	color: darkgreen;
+}
+
+.gcc-nok{
+	color: darkorange;
 }

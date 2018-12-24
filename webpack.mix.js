@@ -26,5 +26,5 @@ mix.styles([
             'resources/assets/js/select2.full.min.js',
             'resources/assets/js/bootstrap-datepicker.min.js',
             'resources/assets/js/bootstrap-datepicker.fr.min.js',
-            'resources/assets/js/fonction.js',
+            'resources/assets/js/fonction.js'
         ], 'public/js/app.js');
