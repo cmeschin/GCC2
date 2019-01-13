@@ -131,15 +131,11 @@
                     @endcomponent
                 </div>
                 <div class="col-md-2">
-                    @component('components.button')
-                        @lang('pagination.next')
+                    @component('components.button-next')
                     @endcomponent
-
                 </div>
-
             </div>
         </form>
-
     @endcomponent
 @endsection
 

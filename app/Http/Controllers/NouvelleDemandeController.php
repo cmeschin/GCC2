@@ -170,6 +170,8 @@ class NouvelleDemandeController extends Controller
 
         if (count($serviceSelected) > 0){
             $myServices = addServiceMacros($serviceSelected);
+        } else {
+            $myServices = array();
         }
         if (count($hostSelected) > 0){
             foreach ($hostSelected as $currentHost)
@@ -177,14 +179,19 @@ class NouvelleDemandeController extends Controller
                 $key = array_search($currentHost, array_column($hosts, 'host id'));
                 $myHosts[] = $hosts[$key];
             }
+        } else {
+            $myHosts = array();
         }
         if (count($timeperiodSelected) > 0) {
             foreach ($timeperiodSelected as $currentTimeperiod) {
                 $key = array_search($currentTimeperiod, array_column($timeperiods, 'host id'));
                 $myTimeperiods[] = $timeperiods[$key];
             }
+        } else {
+            $myTimeperiods = array();
         }
 
+//        dd($myHosts,$sites,$hostFonctions);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 

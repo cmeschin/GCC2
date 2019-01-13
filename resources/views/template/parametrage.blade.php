@@ -26,18 +26,21 @@
                                                 <tr class="text-center color-tessi-clair">
                                                     <th>Service</th>
                                                     <th>Etat</th>
-                                                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Afficher/Masquer tous les éléments</button>
+                                                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
                                                 </tr>
-                                                @foreach ($myServices as $service)
-                                                    <tr>
-                                                        <td>
-                                                            <a data-toggle="collapse" href="#collapseS{{ $service['service id']}}" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                {{ $service['host name'] . " / " . $service['service description'] }}
-                                                            </a>
-                                                        </td>
-                                                        <td id="S{{ $service['service id'] }}"><span class="fas fa-edit gcc-nok">NOK</span><span class="fas fa-check gcc-ok">OK</span></td>
-                                                    </tr>
-                                                @endforeach
+                                                @if (count($myServices) > 0)
+
+                                                    @foreach ($myServices as $service)
+                                                        <tr>
+                                                            <td>
+                                                                <a data-toggle="collapse" href="#collapseS{{ $service['service id']}}" role="button" aria-expanded="false" aria-controls="collapseS{{ $service['service id']}}">
+                                                                    {{ $service['host name'] . " / " . $service['service description'] }}
+                                                                </a>
+                                                            </td>
+                                                            <td id="S{{ $service['service id'] }}"><span class="fas fa-edit gcc-nok">NOK</span><span class="fas fa-check gcc-ok">OK</span></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </table>
                                         </div>
                                         <div class="col-md-9">
@@ -45,7 +48,7 @@
                                                 <div class="collapse multi-collapse" id="collapseS{{ $service['service id'] }}">
                                                     {{--<div class="card card-body">--}}
                                                         {{--@php(dd($sites))--}}
-                                                        @include('template.host')
+                                                        {{--@include('template.host')--}}
                                                     {{--</div>--}}
                                                 </div>
                                             @endforeach
@@ -65,7 +68,43 @@
                                 </h4>
                             </div>
                             <div id="listHosts" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
+                                <div class="panel-body responsive-table-line" style="margin:0 auto">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <table id="T_List_Host" class="table table-bordered table-condensed table-body-center">
+                                                <tr class="text-center color-tessi-clair">
+                                                    <th>Hôte</th>
+                                                    <th>Etat</th>
+                                                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
+                                                </tr>
+                                                @if (count($myHosts) > 0)
+                                                    @foreach ($myHosts as $host)
+
+                                                        <tr>
+                                                            <td>
+                                                                <a data-toggle="collapse" href="#collapseH{{ $host['host_id']}}" role="button" aria-expanded="false" aria-controls="collapseH{{ $host['host_id']}}">
+                                                                    {{ $host['host_name'] . " / " . $host['host_address'] }}
+                                                                </a>
+                                                            </td>
+                                                            <td id="H{{ $host['host_id'] }}"><span class="fas fa-edit gcc-nok">NOK</span><span class="fas fa-check gcc-ok">OK</span></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </table>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @if (count($myHosts) > 0)
+                                            @foreach ($myHosts as $host)
+                                                <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
+                                                    <div class="card card-body">
+                                                    {{--@php(dd($sites))--}}
+                                                    @include('template.host')
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,9 +125,7 @@
                     </div>
                 </div>
 			</div>
-
-        @component('components.button')
-                @lang('pagination.next')
+            @component('components.button-next')
             @endcomponent
         </form>
     @endcomponent

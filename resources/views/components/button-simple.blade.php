@@ -1,3 +1,3 @@
-<button class="btn btn-primary float-right">
+<button class="btn btn-secondary color-tessi-fonce float-right">
     {{ $slot }}
 </button>

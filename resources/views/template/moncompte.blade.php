@@ -59,7 +59,7 @@
     	                              <td> {{$preference->cle}} </td>
         	                          <td> {{$preference->valeur}} </td>
             	                      <td>@component('components.button')
-                						<span style="font-size:1em; color:#6a003e" class="fas fa-trash"></span>
+                						<span class="fas fa-trash color-tessi-fonce"></span>
             						  @endcomponent</td>
                 				  </form>
             	                  
@@ -110,20 +110,20 @@
                                 'type' => 'text',
                                 'name' => 'valeur',
                                 'value' => "",
-                                'placeholder' => "valeurs de l'élément",
+                                'placeholder' => "valeurs de l'élément. séparer les mails par un point-virgule <;>",
                                 'required' => true,
                                 'readonly' => false,
                                 ])
                         </div>
                         </div>
                         @component('components.button')
-                			@lang('validation.custom.add') <span style="font-size:1em; color:#6a003e" class="fas fa-plus"></span>
+                			<span class="fas fa-plus color-tessi-fonce"> @lang('validation.custom.add')</span>
             			@endcomponent
                 	</form>
                 </div>
 			</div>
-                <a href="/home" class="btn btn-primary float-right">@lang('validation.custom.ok') <span style="font-size:1em; color:#6a003e" class="fas fa-check"></span></a>
-
+        @component('components.button-home')
+        @endcomponent
     @endcomponent
 @endsection
 

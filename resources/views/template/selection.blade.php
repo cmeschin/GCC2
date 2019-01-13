@@ -146,7 +146,7 @@
                                           {{--<td>{{ $host['CategorieLangue'] }}</td>--}}
                                           <td>{{ $host['CategorieOS'] }}</td>
                                           <td>{{ $host['CategorieType'] }}</td>
-                                          <td>{{ $host['host_id'] }}</td>
+                                          <td hidden="hidden">{{ $host['host_id'] }}</td>
                                       </tr>
                                       @php
                                           $i++;
@@ -213,8 +213,7 @@
                     @lang('pagination.waiting')
                 @endcomponent
             </div>
-            @component('components.button')
-                @lang('pagination.next')
+            @component('components.button-next')
             @endcomponent
         </form>
     @endcomponent

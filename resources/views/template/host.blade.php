@@ -1,6 +1,6 @@
 @component('components.card')
     @slot('title')
-        {{ $service['host name'] . " / " . $service['service description'] }}
+        {{ $host['host_name'] . " / " . $host['host_address'] }}
     @endslot
     <div class="row">
         <div class="col-md-3">
@@ -9,6 +9,8 @@
                 'type' => 'select',
                 'name' => 'hostsite',
                 'values' => $sites,
+                'myvalue' => $host['GroupeSite'],
+                'multiple' => '',
                 ])
         </div>
         <div class="col-md-3">
@@ -17,25 +19,27 @@
                 'type' => 'select',
                 'name' => 'hosttype',
                 'values' => $hostTypes,
+                'myvalue' => $host['CategorieType'],
+                'multiple' => '',
                 ])
         </div>
         <div class="col-md-4">
-        @include('partials.form-group-input', [
-            'title' => __('Nom'),
-            'type' => 'text',
-            'name' => 'hostname',
-            'value' => 'hostname',
-            'placeholder' => "HOST-NAME",
-            'required' => true,
-            'readonly' => false,
-            ])
+            @include('partials.form-group-input', [
+                'title' => __('Nom'),
+                'type' => 'text',
+                'name' => 'hostname',
+                'value' => $host['host_name'],
+                'placeholder' => "HOST-NAME",
+                'required' => true,
+                'readonly' => false,
+                ])
         </div>
         <div class="col-md-2">
             @include('partials.form-group-input', [
                 'title' => __('Adresse IP'),
                 'type' => 'text',
                 'name' => 'hostaddress',
-                'value' => 'hostaddress',
+                'value' => $host['host_address'],
                 'placeholder' => "HOST-IP",
                 'required' => true,
                 'readonly' => false,
@@ -49,7 +53,7 @@
                 'type' => 'text',
                 'rows' => 2,
                 'name' => 'description',
-                'value' => 'host description',
+                'value' => $host['host_alias'],
                 'placeholder' => "short description of host",
                 'required' => true,
                 'readonly' => false,
@@ -61,6 +65,8 @@
                 'type' => 'select',
                 'name' => 'hostOss',
                 'values' => $hostOss,
+                'myvalue' => $host['CategorieOS'],
+                'multiple' => '',
                 ])
         </div>
     </div>
@@ -71,14 +77,21 @@
                 'type' => 'select',
                 'name' => 'Solution',
                 'values' => $solutions,
+                'myvalue' => $host['GroupeSolution'],
+                'multiple' => '',
                 ])
         </div>
         <div class="col-md-2">
+            @php(
+
+            )
             @include('partials.form-group-select', [
                 'title' => __('Fonction(s)'),
                 'type' => 'select',
                 'name' => 'hostFonctions',
                 'values' => $hostFonctions,
+                'myvalue' => $host['CategorieFonction'],
+                'multiple' => 'multiple',
                 ])
         </div>
 
@@ -86,6 +99,8 @@
 @endcomponent
 @section('script')
 	<script>
-		$('.select2').select2();
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
     </script>
 @endsection

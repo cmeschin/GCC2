@@ -30,16 +30,16 @@
                                           <form method="POST" action="{{ route('delaccount', ['userid' => $account->id]) }}" onsubmit="return ConfirmDelete()">
                                               {{ csrf_field() }}
                                               @component('components.button')
-                                                  <span style="font-size:1em; color:#6a003e" class="fas fa-trash"></span>
+                                                  <span class="fas fa-trash color-tessi-fonce"></span>
                                               @endcomponent
                                           </form>
                                           <form method="POST" action="{{ route('setaccount', ['userid' => $account->id]) }}">
                                               {{ csrf_field() }}
                                               @component('components.button')
                                                   @if ($account->role == "admin")
-                                                      <span style="font-size:1em; color:#6a003e" class="fas fa-toggle-on"></span>
+                                                      <span class="fas fa-toggle-on color-tessi-fonce"></span>
                                                   @else
-                                                      <span style="font-size:1em; color:#6a003e" class="fas fa-toggle-off"></span>
+                                                      <span class="fas fa-toggle-off color-tessi-fonce"></span>
                                                   @endif
                                               @endcomponent
                                           </form>
@@ -51,7 +51,10 @@
                     </table>
 				</div>
 			</div>
-            <a href="/home" class="btn btn-primary float-right">@lang('validation.custom.ok') <span style="font-size:1em; color:#6a003e" class="fas fa-check"></span></a>
+        @component('components.button-home')
+        @endcomponent
+
+
     @endcomponent
 @endsection
 
