@@ -55,7 +55,7 @@
 <footer class="fixed-bottom text-md-center">
 @yield('footer')
     <div>
-        propulsé par Laravel.
+        propulsé par Laravel5.
     </div>
 </footer>
 </html>

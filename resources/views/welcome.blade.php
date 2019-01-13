@@ -54,7 +54,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    Gestionnaire des changements centreon
+                    Gestionnaire des Changements Centreon 2  Copyright (C) 2017-2019 Cédric Meschin
                 </div>
             </div>
         </div>
