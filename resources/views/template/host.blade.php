@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             @include('partials.form-group-select', [
                 'title' => __('Solution logicielle'),
                 'type' => 'select',
@@ -81,26 +81,19 @@
                 'multiple' => '',
                 ])
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             @php(
-
+                $hostListFonctions = explode(', ', $host['CategorieFonction'])
             )
             @include('partials.form-group-select', [
                 'title' => __('Fonction(s)'),
                 'type' => 'select',
                 'name' => 'hostFonctions',
                 'values' => $hostFonctions,
-                'myvalue' => $host['CategorieFonction'],
+                'myvalue' => $hostListFonctions,
                 'multiple' => 'multiple',
                 ])
         </div>
 
     </div>
 @endcomponent
-@section('script')
-	<script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
-@endsection

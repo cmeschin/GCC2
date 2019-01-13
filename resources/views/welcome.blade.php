@@ -54,7 +54,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    Gestionnaire des Changements Centreon 2  Copyright (C) 2017-2019 Cédric Meschin
+                    Gestionnaire des changements centreon
                 </div>
             </div>
         </div>
@@ -62,6 +62,6 @@
 
 @section('footer')
 <div>
-	développé par Cédric Meschin - Tessi Technologies 2018
+    GCC2 Copyright (C) 2017-2019 Cédric Meschin
 </div>
 @endsection

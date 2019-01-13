@@ -131,12 +131,6 @@ class NouvelleDemandeController extends Controller
      *
      * @param $refDemande
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
-     *
-     * @TODO
-     * - parcourir le formulaire pour récupérer les éléments sélectionnés en trois tableaux
-     *      - services
-     *      - hosts
-     *      - timeperiods
      */
     public function parametrage(SelectionNewRequest $request, $refDemande)
     {
@@ -176,7 +170,8 @@ class NouvelleDemandeController extends Controller
         if (count($hostSelected) > 0){
             foreach ($hostSelected as $currentHost)
             {
-                $key = array_search($currentHost, array_column($hosts, 'host id'));
+//                var_dump($currentHost);
+                $key = array_search($currentHost, array_column($hosts, 'host_id'));
                 $myHosts[] = $hosts[$key];
             }
         } else {
@@ -184,14 +179,14 @@ class NouvelleDemandeController extends Controller
         }
         if (count($timeperiodSelected) > 0) {
             foreach ($timeperiodSelected as $currentTimeperiod) {
-                $key = array_search($currentTimeperiod, array_column($timeperiods, 'host id'));
+                $key = array_search($currentTimeperiod, array_column($timeperiods, 'timeperiod_id'));
                 $myTimeperiods[] = $timeperiods[$key];
             }
         } else {
             $myTimeperiods = array();
         }
 
-//        dd($myHosts,$sites,$hostFonctions);
+//        dd($hosts,$myHosts,$hostSelected);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 

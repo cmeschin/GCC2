@@ -95,6 +95,7 @@
                                         <div class="col-md-9">
                                             @if (count($myHosts) > 0)
                                             @foreach ($myHosts as $host)
+                                                {{--@php(var_dump($host))--}}
                                                 <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
                                                     <div class="card card-body">
                                                     {{--@php(dd($sites))--}}
@@ -132,7 +133,9 @@
 @endsection
 
 @section('script')
-	<script>
-        $('.select2').select2();
+    <script>
+        // $(document).ready(function() {
+            $('.select2').select2();
+        // });
     </script>
 @endsection
