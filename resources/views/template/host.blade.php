@@ -9,8 +9,6 @@
                 'type' => 'select',
                 'name' => 'hostsite',
                 'values' => $sites,
-                'myvalue' => $host['GroupeSite'],
-                'multiple' => '',
                 ])
         </div>
         <div class="col-md-3">
@@ -19,8 +17,6 @@
                 'type' => 'select',
                 'name' => 'hosttype',
                 'values' => $hostTypes,
-                'myvalue' => $host['CategorieType'],
-                'multiple' => '',
                 ])
         </div>
         <div class="col-md-4">
@@ -65,8 +61,6 @@
                 'type' => 'select',
                 'name' => 'hostOss',
                 'values' => $hostOss,
-                'myvalue' => $host['CategorieOS'],
-                'multiple' => '',
                 ])
         </div>
     </div>
@@ -77,23 +71,23 @@
                 'type' => 'select',
                 'name' => 'Solution',
                 'values' => $solutions,
-                'myvalue' => $host['GroupeSolution'],
-                'multiple' => '',
                 ])
         </div>
         <div class="col-md-3">
-            @php(
-                $hostListFonctions = explode(', ', $host['CategorieFonction'])
-            )
-            @include('partials.form-group-select', [
+            @include('partials.form-group-select-multiple', [
                 'title' => __('Fonction(s)'),
                 'type' => 'select',
                 'name' => 'hostFonctions',
                 'values' => $hostFonctions,
-                'myvalue' => $hostListFonctions,
-                'multiple' => 'multiple',
                 ])
         </div>
 
     </div>
 @endcomponent
+{{--@section('script')--}}
+    {{--<script>--}}
+        {{--// $(document).ready(function() {--}}
+        {{--$('.select2').select2();--}}
+        {{--// });--}}
+    {{--</script>--}}
+{{--@endsection--}}

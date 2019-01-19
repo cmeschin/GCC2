@@ -46,10 +46,7 @@
                                         <div class="col-md-9">
                                             @foreach ($myServices as $service)
                                                 <div class="collapse multi-collapse" id="collapseS{{ $service['service id'] }}">
-                                                    {{--<div class="card card-body">--}}
-                                                        {{--@php(dd($sites))--}}
-                                                        {{--@include('template.host')--}}
-                                                    {{--</div>--}}
+                                                        {{--@include('template.service')--}}
                                                 </div>
                                             @endforeach
                                         </div>
@@ -95,12 +92,8 @@
                                         <div class="col-md-9">
                                             @if (count($myHosts) > 0)
                                             @foreach ($myHosts as $host)
-                                                {{--@php(var_dump($host))--}}
                                                 <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
-                                                    <div class="card card-body">
-                                                    {{--@php(dd($sites))--}}
                                                     @include('template.host')
-                                                    </div>
                                                 </div>
                                             @endforeach
                                             @endif
@@ -134,8 +127,8 @@
 
 @section('script')
     <script>
-        // $(document).ready(function() {
+        $(document).ready(function() {
             $('.select2').select2();
-        // });
+        });
     </script>
 @endsection

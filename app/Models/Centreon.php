@@ -29,7 +29,7 @@ class Centreon extends Model
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsolution.hg_name,10)) as GroupeSolution")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsite.hg_name,6)) as GroupeSite")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcarchitecture.hc_name,hctarchitecture.hc_name),14)) as CategorieArchitecture")
-                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcfonction.hc_name,hctfonction.hc_name),10) SEPARATOR ', ') as CategorieFonction")
+                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcfonction.hc_name,hctfonction.hc_name),10) SEPARATOR ',') as CategorieFonction")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hclangue.hc_name,hctlangue.hc_name),8)) as CategorieLangue")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcos.hc_name,hctos.hc_name),4)) as CategorieOS")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hctype.hc_name,hcttype.hc_name),6)) as CategorieType"))

@@ -37,11 +37,12 @@ body {
 }
 .inline-form input {
 	display: inline-block;
-	width: 100px;
+	width: 100%;
 }
 
 .form-control {
 	font-size: 1.4rem;
+	width: 100%;
 }
 
 .btn {

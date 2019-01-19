@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="{{ $name }}">{{ $title }}</label>
     <div class="form-control">
-        <select id="{{ $name }}" name="{{ $name }}[]" class="select2 form-control{{ $errors->has( $name .'[]') ? ' is-invalid' : ''}}" required style="height: 100%;width: 100%">
+        <select id="{{ $name }}" name="{{ $name }}[]" class="select2 form-control{{ $errors->has( $name .'[]') ? ' is-invalid' : ''}}" multiple required style="height: 100%;width: 100%">
             <option value="">...</option>
             @foreach($values as $value)
                 @if ( in_array($host['host_name'], $value['selected']))

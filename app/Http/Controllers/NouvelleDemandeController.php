@@ -186,7 +186,53 @@ class NouvelleDemandeController extends Controller
             $myTimeperiods = array();
         }
 
-//        dd($hosts,$myHosts,$hostSelected);
+        foreach ($sites as &$site){
+            $site['selected'] = array();
+            foreach ($myHosts as $host){
+                if ($host['GroupeSite'] == substr($site['name'],5)){
+                    $site['selected'][] = $host['host_name'];
+                }
+            }
+        }
+
+        foreach ($solutions as &$solution){
+            $solution['selected'] = array();
+            foreach ($myHosts as $host){
+                if ($host['GroupeSolution'] == substr($solution['name'],9)){
+                    $solution['selected'][] = $host['host_name'];
+                }
+            }
+        }
+
+        foreach ($hostTypes as &$hostType){
+            $hostType['selected'] = array();
+            foreach ($myHosts as $host){
+                if ($host['CategorieType'] == substr($hostType['name'],5)){
+                    $hostType['selected'][] = $host['host_name'];
+                }
+            }
+        }
+
+        foreach ($hostOss as &$hostOs){
+            $hostOs['selected'] = array();
+            foreach ($myHosts as $host){
+                if ($host['CategorieOS'] == substr($hostOs['name'],3)){
+                    $hostOs['selected'][] = $host['host_name'];
+                }
+            }
+        }
+
+        foreach ($hostFonctions as &$hostFonction){
+            $hostFonction['selected'] = array();
+            foreach ($myHosts as $host){
+                if ( stristr($host['CategorieFonction'],substr($hostFonction['name'],9))){ // cherche la fonction dans la chaine
+                    $hostFonction['selected'][] = $host['host_name'];
+                }
+            }
+        }
+
+//        dd($sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
+        //dd($hosts,$myHosts,$hostSelected);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 
