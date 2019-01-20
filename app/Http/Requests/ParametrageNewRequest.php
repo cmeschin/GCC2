@@ -24,7 +24,19 @@ class ParametrageNewRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'host_address' => 'ipv4'
+        ];
+    }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'host_address.ip' => 'A valid ip address must be set',
+//            'dateActivation.required' => 'A activation date is required',
         ];
     }
 }

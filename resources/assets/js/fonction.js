@@ -12,4 +12,5 @@ function waiting(){
 
 function gccOkNok(){
     // TODO: function to set span OK or span NOK for each elements
+
 }

@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            <span class="fas fa-check gcc-ok"> @lang('validation.custom.selection')</span>
+            <span class="fas fa-check gcc-text-ok"> @lang('validation.custom.selection')</span>
         @endslot
         <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
             {{ csrf_field() }}

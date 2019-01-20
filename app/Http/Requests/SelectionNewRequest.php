@@ -27,7 +27,7 @@ class SelectionNewRequest extends FormRequest
             //
 //            'selection_service' => 'nullable|string',
 //            'selection_host' => 'nullable|string',
-//            'selection_timeperiod' => 'nullable|string',
+            'selection_timeperiod' => 'nullable|string|',
         ];
     }
     /**

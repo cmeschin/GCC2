@@ -24,6 +24,7 @@ class Centreon extends Model
                 , 'h.host_address'
                 , 'h.host_alias'
                 , 'h.host_activate'
+                , 'ehi.ehi_notes_url'
                 , DB::RAW("GROUP_CONCAT(DISTINCT ht.host_name) as Modeles")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgtype.hg_name,6)) as GroupeType")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsolution.hg_name,10)) as GroupeSolution")
@@ -33,6 +34,7 @@ class Centreon extends Model
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hclangue.hc_name,hctlangue.hc_name),8)) as CategorieLangue")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcos.hc_name,hctos.hc_name),4)) as CategorieOS")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hctype.hc_name,hcttype.hc_name),6)) as CategorieType"))
+
 
             ->leftjoin('host_template_relation as htr','h.host_id','=','htr.host_host_id')
             ->leftjoin('host as ht','htr.host_tpl_id','=','ht.host_id')
@@ -78,9 +80,10 @@ class Centreon extends Model
             ->leftjoin('hostcategories as hcttype', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hcttype.hc_id');
                 $join->on( DB::RAW("substr(hcttype.hc_name,1,5)"),'=' ,DB::RAW('"Type_"'));})
+            -> leftjoin('extended_host_information as ehi', 'ehi.host_host_id', '=', 'h.host_id')
             ->where('h.host_register','=','1')
             ->wherein('h.host_name', $hosts)
-            ->groupby('h.host_name','h.host_id', 'h.host_address', 'h.host_alias', 'h.host_activate')
+            ->groupby('h.host_name','h.host_id', 'h.host_address', 'h.host_alias', 'h.host_activate','ehi.ehi_notes_url')
             ->orderBy('h.host_name','asc')
         ;
 

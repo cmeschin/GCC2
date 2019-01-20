@@ -162,12 +162,12 @@ class NouvelleDemandeController extends Controller
         $hostFonctions = $api->getApiHostcategories($token,'Fonction_')['result'];
         array_multisort(array_column($hostFonctions, 'alias'),  SORT_ASC, $hostFonctions);
 
-        if (count($serviceSelected) > 0){
+        if ($serviceSelected){
             $myServices = addServiceMacros($serviceSelected);
         } else {
             $myServices = array();
         }
-        if (count($hostSelected) > 0){
+        if ($hostSelected){
             foreach ($hostSelected as $currentHost)
             {
 //                var_dump($currentHost);
@@ -177,7 +177,7 @@ class NouvelleDemandeController extends Controller
         } else {
             $myHosts = array();
         }
-        if (count($timeperiodSelected) > 0) {
+        if ($timeperiodSelected) {
             foreach ($timeperiodSelected as $currentTimeperiod) {
                 $key = array_search($currentTimeperiod, array_column($timeperiods, 'timeperiod_id'));
                 $myTimeperiods[] = $timeperiods[$key];
@@ -190,7 +190,7 @@ class NouvelleDemandeController extends Controller
             $site['selected'] = array();
             foreach ($myHosts as $host){
                 if ($host['GroupeSite'] == substr($site['name'],5)){
-                    $site['selected'][] = $host['host_name'];
+                    $site['selected'][] = $host['host_id'];
                 }
             }
         }
@@ -199,7 +199,7 @@ class NouvelleDemandeController extends Controller
             $solution['selected'] = array();
             foreach ($myHosts as $host){
                 if ($host['GroupeSolution'] == substr($solution['name'],9)){
-                    $solution['selected'][] = $host['host_name'];
+                    $solution['selected'][] = $host['host_id'];
                 }
             }
         }
@@ -208,7 +208,7 @@ class NouvelleDemandeController extends Controller
             $hostType['selected'] = array();
             foreach ($myHosts as $host){
                 if ($host['CategorieType'] == substr($hostType['name'],5)){
-                    $hostType['selected'][] = $host['host_name'];
+                    $hostType['selected'][] = $host['host_id'];
                 }
             }
         }
@@ -217,7 +217,7 @@ class NouvelleDemandeController extends Controller
             $hostOs['selected'] = array();
             foreach ($myHosts as $host){
                 if ($host['CategorieOS'] == substr($hostOs['name'],3)){
-                    $hostOs['selected'][] = $host['host_name'];
+                    $hostOs['selected'][] = $host['host_id'];
                 }
             }
         }
@@ -226,18 +226,35 @@ class NouvelleDemandeController extends Controller
             $hostFonction['selected'] = array();
             foreach ($myHosts as $host){
                 if ( stristr($host['CategorieFonction'],substr($hostFonction['name'],9))){ // cherche la fonction dans la chaine
-                    $hostFonction['selected'][] = $host['host_name'];
+                    $hostFonction['selected'][] = $host['host_id'];
                 }
             }
         }
+        foreach ($timeperiods as &$timeperiod){
+            $timeperiod['selected'] = array();
+            foreach ($myServices as $service){
+                if ( $service['tp name'] == $timeperiod['tp_name'] ){
+                    $timeperiod['selected'][] = $service['service id'];
+                }
+            }
 
-//        dd($sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
-        //dd($hosts,$myHosts,$hostSelected);
+        }
+//        dd($myHosts,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
+//        dd($timeperiods,$myServices);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 
+    /**
+     * Go to validation page
+     * @param ParametrageNewRequest $request
+     * @return string
+     *
+     * @TODO: verify valid ip addresses
+     */
     public function validation(ParametrageNewRequest $request)
     {
+        $ipaddress = $request->host_address;
+
         return 'bingo';
     }
 }

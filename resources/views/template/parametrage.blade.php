@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            <span class="fas fa-edit gcc-nok"> @lang('validation.custom.parametrage')</span>
+            <span class="fas fa-edit gcc-text-nok"> @lang('validation.custom.parametrage')</span>
         @endslot
         <form id="submitParametrage" method="POST" action="{{ route('validation',$refDemande) }}">
             {{ csrf_field() }}
@@ -37,7 +37,7 @@
                                                                     {{ $service['host name'] . " / " . $service['service description'] }}
                                                                 </a>
                                                             </td>
-                                                            <td id="S{{ $service['service id'] }}"><span class="fas fa-edit gcc-nok">NOK</span><span class="fas fa-check gcc-ok">OK</span></td>
+                                                            <td id="S{{ $service['service id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -83,7 +83,7 @@
                                                                     {{ $host['host_name'] . " / " . $host['host_address'] }}
                                                                 </a>
                                                             </td>
-                                                            <td id="H{{ $host['host_id'] }}"><span class="fas fa-edit gcc-nok">NOK</span><span class="fas fa-check gcc-ok">OK</span></td>
+                                                            <td id="H{{ $host['host_id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -127,8 +127,8 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+        // $(document).ready(function() {
             $('.select2').select2();
-        });
+        // });
     </script>
 @endsection

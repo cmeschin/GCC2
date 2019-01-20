@@ -39,10 +39,18 @@ body {
 	background-color: dimgrey;
 }
 
-.gcc-ok{
+.gcc-text-ok{
 	color: darkgreen;
 }
 
-.gcc-nok{
+.gcc-text-nok{
 	color: darkorange;
+}
+
+.gcc-input-ok{
+	background-color: darkgreen;
+}
+
+.gcc-input-nok{
+	background-color: darkorange;
 }
