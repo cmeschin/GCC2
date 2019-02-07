@@ -237,11 +237,20 @@ class NouvelleDemandeController extends Controller
                     $timeperiod['selected'][] = $service['service id'];
                 }
             }
-
+        }
+        foreach ($hosts as &$host){
+            $host['selected'] = array();
+            foreach ($myServices as $service){
+                if ( $service['host id'] == $host['host_id'] ){
+                    $host['selected'][] = $service['service id'];
+                }
+            }
         }
 //        dd($myHosts,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
-//        dd($timeperiods,$myServices);
-        return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods', 'hosts', 'timeperiods'), array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
+//        dd($myServices,$myHosts,$myTimeperiods,$hosts,$timeperiods,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
+        return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
+            'hosts', 'timeperiods'),
+            array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 
     /**

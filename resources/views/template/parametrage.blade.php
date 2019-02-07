@@ -26,10 +26,9 @@
                                                 <tr class="text-center color-tessi-clair">
                                                     <th>Service</th>
                                                     <th>Etat</th>
-                                                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
+                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
-                                                @if (count($myServices) > 0)
-
+                                                @if ($myServices)
                                                     @foreach ($myServices as $service)
                                                         <tr>
                                                             <td>
@@ -44,11 +43,15 @@
                                             </table>
                                         </div>
                                         <div class="col-md-9">
-                                            @foreach ($myServices as $service)
-                                                <div class="collapse multi-collapse" id="collapseS{{ $service['service id'] }}">
-                                                        {{--@include('template.service')--}}
-                                                </div>
-                                            @endforeach
+                                            @if ($myServices)
+                                                @foreach ($myServices as $service)
+                                                    @php($numService=1)
+                                                    <div class="collapse multi-collapse" id="collapseS{{ $service['service id'] }}">
+                                                            @include('template.service')
+                                                    </div>
+                                                    @php($numService++)
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -72,9 +75,10 @@
                                                 <tr class="text-center color-tessi-clair">
                                                     <th>Hôte</th>
                                                     <th>Etat</th>
-                                                    <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
+                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapseHost">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
-                                                @if (count($myHosts) > 0)
+                                                {{--@if (count($myHosts) > 0)--}}
+                                                @if ($myHosts)
                                                     @foreach ($myHosts as $host)
 
                                                         <tr>
@@ -90,12 +94,14 @@
                                             </table>
                                         </div>
                                         <div class="col-md-9">
-                                            @if (count($myHosts) > 0)
-                                            @foreach ($myHosts as $host)
-                                                <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
-                                                    @include('template.host')
-                                                </div>
-                                            @endforeach
+                                            @if ($myHosts)
+                                                @foreach ($myHosts as $host)
+                                                    @php($numHost=1)
+                                                    <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
+                                                        @include('template.host')
+                                                    </div>
+                                                    @php($numHost++)
+                                                @endforeach
                                             @endif
                                         </div>
                                     </div>

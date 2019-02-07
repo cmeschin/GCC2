@@ -5,14 +5,13 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-10-14 22:03:48.
+    * Generated on 2019-01-20 18:20:53.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
     */
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -31,7 +30,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -79,6 +78,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -154,7 +155,6 @@ namespace PHPSTORM_META {
     ]));
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -173,7 +173,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -221,6 +221,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -296,7 +298,6 @@ namespace PHPSTORM_META {
     ]));
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -315,7 +316,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -363,6 +364,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -438,7 +441,6 @@ namespace PHPSTORM_META {
     ]));
     override(\App::make(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -457,7 +459,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -505,6 +507,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -580,7 +584,6 @@ namespace PHPSTORM_META {
     ]));
     override(\App::makeWith(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -599,7 +602,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -647,6 +650,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -722,7 +727,6 @@ namespace PHPSTORM_META {
     ]));
     override(\app(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -741,7 +745,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -789,6 +793,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
@@ -864,7 +870,6 @@ namespace PHPSTORM_META {
     ]));
     override(\resolve(0), map([
         '' => '@',
-        'Adldap\AdldapInterface' => \Adldap\Adldap::class,
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
         'Illuminate\Broadcasting\BroadcastManager' => \Illuminate\Broadcasting\BroadcastManager::class,
         'Illuminate\Bus\Dispatcher' => \Illuminate\Bus\Dispatcher::class,
@@ -883,7 +888,7 @@ namespace PHPSTORM_META {
         'Illuminate\Notifications\ChannelManager' => \Illuminate\Notifications\ChannelManager::class,
         'Illuminate\Routing\Contracts\ControllerDispatcher' => \Illuminate\Routing\ControllerDispatcher::class,
         'Illuminate\Session\Middleware\StartSession' => \Illuminate\Session\Middleware\StartSession::class,
-        'adldap' => \Adldap\Adldap::class,
+        'Psr\Http\Message\ResponseInterface' => \Zend\Diactoros\Response::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
         'auth.password' => \Illuminate\Auth\Passwords\PasswordBrokerManager::class,
@@ -931,6 +936,8 @@ namespace PHPSTORM_META {
         'command.notification.make' => \Illuminate\Foundation\Console\NotificationMakeCommand::class,
         'command.notification.table' => \Illuminate\Notifications\Console\NotificationTableCommand::class,
         'command.observer.make' => \Illuminate\Foundation\Console\ObserverMakeCommand::class,
+        'command.optimize' => \Illuminate\Foundation\Console\OptimizeCommand::class,
+        'command.optimize.clear' => \Illuminate\Foundation\Console\OptimizeClearCommand::class,
         'command.package.discover' => \Illuminate\Foundation\Console\PackageDiscoverCommand::class,
         'command.policy.make' => \Illuminate\Foundation\Console\PolicyMakeCommand::class,
         'command.preset' => \Illuminate\Foundation\Console\PresetCommand::class,
