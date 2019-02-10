@@ -58,7 +58,7 @@
                 {{--])--}}
             <div class="form-group">
                 <label for="host-name{{ $numHost }}">Nom</label>
-                <input id="host-name{{ $numHost }}" type="text" class="form-control{{ $errors->has("host-name" . $numHost) ? ' is-invalid' : '' }}" name="host-name{{ $numHost }}" placeholder="Nom de l'hôte" value="{{ old("host-name" . $numHost, isset($value) ? $value : '') }}" required="required">
+                <input id="host-name{{ $numHost }}" type="text" class="form-control{{ $errors->has("host-name" . $numHost) ? ' is-invalid' : '' }}" name="host-name{{ $numHost }}" placeholder="Nom de l'hôte" value="{{ old("host-name" . $numHost, isset($value) ? $value : '') }}" required="required" readonly="readonly">
                 @if ($errors->has("host-name" . $numHost))
                     <div class="invalid-feedback">
                         {{ $errors->first("host-name" . $numHost) }}

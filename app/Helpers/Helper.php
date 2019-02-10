@@ -43,8 +43,8 @@ if (!function_exists('addServiceDetails')) {
                     $serviceActivate = $serviceDetails[$j]['service_activate'];
                     $serviceCategorie = $serviceDetails[$j]['sc_name'];
                     $serviceInterval = $serviceDetails[$j]['service_normal_check_interval'];
-                    $serviceTemplateId = $serviceDetails[$j]['service_template_id'];
-                    $serviceTemplateDescription = $serviceDetails[$j]['service_template_description'];
+//                    $serviceTemplateId = $serviceDetails[$j]['service_template_id'];
+//                    $serviceTemplateDescription = $serviceDetails[$j]['service_template_description'];
 
                     // set new values in services array
                     $services[$i]['host address'] = $hostAddress;
@@ -52,8 +52,8 @@ if (!function_exists('addServiceDetails')) {
                     $services[$i]['service activate'] = $serviceActivate;
                     $services[$i]['sc name'] = $serviceCategorie;
                     $services[$i]['service interval'] = $serviceInterval;
-                    $services[$i]['service template id'] = $serviceTemplateId;
-                    $services[$i]['service template description'] = $serviceTemplateDescription;
+//                    $services[$i]['service template id'] = $serviceTemplateId;
+//                    $services[$i]['service template description'] = $serviceTemplateDescription;
 
                     // if found, exit loop and get new service in services array
                     $trouve = True;

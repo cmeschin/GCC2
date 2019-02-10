@@ -29,9 +29,9 @@ class Centreon extends Model
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgtype.hg_name,6)) as GroupeType")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsolution.hg_name,10)) as GroupeSolution")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(hgsite.hg_name,6)) as GroupeSite")
-                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcarchitecture.hc_name,hctarchitecture.hc_name),14)) as CategorieArchitecture")
+//                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcarchitecture.hc_name,hctarchitecture.hc_name),14)) as CategorieArchitecture")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcfonction.hc_name,hctfonction.hc_name),10) SEPARATOR ',') as CategorieFonction")
-                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hclangue.hc_name,hctlangue.hc_name),8)) as CategorieLangue")
+//                , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hclangue.hc_name,hctlangue.hc_name),8)) as CategorieLangue")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hcos.hc_name,hctos.hc_name),4)) as CategorieOS")
                 , DB::RAW("GROUP_CONCAT(DISTINCT substr(coalesce(hctype.hc_name,hcttype.hc_name),6)) as CategorieType"))
 
@@ -50,30 +50,30 @@ class Centreon extends Model
                 $join->on( DB::RAW("substr(hgsite.hg_name,1,5)"),'=' ,DB::RAW('"Site_"'));})
             ->leftjoin('hostcategories_relation as hcr','hcr.host_host_id','=','h.host_id')
             ->leftjoin('hostcategories_relation as hcrt','hcrt.host_host_id','=','ht.host_id')
-            ->leftjoin('hostcategories as hcarchitecture', function($join){
-                $join->on('hcr.hostcategories_hc_id','=','hcarchitecture.hc_id');
-                $join->on( DB::RAW("substr(hcarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
+//            ->leftjoin('hostcategories as hcarchitecture', function($join){
+//                $join->on('hcr.hostcategories_hc_id','=','hcarchitecture.hc_id');
+//                $join->on( DB::RAW("substr(hcarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
             ->leftjoin('hostcategories as hcfonction', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hcfonction.hc_id');
                 $join->on( DB::RAW("substr(hcfonction.hc_name,1,9)"),'=' ,DB::RAW('"Fonction_"'));})
-            ->leftjoin('hostcategories as hclangue', function($join){
-                $join->on('hcr.hostcategories_hc_id','=','hclangue.hc_id');
-                $join->on( DB::RAW("substr(hclangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
+//            ->leftjoin('hostcategories as hclangue', function($join){
+//                $join->on('hcr.hostcategories_hc_id','=','hclangue.hc_id');
+//                $join->on( DB::RAW("substr(hclangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
             ->leftjoin('hostcategories as hcos', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hcos.hc_id');
                 $join->on( DB::RAW("substr(hcos.hc_name,1,3)"),'=' ,DB::RAW('"OS_"'));})
             ->leftjoin('hostcategories as hctype', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hctype.hc_id');
                 $join->on( DB::RAW("substr(hctype.hc_name,1,5)"),'=' ,DB::RAW('"Type_"'));})
-            ->leftjoin('hostcategories as hctarchitecture', function($join){
-                $join->on('hcr.hostcategories_hc_id','=','hctarchitecture.hc_id');
-                $join->on( DB::RAW("substr(hctarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
+//            ->leftjoin('hostcategories as hctarchitecture', function($join){
+//                $join->on('hcr.hostcategories_hc_id','=','hctarchitecture.hc_id');
+//                $join->on( DB::RAW("substr(hctarchitecture.hc_name,1,13)"),'=' ,DB::RAW('"Architecture_"'));})
             ->leftjoin('hostcategories as hctfonction', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hctfonction.hc_id');
                 $join->on( DB::RAW("substr(hctfonction.hc_name,1,9)"),'=' ,DB::RAW('"Fonction_"'));})
-            ->leftjoin('hostcategories as hctlangue', function($join){
-                $join->on('hcr.hostcategories_hc_id','=','hctlangue.hc_id');
-                $join->on( DB::RAW("substr(hctlangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
+//            ->leftjoin('hostcategories as hctlangue', function($join){
+//                $join->on('hcr.hostcategories_hc_id','=','hctlangue.hc_id');
+//                $join->on( DB::RAW("substr(hctlangue.hc_name,1,7)"),'=' ,DB::RAW('"Langue_"'));})
             ->leftjoin('hostcategories as hctos', function($join){
                 $join->on('hcr.hostcategories_hc_id','=','hctos.hc_id');
                 $join->on( DB::RAW("substr(hctos.hc_name,1,3)"),'=' ,DB::RAW('"OS_"'));})

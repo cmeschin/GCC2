@@ -247,7 +247,8 @@ class NouvelleDemandeController extends Controller
             }
         }
 //        dd($myHosts,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
-//        dd($myServices,$myHosts,$myTimeperiods,$hosts,$timeperiods,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
+        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,
+            "sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
             'hosts', 'timeperiods'),
             array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
