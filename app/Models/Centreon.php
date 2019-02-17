@@ -88,6 +88,7 @@ class Centreon extends Model
         ;
 
         $hostDetails = json_decode($res->get(), true);
+        fixArrayKey($hostDetails);
         return $hostDetails;
 
     }
@@ -96,10 +97,10 @@ class Centreon extends Model
     {
 
         $res = DB::connection('centreon')->table('service as s')
-            ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"),
+            ->select('h.host_id',
                 'h.host_address',
                 'h.host_activate',
-                DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"),
+                's.service_id',
                 's.service_activate',
                 'sc.sc_name',
                 DB::RAW("CONCAT(coalesce(
@@ -146,6 +147,7 @@ class Centreon extends Model
         ;
 
         $serviceDetails = json_decode($res->get(), true);
+        fixArrayKey($serviceDetails);
         return $serviceDetails;
 
     }
@@ -161,10 +163,10 @@ class Centreon extends Model
     public function getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts, $prestation)
     {
         $res = DB::connection('centreon')->table('service as s')
-        ->select(DB::RAW("CONVERT(h.host_id, CHAR) as 'host id'"),
+        ->select('h.host_id',
             'h.host_name as host name',
-            DB::RAW("CONVERT(s.service_id, CHAR) as 'service id'"),
-            's.service_description as service description',
+            's.service_id',
+            's.service_description',
             DB::RAW('GROUP_CONCAT(sg.sg_name) as sg_name'),
             DB::RAW("CONVERT(s.service_template_model_stm_id, CHAR) as 'service_template_id'"),
             DB::RAW("CONVERT(st.service_description, CHAR) as 'service_template_description'")
@@ -178,7 +180,7 @@ class Centreon extends Model
         ->leftjoin('servicegroup as sg', 'sgr.servicegroup_sg_id', '=', 'sg.sg_id')
         ->where('sc.sc_name', $serviceCategorie)
         ->whereIn('h.host_name', $hosts)
-            ->groupBy('host name', 'service description', 'host id', 'service id', 'service_template_id', 'service_template_description')
+            ->groupBy('host_name', 'service_description', 'host_id', 'service_id', 'service_template_id', 'service_template_description')
         ->orderBy('h.host_name','asc')
         ->orderBy('s.service_description','asc')
         ;
@@ -187,6 +189,7 @@ class Centreon extends Model
         //dd($services);
         $services = $this->dropDuplicateServicesByPrestation($services,$prestation);
         //dd($services);
+        fixArrayKey($services);
         return $services;
     }
 
@@ -224,7 +227,7 @@ class Centreon extends Model
     public function getCentreonTimeperiodByServiceIds($serviceIds)
     {
         $res = DB::connection('centreon')->table('service as s')
-            ->select(DB::RAW("CONVERT(s.service_id, CHAR) as 'service_id'"),
+            ->select('s.service_id',
                 't.tp_id',
                 't.tp_name',
                 't.tp_monday',
@@ -258,6 +261,7 @@ class Centreon extends Model
         ;
 
         $timeperiods = json_decode($res->get(), true);
+        fixArrayKey($timeperiods);
         return $timeperiods;
 
     }
@@ -304,8 +308,7 @@ class Centreon extends Model
         ;
 
         $uniqueTimeperiods = json_decode($res->get(), true);
+        fixArrayKey($uniqueTimeperiods);
         return $uniqueTimeperiods;
-
     }
-
 }

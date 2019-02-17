@@ -18,8 +18,8 @@ use App\Models\TypeDemande;
  *
  * @param $services
  * @param $serviceDetails
- * @return array("host id", "host name", "service id", "service description", "tp name", "host address",
- *  "host activate", "service activate", "service categorie", "service interval")
+ * @return array("host_id", "host_name", "service_id", "service_description", "tp_name", "host_address",
+ *  "host_activate", "service_activate", "service_categorie", "service_interval")
  */
 if (!function_exists('addServiceDetails')) {
     function addServiceDetails($services, $serviceDetails)
@@ -32,28 +32,19 @@ if (!function_exists('addServiceDetails')) {
         {
             //\Log::debug('Service: ', [$value]);
             for($j=0;$j<count($serviceDetails);$j++){
-                $indexService = array_search($value['service id'],$serviceDetails[$j]);
+                $indexService = array_search($value['service_id'],$serviceDetails[$j]);
                 $trouve = False;
                 if ($indexService)
                 {
                     //\Log::debug('Detail: ', [$serviceDetails[$j]]);
                     // get values in serviceDetails array
-                    $hostAddress = $serviceDetails[$j]['host_address'];
-                    $hostActivate = $serviceDetails[$j]['host_activate'];
-                    $serviceActivate = $serviceDetails[$j]['service_activate'];
-                    $serviceCategorie = $serviceDetails[$j]['sc_name'];
-                    $serviceInterval = $serviceDetails[$j]['service_normal_check_interval'];
+                    $services[$i]['host_address'] = $serviceDetails[$j]['host_address'];
+                    $services[$i]['host_activate'] = $serviceDetails[$j]['host_activate'];
+                    $services[$i]['service_activate'] = $serviceDetails[$j]['service_activate'];
+                    $services[$i]['sc_name'] = $serviceDetails[$j]['sc_name'];
+                    $services[$i]['service_interval'] = $serviceDetails[$j]['service_normal_check_interval'];
 //                    $serviceTemplateId = $serviceDetails[$j]['service_template_id'];
 //                    $serviceTemplateDescription = $serviceDetails[$j]['service_template_description'];
-
-                    // set new values in services array
-                    $services[$i]['host address'] = $hostAddress;
-                    $services[$i]['host activate'] = $hostActivate;
-                    $services[$i]['service activate'] = $serviceActivate;
-                    $services[$i]['sc name'] = $serviceCategorie;
-                    $services[$i]['service interval'] = $serviceInterval;
-//                    $services[$i]['service template id'] = $serviceTemplateId;
-//                    $services[$i]['service template description'] = $serviceTemplateDescription;
 
                     // if found, exit loop and get new service in services array
                     $trouve = True;
@@ -70,6 +61,7 @@ if (!function_exists('addServiceDetails')) {
         \Log::info('Service: détails ajoutés');
         //dd($services);
         //var_dump($services);
+        fixArrayKey($services);
         return $services;
     }
 }
@@ -88,7 +80,7 @@ if (!function_exists('addServiceMacros')) {
         foreach ($serviceSelected as $currentService)
         {
             //dd($services[$i],$serviceSelected, $currentService);
-            $key = array_search($currentService, array_column($services, 'service id'));
+            $key = array_search($currentService, array_column($services, 'service_id'));
             $myServices[] = $services[$key];
         }
         //dd($myServices);
@@ -104,6 +96,7 @@ if (!function_exists('addServiceMacros')) {
             $myServices[$i]['macros'] = $macros;
             $i++;
         }
+        fixArrayKey($myServices);
         session(['myServices' => $myServices]);
         return $myServices;
     }
@@ -113,7 +106,7 @@ if (!function_exists('addServiceMacros')) {
  *
  * @param $services
  * @param $timeperiods
- * @return array("host id", "host name", "service id", "service description", "tp name")
+ * @return array("host_id", "host_name", "service_id", "service_description", "tp_name")
  */
 if (!function_exists('addServiceTimeperiod')) {
     function addServiceTimeperiod($services, $timeperiods)
@@ -123,13 +116,10 @@ if (!function_exists('addServiceTimeperiod')) {
         $i = 0;
         foreach ($services as $value) {
             for ($j = 0; $j < count($timeperiods); $j++) {
-                $index = array_search($value['service id'], $timeperiods[$j]);
+                $index = array_search($value['service_id'], $timeperiods[$j]);
                 $trouve = False;
                 if ($index) {
-                    $tpName = $timeperiods[$j]['tp_name'];
-
-                    $services[$i]['tp name'] = $tpName;
-
+                    $services[$i]['tp_name'] = $timeperiods[$j]['tp_name'];
                     $trouve = True;
                     break;
                 }
@@ -141,7 +131,7 @@ if (!function_exists('addServiceTimeperiod')) {
             $i++;
         }
         \Log::info('Service: TimePeriod ajoutés');
-        //dd($services);
+        fixArrayKey($services);
         return $services;
    }
 }
@@ -177,6 +167,7 @@ if (!function_exists('getEtatDemande')) {
     function getEtatDemande()
     {
         $etatdemandes = EtatDemande::all()->pluck('etat', 'id');
+        fixArrayKey($etatdemandes);
         return $etatdemandes;
     }
 }
@@ -190,6 +181,7 @@ if (!function_exists('getListDiffusion')) {
     function getListDiffusion()
     {
         $listDiffusions = Preference::All('id', 'type', 'cle', 'user_id', 'valeur')->where('user_id', Auth::user()->id)->where('type', 'emails');
+//        fixArrayKey($listDiffusions);
         return $listDiffusions;
     }
 }
@@ -213,7 +205,7 @@ if (!function_exists('getPrestations')) {
             };
         };
         sort($prestations);
-        //dd($prestations);
+        fixArrayKey($prestations);
         return $prestations;
     }
 }
@@ -227,6 +219,26 @@ if (!function_exists('getTypeDemande')) {
     function getTypeDemande()
     {
         $typedemandes = TypeDemande::all()->pluck('type', 'id');
+//        fixArrayKey($typedemandes);
         return $typedemandes;
+    }
+}
+
+/**
+ * Function to replace all spaces by underscores in all keys of arrays recursively
+ * @param $arr
+ */
+if (!function_exists('fixArrayKey')){
+    function fixArrayKey(&$arr)
+    {
+        if (is_array($arr)){
+            $arr=array_combine(array_map(function($str){return str_replace(" ","_",$str);},array_keys($arr)),array_values($arr));
+            foreach($arr as $key=>$val)
+            {
+                if(is_array($val)) fixArrayKey($arr[$key]);
+            }
+        } else {
+            dd($arr);
+        }
     }
 }

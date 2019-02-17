@@ -9,6 +9,7 @@ define("URL",  "http://192.168.0.22/centreon/api/index.php");
 
 class ApiController extends Controller
 {
+
     /**
      * @TODO variabiliser l'URL et les user/password
      */
@@ -46,6 +47,7 @@ class ApiController extends Controller
             ]
         ]);
         $host = json_decode($res->getBody(), true);
+        fixArrayKey($host);
         return $host;
     }
 
@@ -76,6 +78,7 @@ class ApiController extends Controller
         ]);
         $hosts = json_decode($res->getBody(), true);
         //var_dump($serviceGroups);
+        fixArrayKey($hosts);
         return $hosts;
     }
 
@@ -107,6 +110,7 @@ class ApiController extends Controller
             ]
         ]);
         $hostcategories = json_decode($res->getBody(), true);
+        fixArrayKey($hostcategories);
         return $hostcategories;
     }
 
@@ -138,6 +142,7 @@ class ApiController extends Controller
             ]
         ]);
         $hostgroups = json_decode($res->getBody(), true);
+        fixArrayKey($hostgroups);
         return $hostgroups;
     }
 
@@ -162,10 +167,11 @@ class ApiController extends Controller
             'json' => [
                 'action' => 'getmacro',
                 'object' => 'service',
-                'values' => $myService['host name'] . ';' . $myService['service description']
+                'values' => $myService['host_name'] . ';' . $myService['service_description']
             ]
         ]);
         $macros = json_decode($res->getBody(), true);
+        fixArrayKey($macros);
         return $macros;
     }
     /**
@@ -195,6 +201,7 @@ class ApiController extends Controller
         ]);
         $serviceGroups = json_decode($res->getBody(), true);
         //var_dump($serviceGroups);
+        fixArrayKey($serviceGroups);
         return $serviceGroups;
     }
 
@@ -226,7 +233,9 @@ class ApiController extends Controller
                 ]
         ]);
         $servicesByServiceGroup = json_decode($res->getBody(), true);
-        //var_dump($servicesByServiceGroup);
+//        var_dump($servicesByServiceGroup);
+        fixArrayKey($servicesByServiceGroup);
+//        dd($servicesByServiceGroup);
         return $servicesByServiceGroup;
     }
 
@@ -247,8 +256,8 @@ class ApiController extends Controller
             ]
         ]);
         $token = json_decode($res->getBody(), true);
-        $token =  $token['authToken'];
-        return $token;
+//        $token = $token['authToken'];
+        return $token['authToken'];
     }
 
 }

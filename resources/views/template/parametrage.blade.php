@@ -26,17 +26,16 @@
                                                 <tr class="text-center color-tessi-clair">
                                                     <th>Service</th>
                                                     <th>Etat</th>
-                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
                                                 @if ($myServices)
                                                     @foreach ($myServices as $service)
                                                         <tr>
                                                             <td>
-                                                                <a data-toggle="collapse" href="#collapseS{{ $service['service id']}}" role="button" aria-expanded="false" aria-controls="collapseS{{ $service['service id']}}">
-                                                                    {{ $service['host name'] . " / " . $service['service description'] }}
+                                                                <a data-toggle="collapse" href="#collapseS{{ $service['service_id']}}" role="button" aria-expanded="false" aria-controls="collapseS{{ $service['service_id']}}">
+                                                                    {{ $service['host_name'] . " / " . $service['service_description'] }}
                                                                 </a>
                                                             </td>
-                                                            <td id="S{{ $service['service id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
+                                                            <td id="S{{ $service['service_id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -45,11 +44,15 @@
                                         <div class="col-md-9">
                                             @if ($myServices)
                                                 @foreach ($myServices as $service)
-                                                    @php($numService=1)
-                                                    <div class="collapse multi-collapse" id="collapseS{{ $service['service id'] }}">
+                                                    @php
+                                                        $numService=1;
+                                                    @endphp
+                                                    <div class="collapse multi-collapse" id="collapseS{{ $service['service_id'] }}">
                                                             @include('template.service')
                                                     </div>
-                                                    @php($numService++)
+                                                    @php
+                                                        $numService++;
+                                                    @endphp
                                                 @endforeach
                                             @endif
                                         </div>
@@ -75,7 +78,6 @@
                                                 <tr class="text-center color-tessi-clair">
                                                     <th>Hôte</th>
                                                     <th>Etat</th>
-                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapseHost">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
                                                 {{--@if (count($myHosts) > 0)--}}
                                                 @if ($myHosts)
@@ -133,8 +135,14 @@
 
 @section('script')
     <script>
-        // $(document).ready(function() {
+        $(document).ready(function() {
             $('.select2').select2();
-        // });
+            // //ajax initialization
+            //     $('.select2').select2();
+            //
+            //     //bug fix
+            //     $('.select2').next('.select2').removeClass('select2');
+            //     $('.select2').select2();
+        });
     </script>
 @endsection

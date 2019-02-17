@@ -85,7 +85,7 @@ class NouvelleDemandeController extends Controller
 
         $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$prestation);
         // extrait la liste des hôtes unitairement
-        $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host name'));
+        $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host_name'));
 
         $serviceCategorie = "Systeme";
 
@@ -97,7 +97,7 @@ class NouvelleDemandeController extends Controller
         //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts;
 
         //récupérer la liste des service_id
-        $serviceIds = array_column($services, 'service id');
+        $serviceIds = array_column($services, 'service_id');
 
         $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
@@ -109,10 +109,10 @@ class NouvelleDemandeController extends Controller
         $services = addServiceTimeperiod($services,$timeperiods);
 
         $services = addServiceDetails($services,$serviceDetails);
-        //array_unique(array_column($services,'service id'));
+        //array_unique(array_column($services,'service_id'));
         //sort($services);
-        array_multisort(array_column($services, 'host name'),  SORT_ASC,
-            array_column($services, 'service description'), SORT_ASC,
+        array_multisort(array_column($services, 'host_name'),  SORT_ASC,
+            array_column($services, 'service_description'), SORT_ASC,
             $services);
 //dd($services);
         /**
@@ -233,22 +233,21 @@ class NouvelleDemandeController extends Controller
         foreach ($timeperiods as &$timeperiod){
             $timeperiod['selected'] = array();
             foreach ($myServices as $service){
-                if ( $service['tp name'] == $timeperiod['tp_name'] ){
-                    $timeperiod['selected'][] = $service['service id'];
+                if ( $service['tp_name'] == $timeperiod['tp_name'] ){
+                    $timeperiod['selected'][] = $service['service_id'];
                 }
             }
         }
         foreach ($hosts as &$host){
             $host['selected'] = array();
             foreach ($myServices as $service){
-                if ( $service['host id'] == $host['host_id'] ){
-                    $host['selected'][] = $service['service id'];
+                if ( $service['host_id'] == $host['host_id'] ){
+                    $host['selected'][] = $service['service_id'];
                 }
             }
         }
 //        dd($myHosts,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
-        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,
-            "sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions);
+//        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
             'hosts', 'timeperiods'),
             array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));

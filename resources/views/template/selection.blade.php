@@ -38,44 +38,44 @@
 
                                   @foreach ($services as $service)
                                       @php
-                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
+                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host_name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
 
                                         if ($nom_hote != $nom_hote_actuel){
 
                                           $j = 1;
                                           $nom_hote = $nom_hote_actuel;
-                                          $hote_localisation = stristr($service['host name'],'-',1); // conserve la chaine avant le premier tiret
+                                          $hote_localisation = stristr($service['host_name'],'-',1); // conserve la chaine avant le premier tiret
                                         }
                                       @endphp
-                                      @if ($service['host activate'] == 0 || $service['service activate'] == 0)
+                                      @if ($service['host_activate'] == 0 || $service['service_activate'] == 0)
                                           {{--// mise en couleur pour les controles inactifs--}}
                                           <tr class="gcc-disabled">
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service id'] }}" value="{{ $service['service id'] }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service_id'] }}" value="{{ $service['service_id'] }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
-                                              data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
+                                              data-original-title="{{ $service['host_address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
                                       @else
                                           <td></td>
                                       @endif
-                                      @if ($service['service activate'] == 1 && $service['host activate'] == 1)
-                                          <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host name'] }}&service_description={{ $service['service description'] }}">{{ $service['service description'] }}</a></td>
+                                      @if ($service['service_activate'] == 1 && $service['host_activate'] == 1)
+                                          <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host_name'] }}&service_description={{ $service['service_description'] }}">{{ $service['service_description'] }}</a></td>
                                       @else
-                                          <td>{{ $service['service description'] }}</td>
+                                          <td>{{ $service['service_description'] }}</td>
                                       @endif
-                                      <td>{{ $service['service interval'] }}</td>
-                                      <td>{{ $service['tp name'] }}</td>
-                                      @if ($service['host activate'] == 0)
+                                      <td>{{ $service['service_interval'] }}</td>
+                                      <td>{{ $service['tp_name'] }}</td>
+                                      @if ($service['host_activate'] == 0)
                                           <td>hôte désactivé</td>
-                                      @elseif ($service['service activate'] == 0)
+                                      @elseif ($service['service_activate'] == 0)
                                           <td>désactivé</td>
                                       @else
                                           <td>actif</td>
                                       @endif
-                                      <td hidden>s{{ $service['service id'] }}</td>
-                                      <td hidden>h{{ $service['host id'] }}</td>
+                                      <td hidden>s{{ $service['service_id'] }}</td>
+                                      <td hidden>h{{ $service['host_id'] }}</td>
                                       </tr>
                                       @php
                                           $i++;
