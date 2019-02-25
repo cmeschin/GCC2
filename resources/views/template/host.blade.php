@@ -148,10 +148,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="form-group">
-                <label for="host-consigne{{ $numHost }}">Consigne</label>
-                <input id="host-consigne{{ $numHost }}" type="text" class="form-control{{ $errors->has("host-consigne" . $numHost) ? ' is-invalid' : '' }}" name="host-consigne{{ $numHost }}" placeholder="Consigne à appliquer en cas d'alerte" value="{{ old("host-consigne" . $numHost, isset($host['ehi_notes_url']) ? $host['ehi_notes_url'] : '') }}" required="required">
+                <label for="host-consigne{{ $numHost }}">
+                    Consigne
+                    @if($host['ehi_notes_url'])
+                        {{ "- " }}<a href="{{ $host['ehi_notes_url'] }}" target="_blank" role="button" aria-expanded="false" aria-controls="host-consigne{{ $numHost}}">
+                            Suivre le lien</a>
+                    @endif
+                </label>
+
+                <input id="host-consigne{{ $numHost }}" type="text" class="form-control{{ $errors->has("host-consigne" . $numHost) ? ' is-invalid' : '' }}"
+                       name="host-consigne{{ $numHost }}" placeholder="Consigne à appliquer en cas d'alerte"
+                       value="{{ old("host-consigne" . $numHost, isset($host['ehi_notes_url']) ? $host['ehi_notes_url'] : '') }}"
+                       required="required">
                 @if ($errors->has("host-consigne" . $numHost))
                     <div class="invalid-feedback">
                         {{ $errors->first("host-consigne" . $numHost) }}

@@ -32,7 +32,7 @@
                                       <th hidden="hidden">host_id</th>
                                   </tr>
                                   @php
-                                      $i = 1;
+                                      //$i = 1;
                                       $nom_hote = "";
                                   @endphp
 
@@ -41,7 +41,6 @@
                                         $nom_hote_actuel = substr(stristr(substr(stristr($service['host_name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
 
                                         if ($nom_hote != $nom_hote_actuel){
-
                                           $j = 1;
                                           $nom_hote = $nom_hote_actuel;
                                           $hote_localisation = stristr($service['host_name'],'-',1); // conserve la chaine avant le premier tiret
@@ -78,7 +77,7 @@
                                       <td hidden>h{{ $service['host_id'] }}</td>
                                       </tr>
                                       @php
-                                          $i++;
+                                          //$i++;
                                           $j++;
                                       @endphp
                                   @endforeach
@@ -114,9 +113,9 @@
                                       <th>Type</th>
                                       <th hidden="hidden">host_id</th>
                                   </tr>
-                                  @php
-                                      $i = 1;
-                                  @endphp
+                                  {{--@php--}}
+                                      {{--$i = 1;--}}
+                                  {{--@endphp--}}
 
                                   @foreach ($hosts as $host)
                                       @if ($host['host_activate'] == 0)
@@ -148,9 +147,9 @@
                                           <td>{{ $host['CategorieType'] }}</td>
                                           <td hidden="hidden">{{ $host['host_id'] }}</td>
                                       </tr>
-                                      @php
-                                          $i++;
-                                      @endphp
+                                      {{--@php--}}
+                                          {{--$i++;--}}
+                                      {{--@endphp--}}
                                   @endforeach
                               </table>
                           </div>
@@ -180,26 +179,26 @@
                                       <th>@lang('validation.custom.weekdays.sunday')</th>
                                       <th hidden="hidden">tp_id</th>
                                   </tr>
-                              @php
-                                  $i = 1;
-                              @endphp
+                              {{--@php--}}
+                                  {{--$i = 1;--}}
+                              {{--@endphp--}}
 
-                              @foreach ($uniqueTimeperiods as $timeperiod)
+                              @foreach ($uniqueTimeperiods as $uniqueTp)
                                   <tr>
-                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $timeperiod['tp_id'] }}" value="{{ $timeperiod['tp_id'] }}"/></td>
-                                      <td>{{ $timeperiod['tp_name'] }}</td>
-                                      <td>{{ $timeperiod['tp_monday'] }}</td>
-                                      <td>{{ $timeperiod['tp_tuesday'] }}</td>
-                                      <td>{{ $timeperiod['tp_wednesday'] }}</td>
-                                      <td>{{ $timeperiod['tp_thursday'] }}</td>
-                                      <td>{{ $timeperiod['tp_friday'] }}</td>
-                                      <td>{{ $timeperiod['tp_saturday'] }}</td>
-                                      <td>{{ $timeperiod['tp_sunday'] }}</td>
-                                      <td hidden="hidden">t{{ $timeperiod['tp_id'] }}</td>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $uniqueTp['tp_id'] }}" value="{{ $uniqueTp['tp_id'] }}"/></td>
+                                      <td>{{ $uniqueTp['tp_name'] }}</td>
+                                      <td>{{ $uniqueTp['tp_monday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_tuesday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_wednesday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_thursday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_friday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_saturday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_sunday'] }}</td>
+                                      <td hidden="hidden">{{ $uniqueTp['tp_id'] }}</td>
                                   </tr>
-                                  @php
-                                      $i++;
-                                  @endphp
+                                  {{--@php--}}
+                                      {{--$i++;--}}
+                                  {{--@endphp--}}
                               @endforeach
                               </table>
                           </div>

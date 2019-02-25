@@ -103,18 +103,21 @@ class NouvelleDemandeController extends Controller
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
 
         $hosts = $centreon->getCentreonHostDetailsByHosts($hosts);
+        fixCentreonKbUrl($hosts);
 
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
-
+//        dd($serviceDetails);
         $services = addServiceTimeperiod($services,$timeperiods);
 
         $services = addServiceDetails($services,$serviceDetails);
+        fixCentreonKbUrl($services);
         //array_unique(array_column($services,'service_id'));
         //sort($services);
+        // tri le tableau par ordre croissant host - service
         array_multisort(array_column($services, 'host_name'),  SORT_ASC,
             array_column($services, 'service_description'), SORT_ASC,
             $services);
-//dd($services);
+//dd("hosts",$hosts,"services",$services);
         /**
          * Enregistrement des variables en session
          */
@@ -146,7 +149,6 @@ class NouvelleDemandeController extends Controller
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
         $token = session('token');
-
         $sites = $api->getApiHostgroups($token,'Site')['result'];
         array_multisort(array_column($sites, 'alias'),  SORT_ASC, $sites);
 
@@ -162,6 +164,9 @@ class NouvelleDemandeController extends Controller
         $hostFonctions = $api->getApiHostcategories($token,'Fonction_')['result'];
         array_multisort(array_column($hostFonctions, 'alias'),  SORT_ASC, $hostFonctions);
 
+        $serviceTemplates = $api->getApiServiceTemplates($token)['result'];
+        array_multisort(array_column($serviceTemplates, 'description'),  SORT_ASC, $serviceTemplates);
+
         if ($serviceSelected){
             $myServices = addServiceMacros($serviceSelected);
         } else {
@@ -170,7 +175,6 @@ class NouvelleDemandeController extends Controller
         if ($hostSelected){
             foreach ($hostSelected as $currentHost)
             {
-//                var_dump($currentHost);
                 $key = array_search($currentHost, array_column($hosts, 'host_id'));
                 $myHosts[] = $hosts[$key];
             }
@@ -179,7 +183,7 @@ class NouvelleDemandeController extends Controller
         }
         if ($timeperiodSelected) {
             foreach ($timeperiodSelected as $currentTimeperiod) {
-                $key = array_search($currentTimeperiod, array_column($timeperiods, 'timeperiod_id'));
+                $key = array_search($currentTimeperiod, array_column($timeperiods, 'tp_id'));
                 $myTimeperiods[] = $timeperiods[$key];
             }
         } else {
@@ -230,6 +234,7 @@ class NouvelleDemandeController extends Controller
                 }
             }
         }
+
         foreach ($timeperiods as &$timeperiod){
             $timeperiod['selected'] = array();
             foreach ($myServices as $service){
@@ -238,6 +243,16 @@ class NouvelleDemandeController extends Controller
                 }
             }
         }
+
+        foreach ($serviceTemplates as &$serviceTemplate){
+            $serviceTemplate['selected'] = array();
+            foreach ($myServices as $service){
+                if ( $service['service_template_description'] == $serviceTemplate['description'] ){
+                    $serviceTemplate['selected'][] = $service['service_id'];
+                }
+            }
+        }
+
         foreach ($hosts as &$host){
             $host['selected'] = array();
             foreach ($myServices as $service){
@@ -246,10 +261,9 @@ class NouvelleDemandeController extends Controller
                 }
             }
         }
-//        dd($myHosts,$sites,$solutions,$hostTypes,$hostOss,$hostFonctions);
-//        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions);
+//        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions,"serviceTemplates",$serviceTemplates);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
-            'hosts', 'timeperiods'),
+            'hosts', 'timeperiods','serviceTemplates'),
             array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 

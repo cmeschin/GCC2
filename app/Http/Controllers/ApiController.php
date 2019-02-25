@@ -206,6 +206,37 @@ class ApiController extends Controller
     }
 
     /**
+     * Fonction de récupération de tous les templates de service
+     *
+     * @param $token
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiServiceTemplates($token)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'STPL',
+            ]
+        ]);
+        $serviceTemplates = json_decode($res->getBody(), true);
+        //var_dump($serviceTemplates);
+        fixArrayKey($serviceTemplates);
+        return $serviceTemplates;
+    }
+
+    /**
      * Fonction de récupération de tous les services pour le groupe de service (prestation) donné
      *
      * @param $token

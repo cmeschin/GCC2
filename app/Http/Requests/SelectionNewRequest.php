@@ -24,10 +24,10 @@ class SelectionNewRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            //TODO: verify utility
 //            'selection_service' => 'nullable|string',
 //            'selection_host' => 'nullable|string',
-            'selection_timeperiod' => 'nullable|string|',
+//            'selection_timeperiod' => 'nullable|string|',
         ];
     }
     /**

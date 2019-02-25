@@ -24,12 +24,18 @@
                                         <div class="col-md-3">
                                             <table id="T_List_Service" class="table table-bordered table-condensed table-body-center">
                                                 <tr class="text-center color-tessi-clair">
+                                                    <th>N°</th>
                                                     <th>Service</th>
                                                     <th>Etat</th>
+                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
                                                 @if ($myServices)
+                                                    @php($numService=1)
                                                     @foreach ($myServices as $service)
                                                         <tr>
+                                                            <td class="text-center">
+                                                                {{ $numService }}
+                                                            </td>
                                                             <td>
                                                                 <a data-toggle="collapse" href="#collapseS{{ $service['service_id']}}" role="button" aria-expanded="false" aria-controls="collapseS{{ $service['service_id']}}">
                                                                     {{ $service['host_name'] . " / " . $service['service_description'] }}
@@ -37,22 +43,19 @@
                                                             </td>
                                                             <td id="S{{ $service['service_id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
                                                         </tr>
+                                                        @php($numService++)
                                                     @endforeach
                                                 @endif
                                             </table>
                                         </div>
                                         <div class="col-md-9">
                                             @if ($myServices)
+                                                @php($numService=1)
                                                 @foreach ($myServices as $service)
-                                                    @php
-                                                        $numService=1;
-                                                    @endphp
                                                     <div class="collapse multi-collapse" id="collapseS{{ $service['service_id'] }}">
                                                             @include('template.service')
                                                     </div>
-                                                    @php
-                                                        $numService++;
-                                                    @endphp
+                                                    @php($numService++)
                                                 @endforeach
                                             @endif
                                         </div>
@@ -76,14 +79,19 @@
                                         <div class="col-md-3">
                                             <table id="T_List_Host" class="table table-bordered table-condensed table-body-center">
                                                 <tr class="text-center color-tessi-clair">
+                                                    <th>N°</th>
                                                     <th>Hôte</th>
                                                     <th>Etat</th>
+                                                    {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
                                                 {{--@if (count($myHosts) > 0)--}}
                                                 @if ($myHosts)
+                                                    @php($numHost=1)
                                                     @foreach ($myHosts as $host)
-
                                                         <tr>
+                                                            <td class="text-center">
+                                                                {{ $numHost }}
+                                                            </td>
                                                             <td>
                                                                 <a data-toggle="collapse" href="#collapseH{{ $host['host_id']}}" role="button" aria-expanded="false" aria-controls="collapseH{{ $host['host_id']}}">
                                                                     {{ $host['host_name'] . " / " . $host['host_address'] }}
@@ -91,14 +99,15 @@
                                                             </td>
                                                             <td id="H{{ $host['host_id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
                                                         </tr>
+                                                        @php($numHost++)
                                                     @endforeach
                                                 @endif
                                             </table>
                                         </div>
                                         <div class="col-md-9">
                                             @if ($myHosts)
+                                                @php($numHost=1)
                                                 @foreach ($myHosts as $host)
-                                                    @php($numHost=1)
                                                     <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
                                                         @include('template.host')
                                                     </div>
@@ -137,12 +146,6 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2();
-            // //ajax initialization
-            //     $('.select2').select2();
-            //
-            //     //bug fix
-            //     $('.select2').next('.select2').removeClass('select2');
-            //     $('.select2').select2();
         });
     </script>
 @endsection

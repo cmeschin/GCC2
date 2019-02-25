@@ -43,6 +43,7 @@ if (!function_exists('addServiceDetails')) {
                     $services[$i]['service_activate'] = $serviceDetails[$j]['service_activate'];
                     $services[$i]['sc_name'] = $serviceDetails[$j]['sc_name'];
                     $services[$i]['service_interval'] = $serviceDetails[$j]['service_normal_check_interval'];
+                    $services[$i]['esi_notes_url'] = $serviceDetails[$j]['esi_notes_url'];
 //                    $serviceTemplateId = $serviceDetails[$j]['service_template_id'];
 //                    $serviceTemplateDescription = $serviceDetails[$j]['service_template_description'];
 
@@ -237,6 +238,49 @@ if (!function_exists('fixArrayKey')){
             {
                 if(is_array($val)) fixArrayKey($arr[$key]);
             }
+        } else {
+            dd($arr);
+        }
+    }
+}
+
+/**
+ * Function to rebuild urls of centreonKB hosts and services
+ * @param $arr
+ */
+if (!function_exists('fixCentreonKbUrl')){
+    function fixCentreonKbUrl(&$arr)
+    {
+        if (is_array($arr)){
+            if (array_key_exists("service_description", $arr[0])){
+                // si le tableau contient la clé service_description => c'est un tableau service
+                foreach($arr as $key=>$val){
+                    foreach($val as $key2=>$val2){
+//                        var_dump($key2,$val2);
+                        if ($key2 == 'esi_notes_url'){
+                            $newVal2=str_replace("./include/","http://192.168.0.22/centreon/include/",str_replace("\$HOSTNAME\$",$val['host_name'],str_replace("\$SERVICEDESC\$",$val['service_description'],$val2)));
+                            $arr[$key][$key2]=$newVal2;
+//                            var_dump('#####',$val[$key2],"<br/>");
+                        }
+                    }
+                }
+            }elseif(array_key_exists("host_alias", $arr[0])){
+                // sinon si le tableau contient la clé host_alias, c'est un tableau host
+                foreach($arr as $key=>$val){
+                    foreach($val as $key2=>$val2){
+//                        var_dump($key2,$val2);
+                        if ($key2 == 'ehi_notes_url'){
+                            $newVal2=str_replace("./include/","http://192.168.0.22/centreon/include/",str_replace("\$HOSTNAME\$",$val['host_name'],$val2));
+                            $arr[$key][$key2]=$newVal2;
+//                            var_dump('#####',$val[$key2],"<br/>");
+                        }
+                    }
+                }
+            } else {
+                // sinon on affiche le tableau pour debug
+                dd("cas non géré", $arr[0]);
+            }
+
         } else {
             dd($arr);
         }

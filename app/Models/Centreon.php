@@ -88,7 +88,7 @@ class Centreon extends Model
         ;
 
         $hostDetails = json_decode($res->get(), true);
-        fixArrayKey($hostDetails);
+//        fixArrayKey($hostDetails);
         return $hostDetails;
 
     }
@@ -114,7 +114,17 @@ class Centreon extends Model
                     st7.service_normal_check_interval,
                     st8.service_normal_check_interval),' Min') as 'service_normal_check_interval'"),
                 DB::RAW("CONVERT(st1.service_id, CHAR) as 'service_template_id'"),
-                DB::RAW("CONVERT(st1.service_description, CHAR) as 'service_template_description'")
+                DB::RAW("CONVERT(st1.service_description, CHAR) as 'service_template_description'"),
+                DB::RAW("coalesce(
+                    esi.esi_notes_url,
+                    esi1.esi_notes_url,
+                    esi2.esi_notes_url,
+                    esi3.esi_notes_url,
+                    esi4.esi_notes_url,
+                    esi5.esi_notes_url,
+                    esi6.esi_notes_url,
+                    esi7.esi_notes_url,
+                    esi8.esi_notes_url) as 'esi_notes_url'")
             )
             ->leftjoin('host_service_relation as hsr','s.service_id','=','hsr.service_service_id')
             ->leftjoin('host as h','hsr.host_host_id','=','h.host_id')
@@ -137,6 +147,15 @@ class Centreon extends Model
                     st7.service_id,
                     st8.service_id)")
             )
+            ->leftjoin('extended_service_information as esi','esi.service_service_id','=','s.service_id')
+            ->leftjoin('extended_service_information as esi1','esi1.service_service_id','=','st1.service_id')
+            ->leftjoin('extended_service_information as esi2','esi2.service_service_id','=','st2.service_id')
+            ->leftjoin('extended_service_information as esi3','esi3.service_service_id','=','st3.service_id')
+            ->leftjoin('extended_service_information as esi4','esi4.service_service_id','=','st4.service_id')
+            ->leftjoin('extended_service_information as esi5','esi5.service_service_id','=','st5.service_id')
+            ->leftjoin('extended_service_information as esi6','esi6.service_service_id','=','st6.service_id')
+            ->leftjoin('extended_service_information as esi7','esi7.service_service_id','=','st7.service_id')
+            ->leftjoin('extended_service_information as esi8','esi8.service_service_id','=','st8.service_id')
             ->leftjoin('service_categories as sc','scr.sc_id','=','sc.sc_id')
             ->whereNull('sc.level')
             ->where('sc.sc_description', 'NOT LIKE', 'Type_%')
@@ -147,7 +166,8 @@ class Centreon extends Model
         ;
 
         $serviceDetails = json_decode($res->get(), true);
-        fixArrayKey($serviceDetails);
+//        fixArrayKey($serviceDetails);
+//        dd($serviceDetails);
         return $serviceDetails;
 
     }
@@ -164,7 +184,7 @@ class Centreon extends Model
     {
         $res = DB::connection('centreon')->table('service as s')
         ->select('h.host_id',
-            'h.host_name as host name',
+            'h.host_name',
             's.service_id',
             's.service_description',
             DB::RAW('GROUP_CONCAT(sg.sg_name) as sg_name'),
@@ -180,7 +200,7 @@ class Centreon extends Model
         ->leftjoin('servicegroup as sg', 'sgr.servicegroup_sg_id', '=', 'sg.sg_id')
         ->where('sc.sc_name', $serviceCategorie)
         ->whereIn('h.host_name', $hosts)
-            ->groupBy('host_name', 'service_description', 'host_id', 'service_id', 'service_template_id', 'service_template_description')
+        ->groupBy('host_name', 'service_description', 'host_id', 'service_id', 'service_template_id', 'service_template_description')
         ->orderBy('h.host_name','asc')
         ->orderBy('s.service_description','asc')
         ;
@@ -189,7 +209,7 @@ class Centreon extends Model
         //dd($services);
         $services = $this->dropDuplicateServicesByPrestation($services,$prestation);
         //dd($services);
-        fixArrayKey($services);
+//        fixArrayKey($services);
         return $services;
     }
 
@@ -261,7 +281,7 @@ class Centreon extends Model
         ;
 
         $timeperiods = json_decode($res->get(), true);
-        fixArrayKey($timeperiods);
+//        fixArrayKey($timeperiods);
         return $timeperiods;
 
     }
@@ -308,7 +328,7 @@ class Centreon extends Model
         ;
 
         $uniqueTimeperiods = json_decode($res->get(), true);
-        fixArrayKey($uniqueTimeperiods);
+//        fixArrayKey($uniqueTimeperiods);
         return $uniqueTimeperiods;
     }
 }
