@@ -167,7 +167,7 @@ class Centreon extends Model
 
         $serviceDetails = json_decode($res->get(), true);
 //        fixArrayKey($serviceDetails);
-//        dd($serviceDetails);
+//        var_dump($serviceDetails);
         return $serviceDetails;
 
     }

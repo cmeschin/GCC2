@@ -44,8 +44,9 @@ if (!function_exists('addServiceDetails')) {
                     $services[$i]['sc_name'] = $serviceDetails[$j]['sc_name'];
                     $services[$i]['service_interval'] = $serviceDetails[$j]['service_normal_check_interval'];
                     $services[$i]['esi_notes_url'] = $serviceDetails[$j]['esi_notes_url'];
-//                    $serviceTemplateId = $serviceDetails[$j]['service_template_id'];
-//                    $serviceTemplateDescription = $serviceDetails[$j]['service_template_description'];
+
+                    $services[$i]['service_template_id'] = $serviceDetails[$j]['service_template_id'];
+                    $services[$i]['service_template_description'] = $serviceDetails[$j]['service_template_description'];
 
                     // if found, exit loop and get new service in services array
                     $trouve = True;
@@ -73,17 +74,17 @@ if (!function_exists('addServiceDetails')) {
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 if (!function_exists('addServiceMacros')) {
-    function addServiceMacros($serviceSelected)
+    function addServiceMacros($serviceSelected,$myServices)
     {
         \Log::debug('Service: ajout des macros...');
         $api = new ApiController;
-        $services = session('services');
-        foreach ($serviceSelected as $currentService)
-        {
-            //dd($services[$i],$serviceSelected, $currentService);
-            $key = array_search($currentService, array_column($services, 'service_id'));
-            $myServices[] = $services[$key];
-        }
+//        $services = session('services');
+//        foreach ($serviceSelected as $currentService)
+//        {
+//            //dd($services[$i],$serviceSelected, $currentService);
+//            $key = array_search($currentService, array_column($services, 'service_id'));
+//            $myServices[] = $services[$key];
+//        }
         //dd($myServices);
 
         /**

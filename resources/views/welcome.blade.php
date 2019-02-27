@@ -62,6 +62,6 @@
 
 @section('footer')
 <div>
-    GCC2 Copyright (C) 2017-2019 Cédric Meschin
+    GCC2 - Cédric Meschin
 </div>
 @endsection

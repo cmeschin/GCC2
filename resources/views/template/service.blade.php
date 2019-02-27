@@ -53,7 +53,7 @@
                     @endif
                 </label>
                 <input id="service-consigne{{ $numService }}" type="text" class="form-control{{ $errors->has("service-consigne" . $numService) ? ' is-invalid' : '' }}"
-                       name="service-consigne{{ $numService }}" placeholder="fréquence des contrôles"
+                       name="service-consigne{{ $numService }}" placeholder="consigne(s) à appliquer en cas d'alerte."
                        value="{{ old("service-consigne" . $numService, isset($service['esi_notes_url']) ? $service['esi_notes_url'] : '') }}"
                        required="required">
 

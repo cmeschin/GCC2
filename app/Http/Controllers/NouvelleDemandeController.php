@@ -98,7 +98,8 @@ class NouvelleDemandeController extends Controller
 
         //récupérer la liste des service_id
         $serviceIds = array_column($services, 'service_id');
-
+//        \Log::debug('ServiceIds: ' . $serviceIds);
+//        dd($serviceIds);
         $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
 
@@ -145,7 +146,7 @@ class NouvelleDemandeController extends Controller
         /**
          * récupération des variables en session
          */
-        //$services = session('services');
+        $services = session('services');
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
         $token = session('token');
@@ -168,7 +169,12 @@ class NouvelleDemandeController extends Controller
         array_multisort(array_column($serviceTemplates, 'description'),  SORT_ASC, $serviceTemplates);
 
         if ($serviceSelected){
-            $myServices = addServiceMacros($serviceSelected);
+            foreach ($serviceSelected as $currentService)
+            {
+                $key = array_search($currentService, array_column($services, 'service_id'));
+                $myServices[] = $services[$key];
+            }
+            $myServices = addServiceMacros($serviceSelected,$myServices);
         } else {
             $myServices = array();
         }
@@ -243,7 +249,7 @@ class NouvelleDemandeController extends Controller
                 }
             }
         }
-
+//dd($myServices);
         foreach ($serviceTemplates as &$serviceTemplate){
             $serviceTemplate['selected'] = array();
             foreach ($myServices as $service){
