@@ -1,9 +1,9 @@
-@component('components.card')
-    @slot('title')
-        {{ $numService . " - " . $service['host_name'] . " [" . $service['host_address'] . "] - " . $service['service_description']}}
-    @endslot
+@component('components.card-without-title')
+    {{--@slot('title')--}}
+        {{--{{ $numService . " - " . $service['host_name'] . " [" . $service['host_address'] . "] - " . $service['service_description']}}--}}
+    {{--@endslot--}}
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="service-timeperiod{{ $numService }}">Période</label>
                 <div class="form-control">
@@ -33,12 +33,43 @@
                 <input id="service-frequence{{ $numService }}" type="text" class="form-control{{ $errors->has("service-frequence" . $numService) ? ' is-invalid' : '' }}"
                        name="service-frequence{{ $numService }}" placeholder="fréquence des contrôles"
                        value="{{ old("service-frequence" . $numService, isset($service['service_interval']) ? $service['service_interval'] : 'par défaut') }}"
-                       readonly="readonly">
+                       readonly>
                 @if ($errors->has("service-frequence" . $numService))
                     <div class="invalid-feedback">
                         {{ $errors->first("service-frequence" . $numService) }}
                     </div>
                 @endif
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <label for="service-etat{{ $numService }}">Etat</label>
+                <input id="service-etat{{ $numService }}" type="text" class="form-control{{ $errors->has("service-etat" . $numService) ? ' is-invalid' : '' }}"
+                       name="service-etat{{ $numService }}" placeholder="état du service"
+                       value="{{ old("service-etat" . $numService, isset($Etat) ? $Etat : 'étrange') }}"
+                       readonly>
+                @if ($errors->has("service-etat" . $numService))
+                    <div class="invalid-feedback">
+                        {{ $errors->first("service-etat" . $numService) }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="service-param{{ $numService }}">Paramétrage à effectuer</label>
+                <div class="form-control">
+                    <select id="service-param{{ $numService }}" name="service-param{{ $numService }}[]"
+                            class="select2 form-control{{ $errors->has( "service-param" . $numService .'[]') ? ' is-invalid' : ''}}"
+                            required style="height: 100%;width: 100% ">
+                        @include('components.param-list')
+                    </select>
+                    @if ($errors->has("service-param" . $numService ))
+                        <div class="invalid-feedback">
+                            {{ $errors->first("service-param" . $numService) }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
