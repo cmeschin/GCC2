@@ -45,7 +45,7 @@ class NouvelleDemandeController extends Controller
 
         $etatDemande = Lang::get('validation.custom.state.draft');
         $listDiffusions = getListDiffusion();
-        $listPrestations = getPrestations();
+        $listPrestations = getPrestations($token);
         return view('template.infosgenerales',compact('typeDemandes','listDiffusions','listPrestations','refDemande','etatDemande'));
     }
 
@@ -69,7 +69,7 @@ class NouvelleDemandeController extends Controller
         $demande->user_id           = $userId;
         $demande->reference         = $request->refDemande;
         $demande->date_activation   = $dateActivation;
-        $demande->listediffusion_id = $request->listeDiffusion[0];
+        $demande->preference_id     = $request->listeDiffusion[0];
         $demande->typedemande_id    = $request->typeDemande[0];
         $demande->prestation        = $request->prestation[0];
         $demande->commentaire       = $request->description;
@@ -125,7 +125,6 @@ class NouvelleDemandeController extends Controller
         session(['services' => $services]);
         session(['hosts' => $hosts]);
         session(['timeperiods' => $uniqueTimeperiods]);
-//        dd($this->_services);
         // Afficher la seconde vue
         return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
     }
@@ -138,7 +137,7 @@ class NouvelleDemandeController extends Controller
      */
     public function parametrage(SelectionNewRequest $request, $refDemande)
     {
-        $api = new ApiController;
+//        $api = new ApiController;
 
         $serviceSelected = $request->input('selection_service');
         $hostSelected = $request->input('selection_host');
@@ -150,23 +149,14 @@ class NouvelleDemandeController extends Controller
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
         $token = session('token');
-        $sites = $api->getApiHostgroups($token,'Site')['result'];
-        array_multisort(array_column($sites, 'alias'),  SORT_ASC, $sites);
 
-        $solutions = $api->getApiHostgroups($token,'Solution')['result'];
-        array_multisort(array_column($solutions, 'alias'),  SORT_ASC, $solutions);
+        $sites = getSites($token);
+        $solutions = getSolutions($token);
+        $hostTypes = getHostTypes($token);
+        $hostOss = getHostOss($token);
+        $hostFonctions = getHostFonctions($token);
 
-        $hostTypes = $api->getApiHostcategories($token,'Type_')['result'];
-        array_multisort(array_column($hostTypes, 'alias'),  SORT_ASC, $hostTypes);
-
-        $hostOss = $api->getApiHostcategories($token,'OS_')['result'];
-        array_multisort(array_column($hostOss, 'alias'),  SORT_ASC, $hostOss);
-
-        $hostFonctions = $api->getApiHostcategories($token,'Fonction_')['result'];
-        array_multisort(array_column($hostFonctions, 'alias'),  SORT_ASC, $hostFonctions);
-
-        $serviceTemplates = $api->getApiServiceTemplates($token)['result'];
-        array_multisort(array_column($serviceTemplates, 'description'),  SORT_ASC, $serviceTemplates);
+        $serviceTemplates = getServiceTemplates($token);
 
         if ($serviceSelected){
             foreach ($serviceSelected as $currentService)
@@ -267,12 +257,24 @@ class NouvelleDemandeController extends Controller
                 }
             }
         }
-//        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions,"serviceTemplates",$serviceTemplates);
+//        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"services",$services,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions,"serviceTemplates",$serviceTemplates);
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
             'hosts', 'timeperiods','serviceTemplates'),
             array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
     }
 
+    public function deleteService($refDemande,$serviceid)
+    {
+        /**
+         * @TODO:
+         *      - retirer l'enregistrement du tableau
+         *      - retirer le service de myServices
+         *      - retirer le service de hosts['selected']
+         *      - retirer le service de timeperiods['selected']
+         *      - retirer le service de serviceTemplates['selected']
+         *
+         */
+    }
     /**
      * Go to validation page
      * @param ParametrageNewRequest $request

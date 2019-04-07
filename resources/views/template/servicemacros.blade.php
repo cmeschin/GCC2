@@ -37,7 +37,7 @@
             @endphp
             <div class="col-md-11">
                 @include('partials.form-group-input', [
-                    'title' => $serviceMacro['macro_name'],
+                    'title' => $title,
                     'type' => $type,
                     'name' => $name,
                     'value' => $macro_value,

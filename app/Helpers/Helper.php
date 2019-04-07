@@ -175,6 +175,71 @@ if (!function_exists('getEtatDemande')) {
 }
 
 /**
+ * Get all hosts types
+ * @param $token
+ * @return mixed
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+if (!function_exists('getHostTypes')) {
+    function getHostTypes($token)
+    {
+        $api = new ApiController;
+        $hostTypes = $api->getApiHostcategories($token,'Type_')['result'];
+        array_multisort(array_column($hostTypes, 'alias'),  SORT_ASC, $hostTypes);
+        return $hostTypes;
+    }
+}
+
+/**
+ * Get all hosts Oss
+ * @param $token
+ * @return mixed
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+if (!function_exists('getHostOss')) {
+    function getHostOss($token)
+    {
+        $api = new ApiController;
+        $hostOss = $api->getApiHostcategories($token,'OS_')['result'];
+        array_multisort(array_column($hostOss, 'alias'),  SORT_ASC, $hostOss);
+        return $hostOss;
+    }
+}
+
+/**
+ * Get all hosts functions
+ * @param $token
+ * @return mixed
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+if (!function_exists('getHostFonctions')) {
+    function getHostFonctions($token)
+    {
+        $api = new ApiController;
+        $hostFonctions = $api->getApiHostcategories($token,'Fonction_')['result'];
+        array_multisort(array_column($hostFonctions, 'alias'),  SORT_ASC, $hostFonctions);
+        return $hostFonctions;
+    }
+}
+
+/**
+ * Get all service templates
+ * @param $token
+ * @return mixed
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ */
+
+if (!function_exists('getServiceTemplates')) {
+    function getServiceTemplates($token)
+    {
+        $api = new ApiController;
+        $serviceTemplates = $api->getApiServiceTemplates($token)['result'];
+        array_multisort(array_column($serviceTemplates, 'description'),  SORT_ASC, $serviceTemplates);
+        return $serviceTemplates;
+    }
+}
+
+/**
  * Get all listDiffusion
  *
  * @return Preference[]|\Illuminate\Database\Eloquent\Collection
@@ -194,10 +259,10 @@ if (!function_exists('getListDiffusion')) {
  * @return array
  */
 if (!function_exists('getPrestations')) {
-    function getPrestations()
+    function getPrestations($token)
     {
         $api = new ApiController;
-        $token = session('token');
+//        $token = session('token');
         //dd($token);
         $result = $api->getApiServiceGroups($token);
 
@@ -209,6 +274,36 @@ if (!function_exists('getPrestations')) {
         sort($prestations);
         fixArrayKey($prestations);
         return $prestations;
+    }
+}
+
+/**
+ * Get all Sites
+ *
+ * @return \Illuminate\Support\Collection
+ */
+if (!function_exists('getSites')) {
+    function getSites($token)
+    {
+        $api = new ApiController;
+        $sites = $api->getApiHostgroups($token,'Site')['result'];
+        array_multisort(array_column($sites, 'alias'),  SORT_ASC, $sites);
+        return $sites;
+    }
+}
+
+/**
+ * Get all Solutions
+ *
+ * @return \Illuminate\Support\Collection
+ */
+if (!function_exists('getSolutions')) {
+    function getSolutions($token)
+    {
+        $api = new ApiController;
+        $solutions = $api->getApiHostgroups($token, 'Solution')['result'];
+        array_multisort(array_column($solutions, 'alias'), SORT_ASC, $solutions);
+        return $solutions;
     }
 }
 

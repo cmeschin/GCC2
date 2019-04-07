@@ -18,6 +18,7 @@ class CreateHoteHotecategorieRelationsTable extends Migration
             $table->integer('hote_id');
             $table->integer('hotecategorie_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

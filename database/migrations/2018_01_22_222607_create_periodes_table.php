@@ -27,8 +27,9 @@ class CreatePeriodesTable extends Migration
             $table->integer('action_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');
-            $table->string('motif_annulation',100);
+            $table->string('motif_annulation',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

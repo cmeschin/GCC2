@@ -17,17 +17,19 @@ class CreateHotesTable extends Migration
             $table->increments('id');
             $table->integer('demande_id');
             $table->integer('centreonhost_id')->nullable();
+            $table->string('centreonhost_name',200);
             $table->string('nom',30);
-            $table->string('description',255);
-            $table->string('ip',50);
+            $table->string('description',200);
+            $table->string('ip',255);
             $table->boolean('actif');
             $table->multiLineString('commentaire');
             $table->text('consigne');
             $table->integer('action_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');
-            $table->string('motif_annulation',100);
+            $table->string('motif_annulation',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

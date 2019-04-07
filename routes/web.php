@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('account/{userid}/delpreference/{preferenceid}', 'AccountController@delPreference')->name('delpreference');
 
+    Route::post('nouvelledemande/{refdemande}/parametrage/service_delete/{serviceid}', 'NouvelleDemandeController@deleteService')->name('deleteservice');
+
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
 

@@ -41,7 +41,7 @@
                                                             @else
                                                                 @php($Etat = $service['service_activate'])
                                                             @endif
-                                                            <tr>
+                                                            <tr id="S{{ $service['service_id'] }}">
                                                                 <td rowspan="2" class="text-center">
                                                                     {{ $numService }}
                                                                 </td>
@@ -51,7 +51,20 @@
                                                                     </a>
                                                                 </td>
                                                                 <td id="S{{ $service['service_id'] }}"><span class="fas fa-edit gcc-text-nok">NOK</span><span class="fas fa-check gcc-text-ok">OK</span></td>
-                                                                <td id="S{{ $service['service_id'] }}">Vérifier Dupliquer Supprimer</td>
+                                                                <td id="S{{ $service['service_id'] }}">
+                                                                    {{--<form id="S{{ $service['service_id'] }}" method="POST" action="{{ route('deleteservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}" onsubmit="return ConfirmDelete()">--}}
+                                                                        {{--{{ csrf_field() }}--}}
+                                                                        @component('components.button-simple')
+                                                                            <span title="Supprimer le service {{ $numService }} de la demande" class="fas fa-trash color-tessi-fonce"></span>
+                                                                        @endcomponent
+                                                                    {{--</form>--}}
+                                                                    @component('components.button-simple')
+                                                                        <span title="Dupliquer le service {{ $numService }}." class="fas fa-copy color-tessi-fonce"></span>
+                                                                    @endcomponent
+                                                                    @component('components.button-simple')
+                                                                        <span title="Vérifier le paramétrage du service {{ $numService }}." class="fas fa-check-double color-tessi-fonce"></span>
+                                                                    @endcomponent
+                                                                </td>
                                                             </tr>
                                                             <td colspan="3">
                                                             <div class="col-md-12">
@@ -166,6 +179,18 @@
         $(document).ready(function() {
             $('.select2').select2();
         });
+        function ConfirmDelete()
+        {
+            // TODO: faire un bouton plus joli
+            var elementid = this.parent().perrent().id;
+            var x = confirm("Confirmer la suppression?");
+            if (x){
+                $('tr[id=" + elementid + "]').remove();
+                return true;
+            } else {
+                return false;
+            }
+        };
 
     </script>
 @endsection

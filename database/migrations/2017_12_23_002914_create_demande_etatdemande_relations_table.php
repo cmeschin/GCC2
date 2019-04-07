@@ -18,6 +18,7 @@ class CreateDemandeEtatdemandeRelationsTable extends Migration
             $table->integer('demande_id');
             $table->integer('etatdemande_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

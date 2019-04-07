@@ -19,6 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->enum('etat', ['A_traiter','En_cours','Validation','Traite','Annule']);
             $table->string('commentaire',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

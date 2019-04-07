@@ -22,6 +22,7 @@ class CreateHistoriesTable extends Migration
             $table->integer('periode_id')->nullable()->index();
             $table->text('commentaire');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

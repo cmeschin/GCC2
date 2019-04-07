@@ -18,6 +18,7 @@ class CreateTypeDemandesTable extends Migration
             $table->string('type',20);
             $table->string('alias',20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

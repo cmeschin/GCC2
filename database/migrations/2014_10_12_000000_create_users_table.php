@@ -19,10 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email');
             $table->string('password');
-            $table->timestamps('lastconnection');
+            $table->timestamp('lastconnection');
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->rememberToken();
             $table->timestamps(); // définit les champs created_at et updated_at de manière automatique
+            $table->softDeletes();
         });
     }
 
