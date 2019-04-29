@@ -88,7 +88,7 @@ if (!function_exists('addServiceMacros')) {
         //dd($myServices);
 
         /**
-         * get macros for myServices (new tab with only selected services
+         * get macros for myServices (new tab with only selected services)
          */
         $i = 0;
         foreach ($myServices as $myService)
@@ -100,6 +100,7 @@ if (!function_exists('addServiceMacros')) {
         }
         fixArrayKey($myServices);
         session(['myServices' => $myServices]);
+//        dd($myServices);
         return $myServices;
     }
 }

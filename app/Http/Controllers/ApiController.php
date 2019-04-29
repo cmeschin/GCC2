@@ -171,6 +171,7 @@ class ApiController extends Controller
             ]
         ]);
         $macros = json_decode($res->getBody(), true);
+//        var_dump($macros);
         fixArrayKey($macros);
         return $macros;
     }

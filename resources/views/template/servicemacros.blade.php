@@ -23,6 +23,9 @@
                 };
 
                 if ($serviceMacro['description']){
+                    // TODO: définir un formalisme pour séparer le titre des exemples par exemple le tiret (-) ou le slash (/)
+                    // puis faire ce découpage ici...
+                    // un ticket est ouvert sur github (https://github.com/centreon/centreon/issues/5989) pour avoir une description ET des exemples séparés
                     $title = $serviceMacro['description'];
                     $placeholder = $serviceMacro['description'];
                 } else {
