@@ -17,7 +17,7 @@ class CreateDemandesTable extends Migration
             $table->increments('id');
             $table->integer('typedemande_id');
             $table->integer('etatdemande_id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('prestation',100);
             $table->integer('preference_id');
             $table->string('reference',50);
@@ -29,6 +29,9 @@ class CreateDemandesTable extends Migration
             $table->string('motif_annulation',255)->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client as GuzzleClient;
 
-define("URL",  env(API_URL));
+define("URL", "http://192.168.0.22/centreon/api/index.php");
 
 class ApiController extends Controller
 {
@@ -282,8 +282,8 @@ class ApiController extends Controller
         $apiClient = new GuzzleClient();
         $res = $apiClient->request('POST', URL.$parameters, [
             'form_params' => [
-                'username' => env(API_USER),
-                'password' => env(API_PASSWORD),
+                'username' => "centreon",
+                'password' => "centreon",
             ]
         ]);
         $token = json_decode($res->getBody(), true);

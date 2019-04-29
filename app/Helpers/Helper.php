@@ -227,6 +227,7 @@ if (!function_exists('getHostFonctions')) {
  * @param $token
  * @return mixed
  * @throws \GuzzleHttp\Exception\GuzzleException
+ * TODO: filtrer seulement les services actifs (non locked, activés et custom-TESSI, sinon custom sinon normal)
  */
 
 if (!function_exists('getServiceTemplates')) {
