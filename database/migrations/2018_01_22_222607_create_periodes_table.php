@@ -16,14 +16,14 @@ class CreatePeriodesTable extends Migration
         Schema::create('periodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('demande_id');
-            $table->string('nom',50);
-            $table->string('lundi',255);
-            $table->string('mardi',255);
-            $table->string('mercredi',255);
-            $table->string('jeudi',255);
-            $table->string('vendredi',255);
-            $table->string('samedi',255);
-            $table->string('dimanche',255);
+            $table->string('tp_name',50);
+            $table->string('tp_monday',255);
+            $table->string('tp_tuesday',255);
+            $table->string('tp_wednesday',255);
+            $table->string('tp_thursday',255);
+            $table->string('tp_friday',255);
+            $table->string('tp_saturday',255);
+            $table->string('tp_sunday',255);
             $table->integer('action_id');
             $table->integer('etatdemande_id');
             $table->boolean('selected');

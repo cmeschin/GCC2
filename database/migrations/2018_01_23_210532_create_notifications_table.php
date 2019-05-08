@@ -16,7 +16,7 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('demande_id');
-            $table->enum('etat', ['A_traiter','En_cours','Validation','Traite','Annule']);
+            $table->integer('etatdemande_id');
             $table->string('commentaire',255);
             $table->timestamps();
             $table->softDeletes();

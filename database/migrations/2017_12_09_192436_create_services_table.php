@@ -17,10 +17,8 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             $table->integer('demande_id');
             $table->integer('hote_id');
-            $table->integer('centreonhost_id')->nullable();
-            $table->integer('centreonservice_id')->nullable();
-            $table->integer('modeleservice_id');
-            $table->integer('centreonservicetemplate_id')->nullable();
+            $table->integer('centreon_service_id')->nullable();
+            $table->integer('centreon_service_template_id')->nullable();
             $table->string('nom',255);
             $table->text('parametres');
             $table->integer('periode_id');

@@ -16,8 +16,8 @@ class CreateHotesTable extends Migration
         Schema::create('hotes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('demande_id');
-            $table->integer('centreonhost_id')->nullable();
-            $table->string('centreonhost_name',200);
+            $table->integer('centreon_host_id')->nullable();
+            $table->string('centreon_host_name',200);
             $table->string('nom',30);
             $table->string('description',200);
             $table->string('ip',255);
