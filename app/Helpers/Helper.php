@@ -28,11 +28,11 @@ if (!function_exists('addServiceDetails')) {
         \Log::info('Service: ajout des détails');
         $i = 0;
 
-        foreach($services as $value)
+        foreach($services as $service)
         {
             //\Log::debug('Service: ', [$value]);
             for($j=0;$j<count($serviceDetails);$j++){
-                $indexService = array_search($value['service_id'],$serviceDetails[$j]);
+                $indexService = array_search($service['service_id'],$serviceDetails[$j]);
                 $trouve = False;
                 if ($indexService)
                 {
@@ -55,9 +55,12 @@ if (!function_exists('addServiceDetails')) {
             }
             if (!$trouve)
             {
-                \Log::debug('ERREUR Service configuration incomplète: ', [$value]);
+                \Log::debug('ERREUR Service configuration incomplète: ', [$service]);
             }
-
+            // Ajout du nom et du site
+            $services[$i]['nom'] = defineHoteNom($services[$i]['host_name']);
+            $services[$i]['site'] = defineHoteSite($services[$i]['host_name']);
+            $services[$i]['href'] = defineServiceSearch($services[$i]['host_name'],$services[$i]['service_description']);
             $i++;
         }
         \Log::info('Service: détails ajoutés');
@@ -74,19 +77,10 @@ if (!function_exists('addServiceDetails')) {
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 if (!function_exists('addServiceMacros')) {
-    function addServiceMacros($serviceSelected,$myServices)
+    function addServiceMacros($myServices)
     {
         \Log::debug('Service: ajout des macros...');
         $api = new ApiController;
-//        $services = session('services');
-//        foreach ($serviceSelected as $currentService)
-//        {
-//            //dd($services[$i],$serviceSelected, $currentService);
-//            $key = array_search($currentService, array_column($services, 'service_id'));
-//            $myServices[] = $services[$key];
-//        }
-        //dd($myServices);
-
         /**
          * get macros for myServices (new tab with only selected services)
          */
@@ -117,9 +111,9 @@ if (!function_exists('addServiceTimeperiod')) {
         \Log::info('Service: ajout des TimePeriod');
         //dd($services,$timeperiods);
         $i = 0;
-        foreach ($services as $value) {
+        foreach ($services as $service) {
             for ($j = 0; $j < count($timeperiods); $j++) {
-                $index = array_search($value['service_id'], $timeperiods[$j]);
+                $index = array_search($service['service_id'], $timeperiods[$j]);
                 $trouve = False;
                 if ($index) {
                     $services[$i]['tp_name'] = $timeperiods[$j]['tp_name'];
@@ -129,7 +123,7 @@ if (!function_exists('addServiceTimeperiod')) {
             }
             if (!$trouve)
             {
-                \Log::debug('ERREUR TimePeriod configuration incomplète: ', [$value]);
+                \Log::debug('ERREUR TimePeriod configuration incomplète: ', [$service]);
             }
             $i++;
         }
@@ -147,6 +141,58 @@ if (!function_exists('decodeArg')) {
     {
         //TODO: decoding argument
         return $arg;
+    }
+}
+
+/**
+ * Define Nom (Hote) since host_name
+ *
+ * @return string
+ */
+if (!function_exists('defineHoteNom')) {
+    function defineHoteNom($host_name)
+    {
+        $nom = substr(stristr(substr(stristr($host_name,'-'),1),'-'),1); // enlève la localisation, la fonction et les deux -
+        return $nom;
+    }
+}
+
+/**
+ * Define Nom (Hote) since host_name
+ *
+ * @return string
+ */
+if (!function_exists('defineHoteSearch')) {
+    function defineHoteSearch($host_name)
+    {
+        $hostSearch = "http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name=" . $host_name;
+        return $hostSearch;
+    }
+}
+
+/**
+ * Define Site (Hote) since host_name
+ *
+ * @return string
+ */
+if (!function_exists('defineHoteSite')) {
+    function defineHoteSite($host_name)
+    {
+        $site = stristr($host_name,'-',1);
+        return $site;
+    }
+}
+
+/**
+ * Define href link to search service
+ *
+ * @return string
+ */
+if (!function_exists('defineHoteSearch')) {
+    function defineServiceSearch($host_name,$service_name)
+    {
+        $serviceSearch = "http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name=" . $host_name . "&service_description=" . $service_name;
+        return $serviceSearch;
     }
 }
 

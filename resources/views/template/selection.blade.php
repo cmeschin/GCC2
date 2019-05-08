@@ -32,18 +32,17 @@
                                       <th hidden="hidden">host_id</th>
                                   </tr>
                                   @php
-                                      //$i = 1;
-                                      $nom_hote = "";
+                                      $hote_nom = "";
                                   @endphp
 
                                   @foreach ($services as $service)
                                       @php
-                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host_name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
+                                        //$hote_nom_actuel = $service['nom'];
 
-                                        if ($nom_hote != $nom_hote_actuel){
+                                        if ($hote_nom != $service['nom']){
                                           $j = 1;
-                                          $nom_hote = $nom_hote_actuel;
-                                          $hote_localisation = stristr($service['host_name'],'-',1); // conserve la chaine avant le premier tiret
+                                          $hote_nom = $service['nom'];
+                                          //$hote_site = $service['site'];
                                         }
                                       @endphp
                                       @if ($service['host_activate'] == 0 || $service['service_activate'] == 0)
@@ -55,7 +54,7 @@
                                       <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service_id'] }}" value="{{ $service['service_id'] }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
-                                              data-original-title="{{ $service['host_address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
+                                              data-original-title="{{ $service['host_address'] }} - {{ $service['site'] }}">{{ $service['nom'] }}</td>
                                       @else
                                           <td></td>
                                       @endif
@@ -77,7 +76,6 @@
                                       <td hidden>h{{ $service['host_id'] }}</td>
                                       </tr>
                                       @php
-                                          //$i++;
                                           $j++;
                                       @endphp
                                   @endforeach

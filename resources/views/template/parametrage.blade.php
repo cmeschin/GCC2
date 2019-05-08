@@ -54,9 +54,12 @@
                                                                 <td id="S{{ $service['service_id'] }}">
                                                                     {{--<form id="S{{ $service['service_id'] }}" method="POST" action="{{ route('deleteservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}" onsubmit="return ConfirmDelete()">--}}
                                                                         {{--{{ csrf_field() }}--}}
-                                                                        @component('components.button-simple')
-                                                                            <span title="Supprimer le service {{ $numService }} de la demande" class="fas fa-trash color-tessi-fonce"></span>
-                                                                        @endcomponent
+{{--                                                                        @component('components.button-simple')--}}
+                                                                        <button id="ajaxDelete_S{{ $service['service_id'] }}" class="btn btn-secondary color-tessi-fonce float-right ajaxDelete" action="{{ route('deleteservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}">
+                                                                            <span title="Supprimer le service {{ $numService }} de la demande" class="fas fa-trash color-tessi-fonce" ></span>
+                                                                        </button>
+
+{{--                                                                        @endcomponent--}}
                                                                     {{--</form>--}}
                                                                     @component('components.button-simple')
                                                                         <span title="Dupliquer le service {{ $numService }}." class="fas fa-copy color-tessi-fonce"></span>
@@ -176,21 +179,32 @@
 
 @section('script')
     <script>
+        var refDemande = '<?php echo json_encode($_SESSION['refDemande']) ?>';
         $(document).ready(function() {
             $('.select2').select2();
         });
-        function ConfirmDelete()
-        {
-            // TODO: faire un bouton plus joli
-            var elementid = this.parent().perrent().id;
-            var x = confirm("Confirmer la suppression?");
-            if (x){
-                $('tr[id=" + elementid + "]').remove();
-                return true;
-            } else {
-                return false;
-            }
-        };
 
+        $('.ajaxDelete').click(function (e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CRSF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: {
+                    refDemande: refDemande,
+                    serviceid: $(this).parent().parent().attr('id')
+                },
+                success: function(result){
+                    $(this).parent().parent().remove();
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        })
     </script>
 @endsection

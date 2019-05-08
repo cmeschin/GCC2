@@ -31,9 +31,10 @@
                 } else {
                     $title = $serviceMacro['macro_name'];
                 };
-                if (substr($serviceMacro['macro_name'],0,9) == 'TRANSFORM'){
-                    continue;
-                } else if ($serviceMacro['macro_name'] == 'EXTRAOPTIONS'){
+//                if (substr($serviceMacro['macro_name'],0,9) == 'TRANSFORM'){
+//                    continue;
+//                } else
+                if ($serviceMacro['macro_name'] == 'EXTRAOPTIONS'){
                     $macro_name = $serviceMacro['macro_name'];
                     $required = '';
                 };

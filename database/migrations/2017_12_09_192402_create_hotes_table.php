@@ -21,6 +21,10 @@ class CreateHotesTable extends Migration
             $table->string('nom',30);
             $table->string('description',200);
             $table->string('ip',255);
+            $table->string('site',255);
+            $table->string('solution',255);
+            $table->string('type',255);
+            $table->string('os',255);
             $table->boolean('actif');
             $table->multiLineString('commentaire');
             $table->text('consigne');

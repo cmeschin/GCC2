@@ -16,13 +16,21 @@ class Hote extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * récupère la demande appartenant à l'hote.
+     * récupère la demande auquel appartient l'hote.
      */
     public function demande()
     {
         return $this->belongsTo(Demande::class);
     }
-    
+
+    /**
+     * récupère les demandes auxquelles appartiennent l'hote.
+     */
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class);
+    }
+
     /**
      * Récupère les services appartenant à l'hote.
      */
@@ -31,22 +39,6 @@ class Hote extends Model
         return $this->hasMany(Service::class);
     }
 
-    /**
-     * Récupère les categories appartenant aux hôtes.
-     */
-    public function categories()
-    {
-        return $this->belongstoMany(HoteCategorie::class);
-    }
-    
-    /**
-     * Récupère les groupes appartenant aux hôtes.
-     */
-    public function groupes()
-    {
-        return $this->belongstoMany(HoteGroupe::class);
-    }
-    
     /**
      * récupère l'action appartenant à l'hote.
      */

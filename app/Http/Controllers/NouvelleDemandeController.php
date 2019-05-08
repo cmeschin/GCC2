@@ -9,6 +9,8 @@ use App\Http\Requests\SelectionNewRequest;
 use App\Models\Centreon;
 use App\Models\Demande;
 use App\Models\EtatDemande;
+use App\Models\Hote;
+use App\Models\Service;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +79,9 @@ class NouvelleDemandeController extends Controller
         // initialiser la demande en enregistrant les infos générales
         $demande->save();
 
+        // récupérer l'id de la demande
+        $idDemande = $demande->where('reference', $refDemande)->pluck('id');
+
         $api = new ApiController;
         $centreon = new Centreon;
         $token = session('token'); // récupère le token dans la variable de session
@@ -125,6 +130,8 @@ class NouvelleDemandeController extends Controller
         session(['services' => $services]);
         session(['hosts' => $hosts]);
         session(['timeperiods' => $uniqueTimeperiods]);
+        session(['idDemande' => $idDemande]);
+
         // Afficher la seconde vue
         return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
     }
@@ -145,6 +152,7 @@ class NouvelleDemandeController extends Controller
         /**
          * récupération des variables en session
          */
+        $idDemande = session('idDemande');
         $services = session('services');
         $hosts = session('hosts');
         $timeperiods = session('timeperiods');
@@ -159,20 +167,30 @@ class NouvelleDemandeController extends Controller
         $serviceTemplates = getServiceTemplates($token);
 
         if ($serviceSelected){
+            $i = 0;
             foreach ($serviceSelected as $currentService)
             {
                 $key = array_search($currentService, array_column($services, 'service_id'));
                 $myServices[] = $services[$key];
+                $myServices[$i]['nom'] = defineHoteNom($myServices[$i]['host_name']);
+                $myServices[$i]['site'] = defineHoteSite($myServices[$i]['host_name']);
+                $myServices[$i]['href'] = defineServiceSearch($myServices[$i]['host_name'],$myServices[$i]['service_description']);
+                $i++;
             }
-            $myServices = addServiceMacros($serviceSelected,$myServices);
+            $myServices = addServiceMacros($myServices);
         } else {
             $myServices = array();
         }
         if ($hostSelected){
+            $i = 0;
             foreach ($hostSelected as $currentHost)
             {
                 $key = array_search($currentHost, array_column($hosts, 'host_id'));
                 $myHosts[] = $hosts[$key];
+                $myHosts[$i]['nom'] = defineHoteNom($myHosts[$i]['host_name']);
+                $myHosts[$i]['site'] = defineHoteSite($myHosts[$i]['host_name']);
+                $myHosts[$i]['href'] = defineHoteSite($myHosts[$i]['host_name']);
+                $i++;
             }
         } else {
             $myHosts = array();
@@ -258,6 +276,33 @@ class NouvelleDemandeController extends Controller
             }
         }
 //        dd("myServices",$myServices,"myHosts",$myHosts,"myTimeperiods",$myTimeperiods,"hosts",$hosts,"services",$services,"timeperiods",$timeperiods,"sites",$sites,"solutions",$solutions,"hostTypes",$hostTypes,"hostOss",$hostOss,"hostFonctions",$hostFonctions,"serviceTemplates",$serviceTemplates);
+
+        /**
+         * Enregistrer les données collectées en base
+         */
+
+        $registerHotes = New Hote;
+        foreach ($myHosts as $host){
+            $registerHotes->demande_id = $idDemande;
+            $registerHotes->centreon_host_id = $myHosts['host_id'];
+            $registerHotes->centreon_host_name = $myHosts['host_name'];
+            $registerHotes->nom =
+            $registerHotes->ip = $myHosts['host_address'];
+        }
+
+        $registerServices = New Service;
+        $registerServices->demande_id    = $idDemande;
+        $registerServices->user_id           = $userId;
+        $demande->reference         = $request->refDemande;
+        $demande->date_activation   = $dateActivation;
+        $demande->preference_id     = $request->listeDiffusion[0];
+        $demande->typedemande_id    = $request->typeDemande[0];
+        $demande->prestation        = $request->prestation[0];
+        $demande->commentaire       = $request->description;
+
+        // initialiser la demande en enregistrant les infos générales
+        $demande->save();
+
         return view('template.parametrage', compact( 'refDemande','myServices', 'myHosts', 'myTimeperiods',
             'hosts', 'timeperiods','serviceTemplates'),
             array('sites' => $sites, 'solutions' => $solutions, 'hostTypes' => $hostTypes, 'hostOss' => $hostOss, 'hostFonctions' => $hostFonctions));
@@ -274,6 +319,9 @@ class NouvelleDemandeController extends Controller
          *      - retirer le service de serviceTemplates['selected']
          *
          */
+//        Service::where('etat', 'draft')->value('id');
+//        $service = Service->Demande()->where('reference', $refDemande)->value(')->find($serviceid)->where('');
+//        $service->delete();
     }
     /**
      * Go to validation page
