@@ -14,12 +14,35 @@ use App\Models\Preference;
 use App\Models\TypeDemande;
 
 /**
+ * Add somes fields in hosts array
+ * @param $hosts
+ * @return new fields nom, site, href and selected values
+ */
+
+if (!function_exists('addHostDetails')) {
+    function addHostDetails($hosts)
+    {
+        $i = 0;
+        while($i < count($hosts))
+        {
+            \Log::debug('DEBUG addHostDetails: ', [$hosts[$i]['host_name']]);
+            $hosts[$i]['nom'] = defineHoteNom($hosts[$i]['host_name']);
+            $hosts[$i]['site'] = defineHoteSite($hosts[$i]['host_name']);
+            $hosts[$i]['href'] = defineHoteSearch($hosts[$i]['host_name']);
+            $hosts[$i]['selected'] = false;
+            $i++;
+        }
+        return $hosts;
+    }
+}
+
+/**
  * Add details on each services
  *
  * @param $services
  * @param $serviceDetails
  * @return array("host_id", "host_name", "service_id", "service_description", "tp_name", "host_address",
- *  "host_activate", "service_activate", "service_categorie", "service_interval")
+ *  "host_activate", "service_activate", "service_categorie", "service_interval",nom, site, href and selected)
  */
 if (!function_exists('addServiceDetails')) {
     function addServiceDetails($services, $serviceDetails)
@@ -41,6 +64,7 @@ if (!function_exists('addServiceDetails')) {
                     $services[$i]['host_address'] = $serviceDetails[$j]['host_address'];
                     $services[$i]['host_activate'] = $serviceDetails[$j]['host_activate'];
                     $services[$i]['service_activate'] = $serviceDetails[$j]['service_activate'];
+                    $services[$i]['sg_name'] = $serviceDetails[$j]['sg_name'];
                     $services[$i]['sc_name'] = $serviceDetails[$j]['sc_name'];
                     $services[$i]['service_interval'] = $serviceDetails[$j]['service_normal_check_interval'];
                     $services[$i]['esi_notes_url'] = $serviceDetails[$j]['esi_notes_url'];
@@ -61,6 +85,7 @@ if (!function_exists('addServiceDetails')) {
             $services[$i]['nom'] = defineHoteNom($services[$i]['host_name']);
             $services[$i]['site'] = defineHoteSite($services[$i]['host_name']);
             $services[$i]['href'] = defineServiceSearch($services[$i]['host_name'],$services[$i]['service_description']);
+            $services[$i]['selected'] = false;
             $i++;
         }
         \Log::info('Service: détails ajoutés');
@@ -103,7 +128,7 @@ if (!function_exists('addServiceMacros')) {
  *
  * @param $services
  * @param $timeperiods
- * @return array("host_id", "host_name", "service_id", "service_description", "tp_name")
+ * @return added "tp_name" field)
  */
 if (!function_exists('addServiceTimeperiod')) {
     function addServiceTimeperiod($services, $timeperiods)
@@ -131,6 +156,26 @@ if (!function_exists('addServiceTimeperiod')) {
         fixArrayKey($services);
         return $services;
    }
+}
+
+/**
+ * Add somes fields in timeperiods array
+ * @param $timeperiods
+ * @return new field selected value
+ */
+
+if (!function_exists('addTimeperiodDetails')) {
+    function addTimeperiodDetails($timeperiods)
+    {
+        $i = 0;
+        while($i < count($timeperiods))
+        {
+            \Log::debug('DEBUG addTimeperiodDetails: ', [$timeperiods[$i]['tp_name']]);
+            $timeperiods[$i]['selected'] = false;
+            $i++;
+        }
+        return $timeperiods;
+    }
 }
 
 /**
@@ -188,7 +233,7 @@ if (!function_exists('defineHoteSite')) {
  *
  * @return string
  */
-if (!function_exists('defineHoteSearch')) {
+if (!function_exists('defineServiceSearch')) {
     function defineServiceSearch($host_name,$service_name)
     {
         $serviceSearch = "http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name=" . $host_name . "&service_description=" . $service_name;
@@ -383,7 +428,7 @@ if (!function_exists('fixArrayKey')){
                 if(is_array($val)) fixArrayKey($arr[$key]);
             }
         } else {
-            dd($arr);
+            dd("fixArrayKey: not an array", $arr);
         }
     }
 }
@@ -422,11 +467,11 @@ if (!function_exists('fixCentreonKbUrl')){
                 }
             } else {
                 // sinon on affiche le tableau pour debug
-                dd("cas non géré", $arr[0]);
+                dd("fixCentreonKbUrl: cas non géré", $arr[0]);
             }
 
         } else {
-            dd($arr);
+            dd("fixCentreonKbUrl: not an array",$arr);
         }
     }
 }

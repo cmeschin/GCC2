@@ -15,5 +15,11 @@ class Macros extends Model
      */
     protected $dates = ['deleted_at'];
 
-    //
+    /**
+     * Récupère le service de la macro
+     */
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }

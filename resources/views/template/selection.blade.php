@@ -206,6 +206,11 @@
 				</div>
 			</div>
             <div class="col-md-8 offset-md-2">
+                @if(Session::get('errors'))
+                    @foreach($errors->all() as $m)
+                        <div>$m</div>
+                    @endforeach
+                 @endif
                 @component('components.waiting')
                     @lang('pagination.waiting')
                 @endcomponent

@@ -16,6 +16,16 @@ class Action extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Get action id by action name
+     * @param $actionName
+     * @return mixed
+     */
+    public function getActionIdByName($actionName)
+    {
+        return $this->where('action',$actionName)->pluck('id');
+    }
+
+    /**
      * Get the services that owns the action.
      */
     public function getServices()

@@ -12,7 +12,7 @@
                             required style="height: 100%;width: 100%">
                         <option value=""></option>
                         @foreach($timeperiods as $timeperiod)
-                            @if ( in_array($service['service_id'], $timeperiod['selected']))
+                            @if ( $service['tp_name'] == $timeperiod['tp_name']))
                                 <option value="{{ $timeperiod['tp_id'] }}" selected>{{ $timeperiod['tp_name'] }}</option>
                             @else
                                 <option value="{{ $timeperiod['tp_id'] }}">{{ $timeperiod['tp_name'] }}</option>

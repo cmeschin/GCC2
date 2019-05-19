@@ -38,7 +38,11 @@ class Periode extends Model
     {
         return $this->belongsTo(Action::class);
     }
-    
+
+//    public function getPeriodeIdByName($tp_name)
+//    {
+//        return $this->where('tp_name',$tp_name)->value('tp_id');
+//    }
     /**
      * Récupère les commentaires de le periode.
      */

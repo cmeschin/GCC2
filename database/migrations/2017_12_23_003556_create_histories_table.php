@@ -20,7 +20,9 @@ class CreateHistoriesTable extends Migration
             $table->integer('hote_id')->nullable()->index();
             $table->integer('service_id')->nullable()->index();
             $table->integer('periode_id')->nullable()->index();
-            $table->text('commentaire');
+            $table->integer('etatdemande_id')->nullable()->index();
+            $table->string('motif_annulation',255)->nullable();
+            $table->text('commentaire')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -46,7 +46,16 @@ class Hote extends Model
     {
         return $this->belongsTo(Action::class);
     }
-    
+
+    /**
+     * get id by centreon_host_id
+     * @param $centreon_host_id
+     * @return $id
+     */
+    public function getHoteIdByCentreonHostId($centreon_host_id)
+    {
+        return $this->where('centreon_host_id', $centreon_host_id)->value('id');
+    }
     /**
      * Récupère les commentaires de l'hote.
      */

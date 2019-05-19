@@ -15,6 +15,7 @@ class CreateHoteFonctionsTable extends Migration
     {
         Schema::create('hote_fonctions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('hote_id');
             $table->string('name',255);
             $table->string('alias',255);
             $table->string('level',255);

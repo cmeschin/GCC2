@@ -18,12 +18,17 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email');
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->timestamp('lastconnection');
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->rememberToken();
             $table->timestamps(); // définit les champs created_at et updated_at de manière automatique
             $table->softDeletes();
+//            $table->foreign('id')->references('user_id')->on('demandes')
+//                ->onDelete('restrict');
+//            $table->foreign('id')->references('user_id')->on('preferences')
+//                ->onDelete('cascade');
+
         });
     }
 

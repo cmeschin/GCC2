@@ -15,6 +15,7 @@ class CreateMacrosTable extends Migration
     {
         Schema::create('macros', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('service_id')->unsigned();
             $table->string('macro_name',255);
             $table->string('macro_value',4096);
             $table->string('macro_value_old',4096);
@@ -23,6 +24,8 @@ class CreateMacrosTable extends Migration
             $table->string('source',255);
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('service_id')->references('id')->on('services')
+                ->onDelete('restrict');
         });
     }
 

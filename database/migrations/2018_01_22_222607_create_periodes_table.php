@@ -15,19 +15,18 @@ class CreatePeriodesTable extends Migration
     {
         Schema::create('periodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('demande_id');
-            $table->string('tp_name',50);
-            $table->string('tp_monday',255);
-            $table->string('tp_tuesday',255);
-            $table->string('tp_wednesday',255);
-            $table->string('tp_thursday',255);
-            $table->string('tp_friday',255);
-            $table->string('tp_saturday',255);
-            $table->string('tp_sunday',255);
-            $table->integer('action_id');
-            $table->integer('etatdemande_id');
-            $table->boolean('selected');
-            $table->string('motif_annulation',255);
+            $table->string('tp_name',200)->index();
+            $table->string('tp_monday',2048)->nullable();
+            $table->string('tp_tuesday',2048)->nullable();
+            $table->string('tp_wednesday',2048)->nullable();
+            $table->string('tp_thursday',2048)->nullable();
+            $table->string('tp_friday',2048)->nullable();
+            $table->string('tp_saturday',2048)->nullable();
+            $table->string('tp_sunday',2048)->nullable();
+            $table->integer('demande_id')->nullable();
+            $table->integer('action_id')->nullable();
+            $table->integer('etatdemande_id')->nullable();
+            $table->boolean('selected')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

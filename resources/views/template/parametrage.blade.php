@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            <span class="fas fa-edit gcc-text-nok"> @lang('validation.custom.parametrage')</span>
+            <span id="title" class="fas fa-edit gcc-text-nok">{{ $refDemande }}: @lang('validation.custom.parametrage')</span>
         @endslot
         <form id="submitParametrage" method="POST" action="{{ route('validation',$refDemande) }}">
             {{ csrf_field() }}
@@ -24,16 +24,17 @@
                                         <div class="col-md-12">
                                             {{--<div class="col-md-3">--}}
                                                 <table id="T_List_Service" class="table table-bordered table-condensed table-body-center">
-                                                        <tr class="text-center color-tessi-clair">
-                                                            <th>N°</th>
-                                                            <th>Service</th>
-                                                            <th>Etat</th>
-                                                            <th>Actions</th>
-                                                            <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
-                                                        </tr>
-                                                    @if ($myServices)
-                                                        @php($numService=1)
-                                                        @foreach ($myServices as $service)
+                                                    <tr class="text-center color-tessi-clair">
+                                                        <th>N°</th>
+                                                        <th>Service</th>
+                                                        <th>Etat</th>
+                                                        <th>Actions</th>
+                                                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>
+                                                    </tr>
+{{--                                                    @if ($services)--}}
+                                                    @php($numService=1)
+                                                    @foreach ($services as $service)
+                                                        @if ($service['selected'] == true)
                                                             @if ($service['service_activate'] == 1)
                                                                 @php($Etat = "Actif")
                                                             @elseif ($service['service_activate'] == 0)
@@ -55,7 +56,7 @@
                                                                     {{--<form id="S{{ $service['service_id'] }}" method="POST" action="{{ route('deleteservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}" onsubmit="return ConfirmDelete()">--}}
                                                                         {{--{{ csrf_field() }}--}}
 {{--                                                                        @component('components.button-simple')--}}
-                                                                        <button id="ajaxDelete_S{{ $service['service_id'] }}" class="btn btn-secondary color-tessi-fonce float-right ajaxDelete" action="{{ route('deleteservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}">
+                                                                        <button id="ajaxDelete_S{{ $service['service_id'] }}" class="btn btn-secondary color-tessi-fonce float-right ajaxDelete" action="{{ route('delservice', ['refdemande' => $refDemande, 'serviceid' => $service['service_id']]) }}">
                                                                             <span title="Supprimer le service {{ $numService }} de la demande" class="fas fa-trash color-tessi-fonce" ></span>
                                                                         </button>
 
@@ -77,16 +78,17 @@
                                                             </div>
                                                             </td>
                                                             @php($numService++)
-                                                        @endforeach
-                                                    @endif
+                                                        @endif
+                                                    @endforeach
+{{--                                                    @endif--}}
                                                 </table>
                                             {{--</div>--}}
                                         </div>
                                     </div>
                                         {{--<div class="col-md-9">--}}
-                                            {{--@if ($myServices)--}}
+                                            {{--@if ($services)--}}
                                                 {{--@php($numService=1)--}}
-                                                {{--@foreach ($myServices as $service)--}}
+                                                {{--@foreach ($services as $service)--}}
                                                     {{--<div class="collapse multi-collapse" id="collapseS{{ $service['service_id'] }}">--}}
                                                             {{--@include('template.service')--}}
                                                     {{--</div>--}}
@@ -120,9 +122,9 @@
                                                     {{--<button class="btn btn-info" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="multiCollapse">Afficher/Masquer tous les éléments</button>--}}
                                                 </tr>
                                                 {{--@if (count($myHosts) > 0)--}}
-                                                @if ($myHosts)
+                                                @if ($hosts)
                                                     @php($numHost=1)
-                                                    @foreach ($myHosts as $host)
+                                                    @foreach ($hosts as $host)
                                                         <tr>
                                                             <td class="text-center">
                                                                 {{ $numHost }}
@@ -140,9 +142,9 @@
                                             </table>
                                         </div>
                                         <div class="col-md-9">
-                                            @if ($myHosts)
+                                            @if ($hosts)
                                                 @php($numHost=1)
-                                                @foreach ($myHosts as $host)
+                                                @foreach ($hosts as $host)
                                                     <div class="collapse multi-collapse" id="collapseH{{ $host['host_id'] }}">
                                                         @include('template.host')
                                                     </div>
@@ -179,7 +181,9 @@
 
 @section('script')
     <script>
-        var refDemande = '<?php echo json_encode($_SESSION['refDemande']) ?>';
+        var title = $(#title).value();
+        var refDemande = title.substring(1,title.indexOf(":")-1);
+        alert(refDemande);
         $(document).ready(function() {
             $('.select2').select2();
         });

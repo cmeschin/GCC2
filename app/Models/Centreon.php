@@ -111,6 +111,7 @@ class Centreon extends Model
                 'h.host_activate',
                 's.service_id',
                 's.service_activate',
+                DB::RAW('GROUP_CONCAT(sg.sg_name) as sg_name'),
                 'sc.sc_name',
                 DB::RAW("CONCAT(coalesce(
                     s.service_normal_check_interval,
@@ -166,10 +167,14 @@ class Centreon extends Model
             ->leftjoin('extended_service_information as esi7','esi7.service_service_id','=','st7.service_id')
             ->leftjoin('extended_service_information as esi8','esi8.service_service_id','=','st8.service_id')
             ->leftjoin('service_categories as sc','scr.sc_id','=','sc.sc_id')
+            ->leftjoin('servicegroup_relation as sgr', 's.service_id', '=', 'sgr.service_service_id')
+            ->leftjoin('servicegroup as sg', 'sgr.servicegroup_sg_id', '=', 'sg.sg_id')
             ->whereNull('sc.level')
             ->where('sc.sc_description', 'NOT LIKE', 'Type_%')
             ->where('h.host_register','=','1')
             ->wherein('s.service_id', $serviceIds)
+            ->groupBy('host_id', 'host_address', 'host_activate', 'service_id', 'service_activate', 'sg_name'
+                , 'sc_name', 'service_normal_check_interval', 'service_template_id', 'service_template_description', 'esi_notes_url')
             ->orderBy('h.host_name','asc')
             ->orderBy('s.service_description','asc')
         ;

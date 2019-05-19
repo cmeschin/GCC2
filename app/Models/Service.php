@@ -32,6 +32,13 @@ class Service extends Model
     }
 
     /**
+     * Récupère l'ensemble des macros du service
+     */
+    public function macros()
+    {
+        return $this->hasmany(Macros::class);
+    }
+    /**
      * Récupère la période appartenant au service.
      */
     public function periode()

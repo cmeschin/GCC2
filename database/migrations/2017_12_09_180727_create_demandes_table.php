@@ -26,12 +26,18 @@ class CreateDemandesTable extends Migration
             $table->time('temps_hote',5)->default(0);
             $table->time('temps_service')->default(0);
             $table->string('ticket_itsm',12)->nullable();
-            $table->string('motif_annulation',255)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+//            $table->foreign('id')->references('demande_id')->on('hotes')
+//                ->onDelete('cascade');
+//            $table->foreign('id')->references('demande_id')->on('services')
+//                ->onDelete('cascade');
+//            $table->foreign('id')->references('demande_id')->on('periodes')
+//                ->onDelete('cascade');
+//            $table->foreign('id')->references('demande_id')->on('histories')
+//                ->onDelete('cascade');
+//            $table->foreign('id')->references('demande_id')->on('notifications')
+//                ->onDelete('cascade');
         });
     }
 
