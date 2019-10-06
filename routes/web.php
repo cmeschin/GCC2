@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/parametrage/service_delete/{serviceid}', 'NouvelleDemandeController@deleteService')->name('delservice');
 
+    Route::post('/parametrage/host_delete/{hostid}', 'NouvelleDemandeController@deleteHost')->name('delhost');
+
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
 

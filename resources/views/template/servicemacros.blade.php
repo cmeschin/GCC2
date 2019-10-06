@@ -6,7 +6,7 @@
 
         @foreach($service['macros']['result'] as $serviceMacro)
             @php
-                $name = 'macroname_' . $numService . "_" .  $serviceMacro['macro_name'];
+                $name = 'macroname_' . $numService . "_" . $serviceMacro['macro_name'];
                 $placeholder = "";
                 $readonly = '';
                 $required = 'true';
@@ -24,8 +24,8 @@
 
                 if ($serviceMacro['description']){
                     // TODO: définir un formalisme pour séparer le titre des exemples par exemple le tiret (-) ou le slash (/)
-                    // puis faire ce découpage ici...
-                    // un ticket est ouvert sur github (https://github.com/centreon/centreon/issues/5989) pour avoir une description ET des exemples séparés
+                    // TODO: puis faire ce découpage ici...
+                    // TODO: un ticket est ouvert sur github (https://github.com/centreon/centreon/issues/5989) pour avoir une description ET des exemples séparés
                     $title = $serviceMacro['description'];
                     $placeholder = $serviceMacro['description'];
                 } else {
