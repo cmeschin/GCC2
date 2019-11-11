@@ -30,16 +30,16 @@
                                           <form method="POST" action="{{ route('delaccount', ['userid' => $account->id]) }}" onsubmit="return ConfirmDelete()">
                                               {{ csrf_field() }}
                                               @component('components.button')
-                                                  <span class="fas fa-trash color-tessi-fonce"></span>
+                                                  <span title="Supprimer le compte" class="fas fa-trash color-tessi-fonce"></span>
                                               @endcomponent
                                           </form>
                                           <form method="POST" action="{{ route('setaccount', ['userid' => $account->id]) }}">
                                               {{ csrf_field() }}
                                               @component('components.button')
                                                   @if ($account->role == "admin")
-                                                      <span class="fas fa-toggle-on color-tessi-fonce"></span>
+                                                      <span title="profil user" class="fas fa-toggle-on color-tessi-fonce"></span>
                                                   @else
-                                                      <span class="fas fa-toggle-off color-tessi-fonce"></span>
+                                                      <span title="profil admin"class="fas fa-toggle-off color-tessi-fonce"></span>
                                                   @endif
                                               @endcomponent
                                           </form>

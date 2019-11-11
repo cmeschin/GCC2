@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client as GuzzleClient;
 
-define("URL",  "http://192.168.0.22/centreon/api/index.php");
+define("URL", "http://192.168.0.22/centreon/api/index.php");
 
 class ApiController extends Controller
 {
+
     /**
      * @TODO variabiliser l'URL et les user/password
      */
@@ -46,6 +47,7 @@ class ApiController extends Controller
             ]
         ]);
         $host = json_decode($res->getBody(), true);
+        fixArrayKey($host);
         return $host;
     }
 
@@ -76,6 +78,7 @@ class ApiController extends Controller
         ]);
         $hosts = json_decode($res->getBody(), true);
         //var_dump($serviceGroups);
+        fixArrayKey($hosts);
         return $hosts;
     }
 
@@ -107,6 +110,7 @@ class ApiController extends Controller
             ]
         ]);
         $hostcategories = json_decode($res->getBody(), true);
+        fixArrayKey($hostcategories);
         return $hostcategories;
     }
 
@@ -138,6 +142,7 @@ class ApiController extends Controller
             ]
         ]);
         $hostgroups = json_decode($res->getBody(), true);
+        fixArrayKey($hostgroups);
         return $hostgroups;
     }
 
@@ -162,10 +167,12 @@ class ApiController extends Controller
             'json' => [
                 'action' => 'getmacro',
                 'object' => 'service',
-                'values' => $myService['host name'] . ';' . $myService['service description']
+                'values' => $myService['host_name'] . ';' . $myService['service_description']
             ]
         ]);
         $macros = json_decode($res->getBody(), true);
+//        var_dump($macros);
+        fixArrayKey($macros);
         return $macros;
     }
     /**
@@ -195,7 +202,39 @@ class ApiController extends Controller
         ]);
         $serviceGroups = json_decode($res->getBody(), true);
         //var_dump($serviceGroups);
+        fixArrayKey($serviceGroups);
         return $serviceGroups;
+    }
+
+    /**
+     * Fonction de récupération de tous les templates de service
+     *
+     * @param $token
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getApiServiceTemplates($token)
+    {
+        $parameters="?action=action&object=centreon_clapi";
+        $headers = [
+            'Content-Type' => 'application/json',
+            'centreon-auth-token' => $token,
+        ];
+
+        $apiClient = new GuzzleClient([
+            'headers' => $headers
+        ]);
+
+        $res = $apiClient->request('POST', URL.$parameters, [
+            'json' => [
+                'action' => 'show',
+                'object' => 'STPL',
+            ]
+        ]);
+        $serviceTemplates = json_decode($res->getBody(), true);
+        //var_dump($serviceTemplates);
+        fixArrayKey($serviceTemplates);
+        return $serviceTemplates;
     }
 
     /**
@@ -226,7 +265,9 @@ class ApiController extends Controller
                 ]
         ]);
         $servicesByServiceGroup = json_decode($res->getBody(), true);
-        //var_dump($servicesByServiceGroup);
+//        var_dump($servicesByServiceGroup);
+        fixArrayKey($servicesByServiceGroup);
+//        dd($servicesByServiceGroup);
         return $servicesByServiceGroup;
     }
 
@@ -242,13 +283,13 @@ class ApiController extends Controller
         $apiClient = new GuzzleClient();
         $res = $apiClient->request('POST', URL.$parameters, [
             'form_params' => [
-                'username' => 'centreon',
-                'password' => 'centreon',
+                'username' => "centreon",
+                'password' => "centreon",
             ]
         ]);
         $token = json_decode($res->getBody(), true);
-        $token =  $token['authToken'];
-        return $token;
+//        $token = $token['authToken'];
+        return $token['authToken'];
     }
 
 }

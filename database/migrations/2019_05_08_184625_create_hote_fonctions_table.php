@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHoteHotecategorieRelationsTable extends Migration
+class CreateHoteFonctionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateHoteHotecategorieRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hote_hotecategorie_relations', function (Blueprint $table) {
+        Schema::create('hote_fonctions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('hote_id');
-            $table->integer('hotecategorie_id');
+            $table->string('name',255);
+            $table->string('alias',255);
+            $table->string('level',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +31,6 @@ class CreateHoteHotecategorieRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hote_hotecategorie_relations');
+        Schema::dropIfExists('hote_fonctions');
     }
 }

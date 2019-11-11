@@ -2,7 +2,7 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            <span class="fas fa-check gcc-ok"> @lang('validation.custom.selection')</span>
+            <span class="fas fa-check gcc-text-ok"> @lang('validation.custom.selection')</span>
         @endslot
         <form id="submitSelection" method="POST" action="{{ route('parametrage',$refDemande) }}">
             {{ csrf_field() }}
@@ -32,53 +32,50 @@
                                       <th hidden="hidden">host_id</th>
                                   </tr>
                                   @php
-                                      $i = 1;
-                                      $nom_hote = "";
+                                      $hote_nom = "";
                                   @endphp
 
                                   @foreach ($services as $service)
                                       @php
-                                        $nom_hote_actuel = substr(stristr(substr(stristr($service['host name'],'-'),1),'-'),1); // enlève la localisation et la fonction et les deux -
+                                        //$hote_nom_actuel = $service['nom'];
 
-                                        if ($nom_hote != $nom_hote_actuel){
-
+                                        if ($hote_nom != $service['nom']){
                                           $j = 1;
-                                          $nom_hote = $nom_hote_actuel;
-                                          $hote_localisation = stristr($service['host name'],'-',1); // conserve la chaine avant le premier tiret
+                                          $hote_nom = $service['nom'];
+                                          //$hote_site = $service['site'];
                                         }
                                       @endphp
-                                      @if ($service['host activate'] == 0 || $service['service activate'] == 0)
+                                      @if ($service['host_activate'] == 0 || $service['service_activate'] == 0)
                                           {{--// mise en couleur pour les controles inactifs--}}
                                           <tr class="gcc-disabled">
                                       @else
                                           <tr>
                                       @endif
-                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service id'] }}" value="{{ $service['service id'] }}"/></td>
+                                      <td class="text-center"><input title="check_service" type="checkbox" name="selection_service[]" id="s{{ $service['service_id'] }}" value="{{ $service['service_id'] }}"/></td>
                                       @if ($j  == 1 || $j % 10 == 0)
                                           <td class="badge-info tooltip-link" data-toggle="tooltip"
-                                              data-original-title="{{ $service['host address'] }} - {{ $hote_localisation }}">{{ $nom_hote }}</td>
+                                              data-original-title="{{ $service['host_address'] }} - {{ $service['site'] }}">{{ $service['nom'] }}</td>
                                       @else
                                           <td></td>
                                       @endif
-                                      @if ($service['service activate'] == 1 && $service['host activate'] == 1)
-                                          <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host name'] }}&service_description={{ $service['service description'] }}">{{ $service['service description'] }}</a></td>
+                                      @if ($service['service_activate'] == 1 && $service['host_activate'] == 1)
+                                          <td><a target="_blank" href="http://192.168.0.22/centreon/main.php?p=20201&o=svcd&host_name={{ $service['host_name'] }}&service_description={{ $service['service_description'] }}">{{ $service['service_description'] }}</a></td>
                                       @else
-                                          <td>{{ $service['service description'] }}</td>
+                                          <td>{{ $service['service_description'] }}</td>
                                       @endif
-                                      <td>{{ $service['service interval'] }}</td>
-                                      <td>{{ $service['tp name'] }}</td>
-                                      @if ($service['host activate'] == 0)
+                                      <td>{{ $service['service_interval'] }}</td>
+                                      <td>{{ $service['tp_name'] }}</td>
+                                      @if ($service['host_activate'] == 0)
                                           <td>hôte désactivé</td>
-                                      @elseif ($service['service activate'] == 0)
+                                      @elseif ($service['service_activate'] == 0)
                                           <td>désactivé</td>
                                       @else
                                           <td>actif</td>
                                       @endif
-                                      <td hidden>s{{ $service['service id'] }}</td>
-                                      <td hidden>h{{ $service['host id'] }}</td>
+                                      <td hidden>s{{ $service['service_id'] }}</td>
+                                      <td hidden>h{{ $service['host_id'] }}</td>
                                       </tr>
                                       @php
-                                          $i++;
                                           $j++;
                                       @endphp
                                   @endforeach
@@ -114,9 +111,9 @@
                                       <th>Type</th>
                                       <th hidden="hidden">host_id</th>
                                   </tr>
-                                  @php
-                                      $i = 1;
-                                  @endphp
+                                  {{--@php--}}
+                                      {{--$i = 1;--}}
+                                  {{--@endphp--}}
 
                                   @foreach ($hosts as $host)
                                       @if ($host['host_activate'] == 0)
@@ -148,9 +145,9 @@
                                           <td>{{ $host['CategorieType'] }}</td>
                                           <td hidden="hidden">{{ $host['host_id'] }}</td>
                                       </tr>
-                                      @php
-                                          $i++;
-                                      @endphp
+                                      {{--@php--}}
+                                          {{--$i++;--}}
+                                      {{--@endphp--}}
                                   @endforeach
                               </table>
                           </div>
@@ -180,26 +177,26 @@
                                       <th>@lang('validation.custom.weekdays.sunday')</th>
                                       <th hidden="hidden">tp_id</th>
                                   </tr>
-                              @php
-                                  $i = 1;
-                              @endphp
+                              {{--@php--}}
+                                  {{--$i = 1;--}}
+                              {{--@endphp--}}
 
-                              @foreach ($uniqueTimeperiods as $timeperiod)
+                              @foreach ($uniqueTimeperiods as $uniqueTp)
                                   <tr>
-                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $timeperiod['tp_id'] }}" value="{{ $timeperiod['tp_id'] }}"/></td>
-                                      <td>{{ $timeperiod['tp_name'] }}</td>
-                                      <td>{{ $timeperiod['tp_monday'] }}</td>
-                                      <td>{{ $timeperiod['tp_tuesday'] }}</td>
-                                      <td>{{ $timeperiod['tp_wednesday'] }}</td>
-                                      <td>{{ $timeperiod['tp_thursday'] }}</td>
-                                      <td>{{ $timeperiod['tp_friday'] }}</td>
-                                      <td>{{ $timeperiod['tp_saturday'] }}</td>
-                                      <td>{{ $timeperiod['tp_sunday'] }}</td>
-                                      <td hidden="hidden">t{{ $timeperiod['tp_id'] }}</td>
+                                      <td class="text-center"><input type="checkbox" name="selection_timeperiod[]" id="t{{ $uniqueTp['tp_id'] }}" value="{{ $uniqueTp['tp_id'] }}"/></td>
+                                      <td>{{ $uniqueTp['tp_name'] }}</td>
+                                      <td>{{ $uniqueTp['tp_monday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_tuesday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_wednesday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_thursday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_friday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_saturday'] }}</td>
+                                      <td>{{ $uniqueTp['tp_sunday'] }}</td>
+                                      <td hidden="hidden">{{ $uniqueTp['tp_id'] }}</td>
                                   </tr>
-                                  @php
-                                      $i++;
-                                  @endphp
+                                  {{--@php--}}
+                                      {{--$i++;--}}
+                                  {{--@endphp--}}
                               @endforeach
                               </table>
                           </div>
@@ -209,6 +206,11 @@
 				</div>
 			</div>
             <div class="col-md-8 offset-md-2">
+                @if(Session::get('errors'))
+                    @foreach($errors->all() as $m)
+                        <div>$m</div>
+                    @endforeach
+                 @endif
                 @component('components.waiting')
                     @lang('pagination.waiting')
                 @endcomponent

@@ -20,6 +20,7 @@ class CreatePreferencesTable extends Migration
             $table->string('cle',255);
             $table->string('valeur',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

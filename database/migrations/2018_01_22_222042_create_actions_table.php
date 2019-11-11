@@ -18,6 +18,7 @@ class CreateActionsTable extends Migration
             $table->string('action',15);
             $table->string('alias',15);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

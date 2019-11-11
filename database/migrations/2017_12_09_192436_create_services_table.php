@@ -17,22 +17,22 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             $table->integer('demande_id');
             $table->integer('hote_id');
-            $table->integer('centreonhost_id')->nullable();
-            $table->integer('centreonservice_id')->nullable();
-            $table->integer('modeleservice_id');
-            $table->integer('centreonservicetemplate_id')->nullable();
+            $table->integer('centreon_service_id')->nullable();
+            $table->integer('centreon_service_template_id')->nullable();
             $table->string('nom',255);
-            $table->text('parametres');
-            $table->integer('periode_id');
+            $table->text('parametres')->nullable();
+            $table->string('tp_name',200);
             $table->string('frequence',25);
             $table->boolean('actif');
-            $table->multiLineString('commentaire');
-            $table->text('consigne');
-            $table->integer('action_id');
-            $table->integer('etatdemande_id');
-            $table->boolean('selected');
-            $table->string('motif_annulation',100);
+            $table->multiLineString('commentaire')->nullable();
+            $table->text('consigne')->nullable();
+            $table->integer('action_id')->nullable();
+            $table->integer('etatdemande_id')->nullable();
+            $table->boolean('selected')->default(false);
             $table->timestamps();
+            $table->softDeletes();
+//            $table->foreign('id')->references('service_id')->on('macros')
+//                ->onDelete('cascade');
         });
     }
 

@@ -37,11 +37,12 @@ body {
 }
 .inline-form input {
 	display: inline-block;
-	width: 100px;
+	width: 100%;
 }
 
 .form-control {
 	font-size: 1.4rem;
+    width: 100%;
 }
 
 .btn {
@@ -59,10 +60,18 @@ body {
 	background-color: dimgrey;
 }
 
-.gcc-ok{
+.gcc-text-ok{
 	color: darkgreen;
 }
 
-.gcc-nok{
+.gcc-text-nok{
 	color: darkorange;
+}
+
+.gcc-input-ok{
+	background-color: darkgreen;
+}
+
+.gcc-input-nok{
+	background-color: darkorange;
 }

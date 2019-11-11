@@ -3,9 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
+    use SoftDeletes;
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
     /**
      * Récupère la demande appartenant au service.
      */
@@ -22,6 +31,13 @@ class Service extends Model
         return $this->belongsTo(Hote::class);
     }
 
+    /**
+     * Récupère l'ensemble des macros du service
+     */
+    public function macros()
+    {
+        return $this->hasmany(Macros::class);
+    }
     /**
      * Récupère la période appartenant au service.
      */

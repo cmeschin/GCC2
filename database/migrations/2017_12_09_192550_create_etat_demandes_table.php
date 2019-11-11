@@ -18,6 +18,7 @@ class CreateEtatDemandesTable extends Migration
             $table->string('etat',15);
             $table->string('action',15);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
