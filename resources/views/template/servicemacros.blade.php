@@ -8,7 +8,12 @@
             @php
                 $name = 'macroname_' . $numService . "_" . $serviceMacro['macro_name'];
                 $placeholder = "";
-                $readonly = '';
+                if ( $serviceModeleOldMacros == 'False'){
+                    $readonly = '';
+                }else{
+                    $readonly = 'readonly';
+                };
+
                 $required = 'true';
                 if($serviceMacro['macro_value']){
                     $macro_value = $serviceMacro['macro_value'];
@@ -50,6 +55,7 @@
                     'readonly' => $readonly,
                     ])
                 @if ($serviceMacro['is_password'])
+                    // TODO: definir la fonction onclick
                         <span title="Afficher/Masquer le mot de passe" class="fas fa-toggle-on color-tessi-fonce" onclick=""></span>
                 @endif
             </div>
@@ -57,6 +63,7 @@
                 <div class="col-md-1">
                     @component('components.button-simple')
                         {{--@if ($serviceMacro['is_password'])--}}
+                        // TODO: définir la fonction onclick
                             <span title="Afficher/Masquer le mot de passe" class="fas fa-toggle-on color-tessi-fonce" onclick=""></span>
                         {{--@else--}}
                             {{--<span title="Masquer le mot de passe"class="fas fa-toggle-off color-tessi-fonce"></span>--}}

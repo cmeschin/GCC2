@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-6" id="div-service-modele{{ $numService }}">
             <div class="row">
                 <div class="col-md-12">
                     <label for="service-modele{{ $numService }}">Modèle de service</label>
@@ -109,6 +109,7 @@
                             @foreach($serviceTemplates as $serviceTemplate)
                                 @if ( in_array($service['service_id'], $serviceTemplate['selected']))
                                     <option value="{{ $serviceTemplate['id'] }}" selected>{{ $serviceTemplate['description'] }}</option>
+                                    @php($serviceTemplateOld = $serviceTemplate['description'])
                                 @else
                                     <option value="{{ $serviceTemplate['id'] }}">{{ $serviceTemplate['description'] }}</option>
                                 @endif
@@ -124,6 +125,26 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    @php($serviceModeleOldMacros='False')
+                    @include('template.servicemacros')
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" hidden="hidden" id="div-service-modele-old{{ $numService }}">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="service-modele{{ $numService }}">Modèle de service Précédent</label>
+                    <div class="form-control">
+                        <input id="service-modele{{ $numService }}" type="text" class="form-control{{ $errors->has("service-modele" . $numService) ? ' is-invalid' : '' }}"
+                               name="service-modele{{ $numService }}" placeholder="modèle du service"
+                               value="{{ $serviceTemplateOld }}"
+                               disabled="disabled">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @php($serviceModeleOldMacros='True')
                     @include('template.servicemacros')
                 </div>
             </div>
