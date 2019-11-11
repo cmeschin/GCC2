@@ -110,7 +110,7 @@
                                                                 {{ $numHost }}
                                                             </td>
                                                             <td>
-                                                                <a data-toggle="collapse" href="#collapseH{{ $host['host_id']}}" role="button" aria-expanded="false" aria-controls="collapseH{{ $host['host_id']}}">
+                                                                <a data-toggle="collapse" href="#collapseH{{ $host['host_id']}}" role="button" aria-expanded="false" aria-controls="collapseH{{ $host['host_id']}}" title="Cliquer pour déveloper/réduire">
                                                                     {{ $host['host_name'] . " / " . $host['host_address'] }}
                                                                 </a>
                                                             </td>

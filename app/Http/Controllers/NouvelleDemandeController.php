@@ -94,41 +94,57 @@ class NouvelleDemandeController extends Controller
         //dd($token);
         $prestation = $request->prestation[0];
 
+        \Log::debug('récupération du contenu de la prestation: ' . $prestation);
         $servicesByServiceGroup = $api->getApiServicesByServiceGroup($token,$prestation);
         // extrait la liste des hôtes unitairement
+        \Log::debug('Extraction de la liste des hôtes');
         $hosts = array_unique(array_column($servicesByServiceGroup['result'],'host_name'));
 
         $serviceCategorie = "Systeme";
 
+        \Log::debug('Récupération des sondes de la catégorie système pour la liste des hôtes');
         $servicesByServiceCategorieByHosts = $centreon->getCentreonServicesByServiceCategorieByHosts($serviceCategorie, $hosts, $prestation);
 
         // fusionne les deux tableaux
+        \Log::debug('fusion des deux tableaux');
         $services = array_merge($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts);
         //$services = array_merge_recursive($servicesByServiceGroup['result'],$servicesByServiceCategorieByHosts[0]);
         //$services = $servicesByServiceGroup['result'] + $servicesByServiceCategorieByHosts;
 
         //récupérer la liste des service_id
+        \Log::debug('extraction de la liste des ServicesId');
         $serviceIds = array_column($services, 'service_id');
 //        \Log::debug('ServiceIds: ' . $serviceIds);
 //        dd($serviceIds);
+        \Log::debug('récupération de la liste des timeperiodes');
         $timeperiods = $centreon->getCentreonTimeperiodByServiceIds($serviceIds);
+        \Log::debug('filtrage des timepériodes uniques');
         $uniqueTimeperiods = $centreon->getCentreonUniqueTimeperiodsByServiceIds($serviceIds);
+        \Log::debug('Timeperiode, ajout des détails');
         $uniqueTimeperiods = addTimeperiodDetails($uniqueTimeperiods);
 
+        \Log::debug('Récupération du détail des hotes');
         $hosts = $centreon->getCentreonHostDetailsByHosts($hosts);
+        \Log::debug('Ajout du détail des hotes');
         $hosts = addHostDetails($hosts);
+        \Log::debug('Fix centreonKbUrl');
         fixCentreonKbUrl($hosts);
 
+        \Log::debug('Récupération du détail des services');
         $serviceDetails = $centreon->getCentreonServiceDetailsByServiceIds($serviceIds);
 //        dd($serviceDetails);
+        \Log::debug('Services Ajout détail timeperiod');
         $services = addServiceTimeperiod($services,$timeperiods);
 
+        \Log::debug('Services Ajout du detail des services');
         $services = addServiceDetails($services,$serviceDetails);
 
+        \Log::debug('Fix CentreonKbUrl');
         fixCentreonKbUrl($services);
         //array_unique(array_column($services,'service_id'));
         //sort($services);
         // tri le tableau par ordre croissant host - service
+        \Log::debug('Tri croissant du tableau Services par Host et service');
         array_multisort(array_column($services, 'host_name'),  SORT_ASC,
             array_column($services, 'service_description'), SORT_ASC,
             $services);
@@ -136,11 +152,14 @@ class NouvelleDemandeController extends Controller
         /**
          * Enregistrement des variables en session
          */
+        \Log::debug('Enregistrement des variables en session');
         session(['services' => $services]);
         session(['hosts' => $hosts]);
         session(['timeperiods' => $uniqueTimeperiods]);
 
         // Afficher la seconde vue
+        \Log::debug('Affichage de la vue Selection');
+
         return view('template.selection',compact('refDemande','services', 'uniqueTimeperiods', 'hosts'));
     }
 

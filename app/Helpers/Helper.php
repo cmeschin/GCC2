@@ -53,13 +53,13 @@ if (!function_exists('addServiceDetails')) {
 
         foreach($services as $service)
         {
-            //\Log::debug('Service: ', [$value]);
+            \Log::debug('Service: ', [$service]);
             for($j=0;$j<count($serviceDetails);$j++){
                 $indexService = array_search($service['service_id'],$serviceDetails[$j]);
                 $trouve = False;
                 if ($indexService)
                 {
-                    //\Log::debug('Detail: ', [$serviceDetails[$j]]);
+                    \Log::debug('Detail: ', [$serviceDetails[$j]]);
                     // get values in serviceDetails array
                     $services[$i]['host_address'] = $serviceDetails[$j]['host_address'];
                     $services[$i]['host_activate'] = $serviceDetails[$j]['host_activate'];
@@ -80,6 +80,8 @@ if (!function_exists('addServiceDetails')) {
             if (!$trouve)
             {
                 \Log::debug('ERREUR Service configuration incomplète: ', [$service]);
+                return response::view('errors.500', [$service], 500);
+
             }
             // Ajout du nom et du site
             $services[$i]['nom'] = defineHoteNom($services[$i]['host_name']);
@@ -89,7 +91,7 @@ if (!function_exists('addServiceDetails')) {
             $i++;
         }
         \Log::info('Service: détails ajoutés');
-        //dd($services);
+//        dd($services);
         //var_dump($services);
         fixArrayKey($services);
         return $services;
